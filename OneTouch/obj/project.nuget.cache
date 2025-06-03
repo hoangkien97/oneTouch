@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "fq1X/LoxuHI=",
+  "dgSpecHash": "HudlXnhelP0=",
   "success": true,
-  "projectFilePath": "D:\\FPT\\Semester8\\Exe2\\OneTouch\\OneTouch\\OneTouch.csproj",
+  "projectFilePath": "D:\\FPT\\Semester8\\Exe2\\oneTouch\\OneTouch\\OneTouch.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\admin\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
