@@ -258,3 +258,4 @@ D:\FPT\Semester8\Exe2\OneTouch\OneTouch\bin\Debug\net8.0\runtimes\win\lib\net7.0
 D:\FPT\Semester8\Exe2\OneTouch\OneTouch\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Windows.Extensions.dll
 D:\FPT\Semester8\Exe2\OneTouch\OneTouch\obj\Debug\net8.0\OneTouch.csproj.AssemblyReference.cache
 D:\FPT\Semester8\Exe2\OneTouch\OneTouch\obj\Debug\net8.0\OneTouch.csproj.Up2Date
+D:\FPT\Semester8\Exe2\oneTouch\OneTouch\obj\Debug\net8.0\OneTouch.sourcelink.json
