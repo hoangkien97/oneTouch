@@ -19,6 +19,8 @@ public partial class Doctor
 
     public string? Certificate { get; set; }
 
+    public string? AvatarPath { get; set; }
+
     public virtual Clinic? Clinic { get; set; }
 
     public virtual ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
