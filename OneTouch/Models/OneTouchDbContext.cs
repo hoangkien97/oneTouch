@@ -47,6 +47,8 @@ public partial class OneTouchDbContext : DbContext
 
     public virtual DbSet<UserInsurance> UserInsurances { get; set; }
 
+    public virtual DbSet<Image> Images { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();

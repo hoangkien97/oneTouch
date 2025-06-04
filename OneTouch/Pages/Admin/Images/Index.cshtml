@@ -1,0 +1,58 @@
+@page
+@model OneTouch.Pages.Admin.Images.IndexModel
+@{
+    ViewData["Title"] = "Quản lý ảnh";
+}
+
+<div class="container py-4">
+    <h2 class="mb-4">Quản lý ảnh</h2>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <form method="post" enctype="multipart/form-data">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Upload ảnh mới</h5>
+                        <div class="mb-3">
+                            <label for="file" class="form-label">Chọn ảnh</label>
+                            <input type="file" class="form-control" id="file" name="file" accept="image/*" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="type" class="form-label">Loại ảnh</label>
+                            <select class="form-select" id="type" name="type" required>
+                                <option value="hero">Hero Image</option>
+                                <option value="feature">Feature Image</option>
+                                <option value="testimonial">Testimonial Image</option>
+                                <option value="doctor">Doctor Avatar</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Mô tả</label>
+                            <input type="text" class="form-control" id="description" name="description">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Upload</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        @foreach (var image in Model.Images)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="@image.FilePath" class="card-img-top" alt="@image.Description">
+                    <div class="card-body">
+                        <h5 class="card-title">@image.Type</h5>
+                        <p class="card-text">@image.Description</p>
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@image.ImageId" 
+                              onsubmit="return confirm('Bạn có chắc muốn xóa ảnh này?');">
+                            <button type="submit" class="btn btn-danger">Xóa</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div> 

@@ -1,10 +1,95 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Trang chủ";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!-- Hero Section -->
+<section class="hero-section position-relative text-white" style="background: url('@(Model.HeroImage?.FilePath ?? "~/images/hero-image.png")') center center/cover no-repeat; min-height: 400px;">
+    <div class="overlay" style="position:absolute; inset:0; background:rgba(0,123,255,0.7); z-index:1;"></div>
+    <div class="container position-relative" style="z-index:2;">
+        <div class="row align-items-center" style="min-height:400px;">
+            <div class="col-md-7">
+                <h1 class="display-4 fw-bold mb-4">
+                    Chăm sóc sức khỏe của bạn
+                    <span class="text-warning">chưa bao giờ dễ dàng hơn</span>
+                </h1>
+                <p class="lead mb-4">
+                    Đặt lịch khám bệnh trực tuyến nhanh chóng, tiện lợi
+                    với đội ngũ y bác sĩ chuyên môn cao
+                </p>
+                <div class="d-flex gap-3">
+                    <a href="/Account/Register" class="btn btn-warning btn-lg">Đăng ký ngay</a>
+                    <a href="/Account/Login" class="btn btn-outline-light btn-lg">Đăng nhập</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Tại sao chọn chúng tôi?</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <i class="fas fa-clock text-primary fa-3x mb-3"></i>
+                        <h3 class="h5 mb-3">Đặt lịch nhanh chóng</h3>
+                        <p class="text-muted mb-0">
+                            Đặt lịch khám bệnh trực tuyến 24/7, tiết kiệm thời gian chờ đợi
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <i class="fas fa-user-md text-primary fa-3x mb-3"></i>
+                        <h3 class="h5 mb-3">Đội ngũ bác sĩ chuyên môn cao</h3>
+                        <p class="text-muted mb-0">
+                            Đội ngũ y bác sĩ giàu kinh nghiệm, tận tâm với người bệnh
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <i class="fas fa-heartbeat text-primary fa-3x mb-3"></i>
+                        <h3 class="h5 mb-3">Chăm sóc toàn diện</h3>
+                        <p class="text-muted mb-0">
+                            Dịch vụ chăm sóc sức khỏe toàn diện, từ khám bệnh đến điều trị
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ĐỘI NGŨ CHUYÊN GIA Section -->
+<section class="bg-light py-5">
+    <div class="container">
+        <h2 class="text-center mb-3 text-success" style="font-weight: bold;">ĐỘI NGŨ CHUYÊN GIA</h2>
+        <p class="text-center mb-5">
+            Cùng gặp gỡ và tìm hiểu về đội ngũ chuyên gia hàng đầu và giàu kinh nghiệm tại Bệnh viện Đại học y Hà Nội
+        </p>
+        <div class="row justify-content-center">
+            @foreach (var img in Model.DoctorImages)
+            {
+                <div class="col-md-3 text-center mb-4">
+                    <img src="@img.FilePath" class="img-fluid rounded-circle mb-3" style="width:180px; height:180px; object-fit:cover;" alt="@img.Description">
+                    <div class="fw-bold text-primary">@img.Description</div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        // Add any page-specific JavaScript here
+    </script>
+}

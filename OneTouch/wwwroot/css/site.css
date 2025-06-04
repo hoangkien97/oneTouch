@@ -1,4 +1,4 @@
-html {
+﻿html {
   font-size: 14px;
 }
 
@@ -20,3 +20,6 @@ html {
 body {
   margin-bottom: 60px;
 }
+footer {
+    line-height: normal;
+}   
