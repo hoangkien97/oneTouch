@@ -13,6 +13,10 @@ public partial class User
 
     public string? PasswordHash { get; set; }
 
+    public string? PasswordResetToken { get; set; }
+
+    public DateTime? PasswordResetTokenExpiry { get; set; }
+
     public string? Phone { get; set; }
 
     public string? Role { get; set; }

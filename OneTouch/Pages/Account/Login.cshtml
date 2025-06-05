@@ -21,6 +21,9 @@
                     <label for="password" class="form-label">Mật khẩu</label>
                     <input asp-for="Input.Password" class="form-control" id="password" type="password" required />
                 </div>
+                <div class="mb-3 text-end">
+                    <a asp-page="/Account/ForgotPassword" class="text-decoration-none">Quên mật khẩu?</a>
+                </div>
                 <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
             </form>
         </div>

@@ -31,6 +31,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<PasswordService>();
 builder.Services.AddScoped<ValidationService>();
 builder.Services.AddScoped<ImageService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 var app = builder.Build();
 
