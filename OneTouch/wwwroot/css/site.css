@@ -23,3 +23,17 @@ body {
 footer {
     line-height: normal;
 }   
+}
+
+.table th, .table td {
+    vertical-align: middle !important;
+}
+
+.card {
+    border-radius: 1rem;
+    transition: all 0.3s ease-in-out;
+}
+
+.card:hover {
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
