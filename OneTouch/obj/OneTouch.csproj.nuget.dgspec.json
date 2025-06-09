@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\FPT\\Semester8\\Exe2\\OneTouch\\OneTouch\\OneTouch.csproj": {}
+    "D:\\FPT\\Semester8\\Exe2\\oneTouch\\OneTouch\\OneTouch.csproj": {}
   },
   "projects": {
-    "D:\\FPT\\Semester8\\Exe2\\OneTouch\\OneTouch\\OneTouch.csproj": {
+    "D:\\FPT\\Semester8\\Exe2\\oneTouch\\OneTouch\\OneTouch.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\FPT\\Semester8\\Exe2\\OneTouch\\OneTouch\\OneTouch.csproj",
+        "projectUniqueName": "D:\\FPT\\Semester8\\Exe2\\oneTouch\\OneTouch\\OneTouch.csproj",
         "projectName": "OneTouch",
-        "projectPath": "D:\\FPT\\Semester8\\Exe2\\OneTouch\\OneTouch\\OneTouch.csproj",
+        "projectPath": "D:\\FPT\\Semester8\\Exe2\\oneTouch\\OneTouch\\OneTouch.csproj",
         "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-        "outputPath": "D:\\FPT\\Semester8\\Exe2\\OneTouch\\OneTouch\\obj\\",
+        "outputPath": "D:\\FPT\\Semester8\\Exe2\\oneTouch\\OneTouch\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -46,25 +46,41 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[14.0.0, )"
+            },
+            "AutoMapper.Collection": {
+              "target": "Package",
+              "version": "[11.0.0, )"
+            },
+            "AutoMapper.Collection.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[11.0.0, )"
+            },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.15, )"
+              "version": "[9.0.2, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[8.0.15, )"
+              "version": "[9.0.2, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.15, )"
+              "version": "[9.0.2, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
-              "version": "[8.0.7, )"
+              "version": "[9.0.0, )"
+            },
+            "Vonage": {
+              "target": "Package",
+              "version": "[7.21.0, )"
             }
           },
           "imports": [

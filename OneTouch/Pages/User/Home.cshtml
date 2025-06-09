@@ -1,0 +1,132 @@
+@page
+@model OneTouch.Pages.User.HomeModel
+@{
+    ViewData["Title"] = "Trang chủ";
+}
+
+<div class="container py-4">
+    <!-- Welcome Section -->
+    <div class="mb-4">
+        <h2 class="mb-2">Xin chào, @Model.UserName</h2>
+        <p class="text-muted">
+            Chào mừng bạn đến với hệ thống đặt lịch khám bệnh OneTouch Medical
+        </p>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <i class="fas fa-calendar-plus text-primary fa-3x mb-3"></i>
+                    <h3 class="h5 mb-3">Đặt lịch khám</h3>
+                    <p class="text-muted mb-3">Đặt lịch khám với bác sĩ chuyên khoa</p>
+                    <a href="/Appointments/Create" class="btn btn-primary">Đặt lịch</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <i class="fas fa-history text-primary fa-3x mb-3"></i>
+                    <h3 class="h5 mb-3">Lịch sử khám</h3>
+                    <p class="text-muted mb-3">Xem lịch sử khám bệnh của bạn</p>
+                    <a href="/Appointments/History" class="btn btn-primary">Xem lịch sử</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <i class="fas fa-user text-primary fa-3x mb-3"></i>
+                    <h3 class="h5 mb-3">Hồ sơ cá nhân</h3>
+                    <p class="text-muted mb-3">Cập nhật thông tin cá nhân</p>
+                    <a href="/Profile" class="btn btn-primary">Cập nhật</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <i class="fas fa-stethoscope text-primary fa-3x mb-3"></i>
+                    <h3 class="h5 mb-3">Dịch vụ y tế</h3>
+                    <p class="text-muted mb-3">Xem các dịch vụ y tế có sẵn</p>
+                    <a href="/Services" class="btn btn-primary">Xem dịch vụ</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upcoming Appointments -->
+    @foreach (var appointment in Model.UpcomingAppointments)
+    {
+        <div class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between align-items-center">
+                <div>
+                    <h5 class="mb-1">
+                        @appointment.Schedule?.Doctor?.User?.FullName
+                        -
+                        @appointment.Schedule?.Doctor?.Specialty?.Name
+                    </h5>
+                    <p class="mb-1">
+                        <i class="fas fa-calendar-alt text-primary me-2"></i>
+                        @appointment.Schedule?.Date?.ToString("dd/MM/yyyy")
+                        |
+                        @appointment.Schedule?.StartTime?.ToString("hh\\:mm")
+                    </p>
+                </div>
+                <a href="/Appointments/Details/@appointment.AppointmentId" class="btn btn-outline-primary">
+                    Chi tiết
+                </a>
+            </div>
+        </div>
+    }
+
+    <!-- Health Tips -->
+    <div class="card border-0 shadow-sm">
+        <div class="card-body">
+            <h3 class="card-title mb-4">Mẹo sức khỏe</h3>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="d-flex">
+                        <i class="fas fa-tint text-primary fa-2x me-3"></i>
+                        <div>
+                            <h4 class="h6 mb-2">Uống đủ nước</h4>
+                            <p class="text-muted mb-0">
+                                Uống ít nhất 2 lít nước mỗi ngày để duy trì sức khỏe tốt
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="d-flex">
+                        <i class="fas fa-running text-primary fa-2x me-3"></i>
+                        <div>
+                            <h4 class="h6 mb-2">Tập thể dục thường xuyên</h4>
+                            <p class="text-muted mb-0">
+                                Dành 30 phút mỗi ngày để tập thể dục giúp tăng cường sức khỏe
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="d-flex">
+                        <i class="fas fa-apple-alt text-primary fa-2x me-3"></i>
+                        <div>
+                            <h4 class="h6 mb-2">Ăn uống lành mạnh</h4>
+                            <p class="text-muted mb-0">
+                                Bổ sung đầy đủ chất dinh dưỡng từ các loại thực phẩm tươi
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Add any page-specific JavaScript here
+    </script>
+} 
