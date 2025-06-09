@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "D:\\FPT\\Semester8\\Exe2\\oneTouch\\OneTouch\\OneTouch.csproj": {}
+    "D:\\FPT\\Semester8\\Exe2\\OneTouch\\OneTouch\\OneTouch.csproj": {}
   },
   "projects": {
-    "D:\\FPT\\Semester8\\Exe2\\oneTouch\\OneTouch\\OneTouch.csproj": {
+    "D:\\FPT\\Semester8\\Exe2\\OneTouch\\OneTouch\\OneTouch.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\FPT\\Semester8\\Exe2\\oneTouch\\OneTouch\\OneTouch.csproj",
+        "projectUniqueName": "D:\\FPT\\Semester8\\Exe2\\OneTouch\\OneTouch\\OneTouch.csproj",
         "projectName": "OneTouch",
-        "projectPath": "D:\\FPT\\Semester8\\Exe2\\oneTouch\\OneTouch\\OneTouch.csproj",
+        "projectPath": "D:\\FPT\\Semester8\\Exe2\\OneTouch\\OneTouch\\OneTouch.csproj",
         "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
         "outputPath": "D:\\FPT\\Semester8\\Exe2\\oneTouch\\OneTouch\\obj\\",
         "projectStyle": "PackageReference",
