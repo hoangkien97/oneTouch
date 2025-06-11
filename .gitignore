@@ -1,1 +1,23 @@
-.vs/ 
+# Build results
+bin/
+obj/
+Debug/
+Release/
+
+# Visual Studio files
+.vs/
+*.user
+*.suo
+
+# Temporary files
+*.tmp
+*.log
+*.bak
+
+# Rider or VS Code
+.idea/
+.vscode/
+
+# NuGet
+packages/
+*.nupkg
