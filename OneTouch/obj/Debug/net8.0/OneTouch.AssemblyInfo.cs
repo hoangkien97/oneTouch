@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("OneTouch")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b22e15a988aa7b30af3219d479c03ca590d67fb5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+292f6bb43486238168b91cfea991b0dc35425fca")]
 [assembly: System.Reflection.AssemblyProductAttribute("OneTouch")]
 [assembly: System.Reflection.AssemblyTitleAttribute("OneTouch")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

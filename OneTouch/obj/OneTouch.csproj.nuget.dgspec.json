@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "D:\\oneTouch\\OneTouch\\OneTouch.csproj": {}
+    "D:\\onetouch\\OneTouch\\OneTouch.csproj": {}
   },
   "projects": {
-    "D:\\oneTouch\\OneTouch\\OneTouch.csproj": {
+    "D:\\onetouch\\OneTouch\\OneTouch.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\oneTouch\\OneTouch\\OneTouch.csproj",
+        "projectUniqueName": "D:\\onetouch\\OneTouch\\OneTouch.csproj",
         "projectName": "OneTouch",
-        "projectPath": "D:\\oneTouch\\OneTouch\\OneTouch.csproj",
+        "projectPath": "D:\\onetouch\\OneTouch\\OneTouch.csproj",
         "packagesPath": "C:\\Users\\phuc\\.nuget\\packages\\",
         "outputPath": "D:\\oneTouch\\OneTouch\\obj\\",
         "projectStyle": "PackageReference",

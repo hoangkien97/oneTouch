@@ -1,0 +1,60 @@
+﻿@page
+@model OneTouch.Pages.ScheduleManager.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Schedule[0].Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Schedule[0].StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Schedule[0].EndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Schedule[0].MaxPatients)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Schedule[0].Doctor)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Schedule) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaxPatients)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Doctor.User.FullName)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ScheduleId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ScheduleId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ScheduleId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

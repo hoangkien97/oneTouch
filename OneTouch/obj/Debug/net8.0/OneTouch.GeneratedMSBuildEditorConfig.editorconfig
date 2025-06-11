@@ -17,77 +17,141 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = OneTouch
 build_property.RootNamespace = OneTouch
-build_property.ProjectDir = D:\oneTouch\OneTouch\
+build_property.ProjectDir = D:\onetouch\OneTouch\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = D:\oneTouch\OneTouch
+build_property.MSBuildProjectDirectory = D:\onetouch\OneTouch
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
-[D:/oneTouch/OneTouch/Pages/Account/ForgotPassword.cshtml]
+[D:/onetouch/OneTouch/Pages/Account/ForgotPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxGb3Jnb3RQYXNzd29yZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/oneTouch/OneTouch/Pages/Account/Login.cshtml]
+[D:/onetouch/OneTouch/Pages/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/oneTouch/OneTouch/Pages/Account/Logout.cshtml]
+[D:/onetouch/OneTouch/Pages/Account/Logout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxMb2dvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/oneTouch/OneTouch/Pages/Account/Register.cshtml]
+[D:/onetouch/OneTouch/Pages/Account/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/oneTouch/OneTouch/Pages/Account/ResetPassword.cshtml]
+[D:/onetouch/OneTouch/Pages/Account/ResetPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxSZXNldFBhc3N3b3JkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/oneTouch/OneTouch/Pages/Account/ResetPasswordWithOtp.cshtml]
+[D:/onetouch/OneTouch/Pages/Account/ResetPasswordWithOtp.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxSZXNldFBhc3N3b3JkV2l0aE90cC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/oneTouch/OneTouch/Pages/Account/VerifyOtp.cshtml]
+[D:/onetouch/OneTouch/Pages/Account/VerifyOtp.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxWZXJpZnlPdHAuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/oneTouch/OneTouch/Pages/Admin/Images/Index.cshtml]
+[D:/onetouch/OneTouch/Pages/Admin/Images/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cSW1hZ2VzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/oneTouch/OneTouch/Pages/Error.cshtml]
+[D:/onetouch/OneTouch/Pages/AppointmentManager/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXBwb2ludG1lbnRNYW5hZ2VyXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/onetouch/OneTouch/Pages/AppointmentManager/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXBwb2ludG1lbnRNYW5hZ2VyXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/onetouch/OneTouch/Pages/AppointmentManager/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXBwb2ludG1lbnRNYW5hZ2VyXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/onetouch/OneTouch/Pages/AppointmentManager/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXBwb2ludG1lbnRNYW5hZ2VyXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/onetouch/OneTouch/Pages/AppointmentManager/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXBwb2ludG1lbnRNYW5hZ2VyXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/onetouch/OneTouch/Pages/DoctorManager/DoctorDashboard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRG9jdG9yTWFuYWdlclxEb2N0b3JEYXNoYm9hcmQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/onetouch/OneTouch/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/oneTouch/OneTouch/Pages/Index.cshtml]
+[D:/onetouch/OneTouch/Pages/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/oneTouch/OneTouch/Pages/Privacy.cshtml]
+[D:/onetouch/OneTouch/Pages/MedicalRecordManager/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWVkaWNhbFJlY29yZE1hbmFnZXJcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/onetouch/OneTouch/Pages/MedicalRecordManager/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWVkaWNhbFJlY29yZE1hbmFnZXJcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/onetouch/OneTouch/Pages/MedicalRecordManager/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWVkaWNhbFJlY29yZE1hbmFnZXJcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/onetouch/OneTouch/Pages/MedicalRecordManager/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWVkaWNhbFJlY29yZE1hbmFnZXJcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/onetouch/OneTouch/Pages/MedicalRecordManager/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWVkaWNhbFJlY29yZE1hbmFnZXJcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/onetouch/OneTouch/Pages/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/oneTouch/OneTouch/Pages/Shared/_ValidationScriptsPartial.cshtml]
+[D:/onetouch/OneTouch/Pages/ScheduleManager/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2NoZWR1bGVNYW5hZ2VyXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/onetouch/OneTouch/Pages/ScheduleManager/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2NoZWR1bGVNYW5hZ2VyXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/onetouch/OneTouch/Pages/ScheduleManager/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2NoZWR1bGVNYW5hZ2VyXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/onetouch/OneTouch/Pages/ScheduleManager/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2NoZWR1bGVNYW5hZ2VyXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/onetouch/OneTouch/Pages/ScheduleManager/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2NoZWR1bGVNYW5hZ2VyXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/onetouch/OneTouch/Pages/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/oneTouch/OneTouch/Pages/User/Home.cshtml]
+[D:/onetouch/OneTouch/Pages/User/Home.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlclxIb21lLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/oneTouch/OneTouch/Pages/_ViewImports.cshtml]
+[D:/onetouch/OneTouch/Pages/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/oneTouch/OneTouch/Pages/_ViewStart.cshtml]
+[D:/onetouch/OneTouch/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/oneTouch/OneTouch/Pages/Shared/_Layout.cshtml]
+[D:/onetouch/OneTouch/Pages/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-bezbqrelc2

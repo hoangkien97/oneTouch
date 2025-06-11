@@ -29,7 +29,6 @@ namespace OneTouch.Pages.Account
             public string Token { get; set; }
             public string Password { get; set; }
             public string ConfirmPassword { get; set; }
-            public string Code { get; set; } 
         }
 
         public IActionResult OnGet(string email, string token)

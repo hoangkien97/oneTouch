@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "myORBnd6A80=",
+  "dgSpecHash": "28xlSboNvt8=",
   "success": true,
-  "projectFilePath": "D:\\oneTouch\\OneTouch\\OneTouch.csproj",
+  "projectFilePath": "D:\\onetouch\\OneTouch\\OneTouch.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\phuc\\.nuget\\packages\\automapper\\14.0.0\\automapper.14.0.0.nupkg.sha512",
     "C:\\Users\\phuc\\.nuget\\packages\\automapper.collection\\11.0.0\\automapper.collection.11.0.0.nupkg.sha512",
