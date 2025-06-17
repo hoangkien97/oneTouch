@@ -5,22 +5,28 @@
 }
 
 <!-- Hero Section -->
-<section class="hero-section position-relative text-white" style="background: url('@(Model.HeroImage?.FilePath ?? "~/images/hero-image.png")') center center/cover no-repeat; min-height: 400px;">
-    <div class="overlay" style="position:absolute; inset:0; background:rgba(0,123,255,0.7); z-index:1;"></div>
-    <div class="container position-relative" style="z-index:2;">
-        <div class="row align-items-center" style="min-height:400px;">
-            <div class="col-md-7">
+<section class="hero-section position-relative text-white py-5">
+    <div class="hero-slider">
+        <div class="hero-slide" style="background-image: url('/uploads/hero/hero1.png');"></div>
+        <div class="hero-slide" style="background-image: url('/uploads/hero/hero2.jpg');"></div>
+        <div class="hero-slide" style="background-image: url('/uploads/hero/hero3.jpg');"></div>
+    </div>
+    <div class="overlay"></div>
+    <div class="container position-relative py-5" style="z-index: 2;">
+        <div class="row min-vh-auto align-items-center">
+            <div class="col-lg-7 animate-fadeInUp">
+                <span class="badge bg-warning mb-3 px-3 py-2">Chăm sóc sức khỏe tận tâm</span>
                 <h1 class="display-4 fw-bold mb-4">
                     Chăm sóc sức khỏe của bạn
-                    <span class="text-warning">chưa bao giờ dễ dàng hơn</span>
+                    <span class="text-warning d-block">chưa bao giờ dễ dàng hơn</span>
                 </h1>
                 <p class="lead mb-4">
-                    Đặt lịch khám bệnh trực tuyến nhanh chóng, tiện lợi
-                    với đội ngũ y bác sĩ chuyên môn cao
+                    Đặt lịch khám bệnh trực tuyến nhanh chóng, tiện lợi với đội ngũ y bác sĩ chuyên môn cao.
+                    Chúng tôi cam kết mang đến dịch vụ y tế chất lượng nhất cho bạn và gia đình.
                 </p>
                 <div class="d-flex gap-3">
                     <a href="/Account/Register" class="btn btn-warning btn-lg">Đăng ký ngay</a>
-                    <a href="/Account/Login" class="btn btn-outline-light btn-lg">Đăng nhập</a>
+                    <a href="/Appointments/Create" class="btn btn-outline-light btn-lg">Đặt lịch khám</a>
                 </div>
             </div>
         </div>
@@ -30,38 +36,82 @@
 <!-- Features Section -->
 <section class="py-5">
     <div class="container">
-        <h2 class="text-center mb-5">Tại sao chọn chúng tôi?</h2>
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="card h-100 border-0 shadow-sm">
-                    <div class="card-body text-center p-4">
-                        <i class="fas fa-clock text-primary fa-3x mb-3"></i>
-                        <h3 class="h5 mb-3">Đặt lịch nhanh chóng</h3>
-                        <p class="text-muted mb-0">
-                            Đặt lịch khám bệnh trực tuyến 24/7, tiết kiệm thời gian chờ đợi
-                        </p>
+        <div class="row">
+            <div class="col-lg-4 mb-4">
+                <div class="feature-card text-center">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-user-md"></i>
                     </div>
+                    <h3 class="h4 mb-3">Bác sĩ chuyên môn</h3>
+                    <p class="text-muted mb-0">
+                        Đội ngũ bác sĩ giàu kinh nghiệm, tận tâm với nghề và luôn đặt sức khỏe bệnh nhân lên hàng đầu
+                    </p>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card h-100 border-0 shadow-sm">
-                    <div class="card-body text-center p-4">
-                        <i class="fas fa-user-md text-primary fa-3x mb-3"></i>
-                        <h3 class="h5 mb-3">Đội ngũ bác sĩ chuyên môn cao</h3>
-                        <p class="text-muted mb-0">
-                            Đội ngũ y bác sĩ giàu kinh nghiệm, tận tâm với người bệnh
-                        </p>
+            <div class="col-lg-4 mb-4">
+                <div class="feature-card text-center">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-clock"></i>
                     </div>
+                    <h3 class="h4 mb-3">Đặt lịch dễ dàng</h3>
+                    <p class="text-muted mb-0">
+                        Đặt lịch khám trực tuyến nhanh chóng, tiện lợi với quy trình đơn giản và thân thiện
+                    </p>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card h-100 border-0 shadow-sm">
-                    <div class="card-body text-center p-4">
-                        <i class="fas fa-heartbeat text-primary fa-3x mb-3"></i>
-                        <h3 class="h5 mb-3">Chăm sóc toàn diện</h3>
-                        <p class="text-muted mb-0">
-                            Dịch vụ chăm sóc sức khỏe toàn diện, từ khám bệnh đến điều trị
-                        </p>
+            <div class="col-lg-4 mb-4">
+                <div class="feature-card text-center">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-hospital"></i>
+                    </div>
+                    <h3 class="h4 mb-3">Cơ sở vật chất</h3>
+                    <p class="text-muted mb-0">
+                        Trang thiết bị y tế hiện đại, đạt chuẩn quốc tế, đảm bảo chất lượng điều trị tốt nhất
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <img src="/images/about-img.jpg" alt="About Us" class="img-fluid rounded-3 shadow">
+            </div>
+            <div class="col-lg-6">
+                <span class="badge bg-primary mb-3 px-3 py-2">Về chúng tôi</span>
+                <h2 class="h1 mb-4">Tại sao chọn OneTouch Medical?</h2>
+                <p class="lead text-muted mb-4">
+                    Chúng tôi cam kết mang đến dịch vụ chăm sóc sức khỏe chất lượng cao nhất cho bạn và gia đình.
+                </p>
+                <div class="d-flex mb-3">
+                    <div class="me-3">
+                        <i class="fas fa-check-circle text-primary fa-2x"></i>
+                    </div>
+                    <div>
+                        <h4 class="h5 mb-2">Đội ngũ y bác sĩ giàu kinh nghiệm</h4>
+                        <p class="text-muted mb-0">Các bác sĩ của chúng tôi đều có nhiều năm kinh nghiệm trong lĩnh vực y tế</p>
+                    </div>
+                </div>
+                <div class="d-flex mb-3">
+                    <div class="me-3">
+                        <i class="fas fa-check-circle text-primary fa-2x"></i>
+                    </div>
+                    <div>
+                        <h4 class="h5 mb-2">Trang thiết bị hiện đại</h4>
+                        <p class="text-muted mb-0">Sử dụng các trang thiết bị y tế tiên tiến nhất để đảm bảo chất lượng điều trị</p>
+                    </div>
+                </div>
+                <div class="d-flex">
+                    <div class="me-3">
+                        <i class="fas fa-check-circle text-primary fa-2x"></i>
+                    </div>
+                    <div>
+                        <h4 class="h5 mb-2">Dịch vụ 24/7</h4>
+                        <p class="text-muted mb-0">Luôn sẵn sàng phục vụ bạn 24/7 với đội ngũ nhân viên chuyên nghiệp</p>
                     </div>
                 </div>
             </div>
@@ -69,27 +119,83 @@
     </div>
 </section>
 
-<!-- ĐỘI NGŨ CHUYÊN GIA Section -->
-<section class="bg-light py-5">
+<!-- Doctors Section -->
+<section class="py-5">
     <div class="container">
-        <h2 class="text-center mb-3 text-success" style="font-weight: bold;">ĐỘI NGŨ CHUYÊN GIA</h2>
-        <p class="text-center mb-5">
-            Cùng gặp gỡ và tìm hiểu về đội ngũ chuyên gia hàng đầu và giàu kinh nghiệm tại Bệnh viện Đại học y Hà Nội
-        </p>
-        <div class="row justify-content-center">
-            @foreach (var img in Model.DoctorImages)
+        <div class="text-center mb-5">
+            <span class="badge bg-primary mb-3 px-3 py-2">Đội ngũ chuyên gia</span>
+            <h2 class="h1 mb-4">Các bác sĩ của chúng tôi</h2>
+            <p class="lead text-muted">
+                Gặp gỡ đội ngũ bác sĩ chuyên nghiệp và giàu kinh nghiệm của OneTouch Medical
+            </p>
+        </div>
+        <div class="row">
+            @foreach (var doctor in Model.Doctors)
             {
-                <div class="col-md-3 text-center mb-4">
-                    <img src="@img.FilePath" class="img-fluid rounded-circle mb-3" style="width:180px; height:180px; object-fit:cover;" alt="@img.Description">
-                    <div class="fw-bold text-primary">@img.Description</div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="doctor-card">
+                        <img src="@(doctor.AvatarPath ?? "/images/doctor-default.jpg")" alt="@doctor.User.FullName">
+                        <div class="card-body text-center">
+                            <h4 class="h5 mb-2">@doctor.User.FullName</h4>
+                            <p class="text-muted mb-3">@doctor.Specialty</p>
+                            <div class="doctor-social">
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             }
         </div>
     </div>
 </section>
 
+<!-- CTA Section -->
+<section class="py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mb-4 mb-lg-0">
+                <h2 class="h1 mb-2">Bạn cần tư vấn?</h2>
+                <p class="lead mb-0">Liên hệ với chúng tôi ngay để được tư vấn miễn phí về sức khỏe</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a href="/Contact" class="btn btn-light btn-lg">Liên hệ ngay</a>
+            </div>
+        </div>
+    </div>
+</section>
+
 @section Scripts {
     <script>
-        // Add any page-specific JavaScript here
+        // Add smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Hero Slider
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.hero-slide');
+        
+        function showSlide(index) {
+            slides.forEach(slide => slide.style.opacity = '0');
+            slides[index].style.opacity = '1';
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        // Initialize first slide
+        showSlide(currentSlide);
+        
+        // Change slide every 3 seconds (3000 milliseconds)
+        setInterval(nextSlide, 3000);
     </script>
 }
