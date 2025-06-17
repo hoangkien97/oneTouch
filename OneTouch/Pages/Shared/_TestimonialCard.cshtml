@@ -1,0 +1,49 @@
+@model dynamic
+
+<div class="testimonial-card hover-shadow">
+    <div class="testimonial-content">
+        <div class="testimonial-quote">
+            <i class="fas fa-quote-left text-primary fa-2x mb-3"></i>
+            <p class="mb-4">@Model.Quote</p>
+        </div>
+        <div class="testimonial-author d-flex align-items-center">
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <img src="@Model.ImageUrl" alt="@Model.Name" class="rounded-circle me-3" style="width: 60px; height: 60px; object-fit: cover;">
+            }
+            <div>
+                <h5 class="mb-1">@Model.Name</h5>
+                @if (!string.IsNullOrEmpty(Model.Title))
+                {
+                    <p class="text-muted mb-0">@Model.Title</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.testimonial-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    margin: 1rem 0;
+    transition: all 0.3s ease;
+}
+
+.testimonial-quote {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.testimonial-quote p {
+    font-style: italic;
+    color: #666;
+    line-height: 1.8;
+}
+
+.testimonial-author {
+    border-top: 1px solid #eee;
+    padding-top: 1.5rem;
+}
+</style> 

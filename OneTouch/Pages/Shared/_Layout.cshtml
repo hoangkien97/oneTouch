@@ -6,66 +6,145 @@
     <title>@ViewData["Title"] - OneTouch Medical</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/animations.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/OneTouch.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        html {
+            height: 100%;
+        }
+        body {
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        main {
+            flex: 1 0 auto;
+        }
+        .footer {
+            flex-shrink: 0;
+        }
+    </style>
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-primary border-bottom box-shadow mb-3">
+<body class="bg-light d-flex flex-column min-vh-100">
+    <!-- Top Bar -->
+    <div class="top-bar bg-primary py-2 text-white">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="d-flex align-items-center">
+                        <div class="me-4">
+                            <i class="fas fa-phone-alt me-2"></i>
+                            <span>+84 123 456 789</span>
+                        </div>
+                        <div>
+                            <i class="fas fa-envelope me-2"></i>
+                            <span>contact@onetouch.com</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 text-end">
+                    <div class="social-links">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <header class="main-header bg-white shadow-sm sticky-top">
+        <nav class="navbar navbar-expand-lg navbar-light py-3">
             <div class="container">
-                <a class="navbar-brand text-white" asp-area="" asp-page="/Index">
-                    <i class="fas fa-hospital me-2"></i>OneTouch Medical
+                <a class="navbar-brand" asp-area="" asp-page="/Index">
+                    <i class="fas fa-hospital me-2 text-primary"></i>
+                    <span class="fw-bold">OneTouch</span> Medical
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav mx-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-page="/Index">Trang chủ</a>
+                            <a class="nav-link fw-medium" asp-area="" asp-page="/Index">Trang chủ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-page="/Services">Dịch vụ</a>
+                            <a class="nav-link fw-medium" asp-area="" asp-page="/Services">Dịch vụ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-page="/Doctors">Bác sĩ</a>
+                            <a class="nav-link fw-medium" asp-area="" asp-page="/Doctors">Bác sĩ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-page="/Contact">Liên hệ</a>
+                            <a class="nav-link fw-medium" asp-area="" asp-page="/Contact">Liên hệ</a>
                         </li>
                     </ul>
-                    <ul class="navbar-nav">
+                    <div class="d-flex align-items-center">
                         @if (string.IsNullOrEmpty(Context.Session.GetString("UserId")))
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-page="/Account/Login">Đăng nhập</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="btn btn-light" asp-area="" asp-page="/Account/Register">Đăng ký</a>
-                            </li>
+                            <a class="btn btn-outline-primary me-2" asp-area="" asp-page="/Account/Login">Đăng nhập</a>
+                            <a class="btn btn-primary" asp-area="" asp-page="/Account/Register">Đăng ký</a>
                         }
                         else
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-page="/Account/Logout">Đăng xuất</a>
-                            </li>
+                            <div class="dropdown">
+                                <button class="btn btn-outline-primary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-user me-2"></i>Tài khoản
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                    <li><a class="dropdown-item" href="/User/Profile"><i class="fas fa-user-circle me-2"></i>Hồ sơ</a></li>
+                                    <li><a class="dropdown-item" href="/Appointments/History"><i class="fas fa-history me-2"></i>Lịch sử khám</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item text-danger" asp-page="/Account/Logout"><i class="fas fa-sign-out-alt me-2"></i>Đăng xuất</a></li>
+                                </ul>
+                            </div>
                         }
-                    </ul>
+                    </div>
                 </div>
             </div>
         </nav>
     </header>
 
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    <!-- Main Content -->
+    <main role="main" class="flex-grow-1">
+        @RenderBody()
+    </main>
 
-    <footer class="border-top footer text-white bg-primary" style="line-height: normal;">
-        <div class="container py-3 text-center">
-            <strong>OneTouch Medical</strong><br />
-            <span>&copy; @DateTime.Now.Year - OneTouch Medical. All rights reserved.</span>
+    <!-- Footer -->
+    <footer class="footer bg-dark text-white pt-5 pb-3 mt-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <h4 class="mb-4">Về OneTouch Medical</h4>
+                    <img src="/uploads/hero/74b073cf-a77b-40e1-bc64-639b2822a9cb.png" alt="OneTouch Medical Logo" class="img-fluid mb-3" style="max-height: 80px;">
+                    <p class="text-white-50">Chúng tôi cung cấp dịch vụ chăm sóc sức khỏe chất lượng cao, với đội ngũ bác sĩ chuyên môn và trang thiết bị hiện đại.</p>
+                    <div class="social-links mt-3">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <h4 class="mb-4">Liên hệ</h4>
+                    <p class="mb-2"><i class="fas fa-map-marker-alt me-2"></i>123 Đường ABC, Quận XYZ, Hà Nội</p>
+                    <p class="mb-2"><i class="fas fa-phone-alt me-2"></i>+84 123 456 789</p>
+                    <p class="mb-2"><i class="fas fa-envelope me-2"></i>contact@onetouch.com</p>
+                </div>
+                <div class="col-lg-4">
+                    <h4 class="mb-4">Giờ làm việc</h4>
+                    <p class="mb-2">Thứ 2 - Thứ 6: 8:00 - 20:00</p>
+                    <p class="mb-2">Thứ 7: 8:00 - 17:00</p>
+                    <p class="mb-2">Chủ nhật: 8:00 - 15:00</p>
+                </div>
+            </div>
+            <hr class="mt-4 mb-3 border-secondary">
+            <div class="text-center text-white-50">
+                <p class="mb-0">&copy; @DateTime.Now.Year - OneTouch Medical. All rights reserved.</p>
+            </div>
         </div>
     </footer>
 
