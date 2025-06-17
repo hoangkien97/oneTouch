@@ -1,0 +1,21 @@
+@model dynamic
+
+<div class="page-header bg-primary text-white py-5 mb-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-3">@Model.Title</h1>
+                @if (!string.IsNullOrEmpty(Model.Subtitle))
+                {
+                    <p class="lead mb-0">@Model.Subtitle</p>
+                }
+            </div>
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <div class="col-lg-6">
+                    <img src="@Model.ImageUrl" alt="@Model.Title" class="img-fluid rounded-3 shadow-lg">
+                </div>
+            }
+        </div>
+    </div>
+</div> 

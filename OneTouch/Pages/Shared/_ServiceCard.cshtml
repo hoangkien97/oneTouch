@@ -1,0 +1,47 @@
+@model dynamic
+
+<div class="service-card hover-shadow">
+    <div class="service-icon">
+        <i class="@Model.Icon"></i>
+    </div>
+    <div class="service-content">
+        <h3 class="h4 mb-3">@Model.Title</h3>
+        <p class="text-muted mb-4">@Model.Description</p>
+        @if (!string.IsNullOrEmpty(Model.ButtonUrl))
+        {
+            <a href="@Model.ButtonUrl" class="btn btn-outline-primary">
+                @(Model.ButtonText ?? "Tìm hiểu thêm")
+                <i class="fas fa-arrow-right ms-2"></i>
+            </a>
+        }
+    </div>
+</div>
+
+<style>
+.service-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.service-icon {
+    width: 70px;
+    height: 70px;
+    background: var(--primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.service-icon i {
+    font-size: 2rem;
+    color: white;
+}
+
+.service-content {
+    text-align: left;
+}
+</style> 
