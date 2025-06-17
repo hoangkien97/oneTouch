@@ -11,7 +11,7 @@
         "projectName": "OneTouch",
         "projectPath": "D:\\onetouch\\OneTouch\\OneTouch.csproj",
         "packagesPath": "C:\\Users\\phuc\\.nuget\\packages\\",
-        "outputPath": "D:\\oneTouch\\OneTouch\\obj\\",
+        "outputPath": "D:\\onetouch\\OneTouch\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
