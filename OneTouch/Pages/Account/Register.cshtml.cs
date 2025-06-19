@@ -27,6 +27,7 @@ namespace OneTouch.Pages.Account
             public string Phone { get; set; }
             public string Email { get; set; }
             public string Password { get; set; }
+            public string ConfirmPassword { get; set; }
         }
 
         public void OnGet()
@@ -54,6 +55,13 @@ namespace OneTouch.Pages.Account
             if (!ValidationService.IsValidPassword(Input.Password))
             {
                 ErrorMessage = "Mật khẩu phải có ít nhất 6 ký tự!";
+                return Page();
+            }
+
+            // Kiểm tra xác nhận mật khẩu
+            if (Input.Password != Input.ConfirmPassword)
+            {
+                ErrorMessage = "Mật khẩu xác nhận không khớp!";
                 return Page();
             }
 

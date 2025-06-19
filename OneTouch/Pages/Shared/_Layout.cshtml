@@ -60,7 +60,20 @@
     <header class="main-header bg-white shadow-sm sticky-top">
         <nav class="navbar navbar-expand-lg navbar-light py-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">
+                @{
+                    var userRole = Context.Session.GetString("UserRole");
+                    var isLoggedIn = !string.IsNullOrEmpty(Context.Session.GetString("UserId"));
+                    var homeLink = "/Index";
+                    if (isLoggedIn && userRole == "patient")
+                    {
+                        homeLink = "/User/Home";
+                    }
+                    else if (isLoggedIn && userRole == "admin")
+                    {
+                        homeLink = "/Admin/Dashboard";
+                    }
+                }
+                <a class="navbar-brand" href="@homeLink">
                     <i class="fas fa-hospital me-2 text-primary"></i>
                     <span class="fw-bold">OneTouch</span> Medical
                 </a>
@@ -70,7 +83,7 @@
                 <div class="navbar-collapse collapse">
                     <ul class="navbar-nav mx-auto">
                         <li class="nav-item">
-                            <a class="nav-link fw-medium" asp-area="" asp-page="/Index">Trang chủ</a>
+                            <a class="nav-link fw-medium" href="@homeLink">Trang chủ</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link fw-medium" asp-area="" asp-page="/Services">Dịch vụ</a>

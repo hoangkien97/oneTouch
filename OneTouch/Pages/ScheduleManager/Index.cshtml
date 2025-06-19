@@ -1,60 +1,69 @@
 ﻿@page
 @model OneTouch.Pages.ScheduleManager.IndexModel
-
 @{
-    ViewData["Title"] = "Index";
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Quản lý lịch làm việc";
 }
 
-<h1>Index</h1>
+<h1>Quản lý lịch làm việc</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Schedule[0].Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Schedule[0].StartTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Schedule[0].EndTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Schedule[0].MaxPatients)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Schedule[0].Doctor)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Schedule) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaxPatients)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Doctor.User.FullName)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.ScheduleId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ScheduleId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ScheduleId">Delete</a>
-            </td>
-        </tr>
+<!-- <p>
+    <a asp-page="Create" class="btn btn-primary">Create New</a>
+</p> -->
+<div class="table-responsive">
+    <table class="table table-striped table-hover table-bordered align-middle shadow-sm" style="border-radius: 12px; overflow: hidden;">
+        <thead class="table-primary">
+            <tr>
+                <th>Ngày</th>
+                <th>Giờ bắt đầu</th>
+                <th>Giờ kết thúc</th>
+                <th>Số BN Tối Đa</th>
+                <th>Bác sĩ</th>
+                <!-- <th></th> -->
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.Schedule)
+        {
+            <tr>
+                <td>@item.Date?.ToString("dd/MM/yyyy")</td>
+                <td>@item.StartTime?.ToString("hh:mm")</td>
+                <td>@item.EndTime?.ToString("hh:mm")</td>
+                <td>@item.MaxPatients</td>
+                <td>@(item.Doctor != null && item.Doctor.User != null ? item.Doctor.User.FullName : "")</td>
+                <!--
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.ScheduleId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.ScheduleId">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ScheduleId">Delete</a>
+                </td>
+                -->
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+<style>
+.table {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
 }
-    </tbody>
-</table>
+.table thead.table-primary {
+    background: linear-gradient(90deg, #667eea 0%, #64b5f6 100%);
+    color: #fff;
+    font-weight: 600;
+    border: none;
+}
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #f6f9fc;
+}
+.table-hover > tbody > tr:hover {
+    background-color: #e3f2fd;
+}
+.table th, .table td {
+    vertical-align: middle;
+    border: none;
+}
+</style>
