@@ -62,8 +62,16 @@ namespace OneTouch.Pages.Account
             HttpContext.Session.SetString("UserName", user.FullName ?? user.Phone);
             HttpContext.Session.SetString("UserRole", user.Role ?? "patient");
 
-            // Chuyển hướng về trang chủ user
-            return RedirectToPage("/User/Home");
+            // Phân quyền chuyển hướng
+            if (user.Role == "admin")
+            {
+                return RedirectToPage("/Admin/Dashboard");
+            }
+            else
+            {
+                // Mặc định là patient
+                return RedirectToPage("/User/Home");
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using OneTouch.Models;
 using OneTouch.Services;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace OneTouch.Pages;
 
@@ -15,16 +16,17 @@ public class IndexModel : PageModel
         _imageService = imageService;
     }
 
-    public Image HeroImage { get; set; }
+    public List<Image> HeroImages { get; set; }
     public List<Image> FeatureImages { get; set; }
     public List<Image> TestimonialImages { get; set; }
     public List<Doctor> Doctors { get; set; }
     public List<Image> DoctorImages { get; set; }
+    public Image AboutImage { get; set; }
 
     public async Task OnGetAsync()
     {
-        // Get hero image
-        HeroImage = await _imageService.GetImageByTypeAsync("hero");
+        // Get hero images
+        HeroImages = await _imageService.GetImagesByTypeAsync("hero");
 
         // Get feature images
         FeatureImages = await _imageService.GetImagesByTypeAsync("feature");
@@ -32,8 +34,11 @@ public class IndexModel : PageModel
         // Get testimonial images
         TestimonialImages = await _imageService.GetImagesByTypeAsync("testimonial");
 
-        Doctors = await _imageService.GetDoctorsWithAvatarAsync();
+        Doctors = await _imageService.GetAllDoctorsWithUserAndSpecialtyAsync();
 
         DoctorImages = await _imageService.GetImagesByTypeAsync("doctor");
+
+        var aboutImages = await _imageService.GetImagesByTypeAsync("about");
+        AboutImage = aboutImages.OrderByDescending(i => i.CreatedAt).FirstOrDefault();
     }
 }
