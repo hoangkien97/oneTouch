@@ -103,9 +103,10 @@
                         }
                         else
                         {
+                            var userName = Context.Session.GetString("UserName");
                             <div class="dropdown">
                                 <button class="btn btn-outline-primary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-user me-2"></i>Tài khoản
+                                    <i class="fas fa-user me-2"></i>@(string.IsNullOrEmpty(userName) ? "Tài khoản" : userName)
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                                     <li><a class="dropdown-item" href="/Profile"><i class="fas fa-user-circle me-2"></i>Hồ sơ</a></li>
