@@ -25,19 +25,19 @@ namespace OneTouch.Pages.Appointments
         public List<Specialty> Specialties { get; set; }
         public string ErrorMessage { get; set; }
         public string SuccessMessage { get; set; }
+        public int? PreselectedSpecialtyId { get; set; }
 
         public class InputModel
         {
             [Required(ErrorMessage = "Vui lòng chọn lịch khám")]
             public int ScheduleId { get; set; }
 
-            [Required(ErrorMessage = "Vui lòng chọn bác sĩ")]
-            public int DoctorId { get; set; }
+            public int? DoctorId { get; set; }
 
             public string Note { get; set; }
         }
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync([FromQuery] int? specialtyId)
         {
             var userIdString = HttpContext.Session.GetString("UserId");
             if (string.IsNullOrEmpty(userIdString))
@@ -47,6 +47,12 @@ namespace OneTouch.Pages.Appointments
 
             // Load specialties
             Specialties = await _context.Specialties.ToListAsync();
+
+            if (specialtyId.HasValue)
+            {
+                PreselectedSpecialtyId = specialtyId.Value;
+            }
+
             return Page();
         }
 

@@ -28,6 +28,10 @@ namespace OneTouch.Controllers
 
             var query = _context.Schedules
                 .Include(s => s.Appointments)
+                .Include(s => s.Doctor)
+                .ThenInclude(d => d.User)
+                .Include(s => s.Doctor)
+                .ThenInclude(d => d.Specialty)
                 .Where(s => s.Date == scheduleDate);
 
             if (doctorId.HasValue)
@@ -40,6 +44,8 @@ namespace OneTouch.Controllers
                 {
                     s.ScheduleId,
                     s.DoctorId,
+                    DoctorName = s.Doctor.User.FullName,
+                    SpecialtyName = s.Doctor.Specialty.Name,
                     StartTime = s.StartTime.Value.ToString("HH:mm"),
                     EndTime = s.EndTime.Value.ToString("HH:mm"),
                     s.MaxPatients,
