@@ -6,8 +6,7 @@
 
 @await Html.PartialAsync("_PageHeader", new { 
     Title = "Dịch vụ y tế", 
-    Subtitle = "Khám phá các dịch vụ chăm sóc sức khỏe chất lượng cao của chúng tôi",
-    ImageUrl = "/images/services-hero.jpg"
+    Subtitle = "Khám phá các dịch vụ chăm sóc sức khỏe chất lượng cao của chúng tôi"
 })
 
 <!-- Services Section -->
@@ -28,8 +27,8 @@
                     Icon = "fas fa-heartbeat",
                     Title = "Khám chuyên khoa",
                     Description = "Đội ngũ bác sĩ chuyên khoa giàu kinh nghiệm, trang thiết bị hiện đại.",
-                    ButtonUrl = "/Appointments/Create",
-                    ButtonText = "Đặt lịch khám"
+                    ButtonUrl = "/Specialties",
+                    ButtonText = "Chọn chuyên khoa"
                 })
             </div>
             <div class="col-lg-4">
@@ -37,7 +36,7 @@
                     Icon = "fas fa-procedures",
                     Title = "Cấp cứu 24/7",
                     Description = "Dịch vụ cấp cứu 24/7 với đội ngũ y bác sĩ luôn sẵn sàng trong mọi tình huống.",
-                    ButtonUrl = "/Emergency",
+                    ButtonUrl = "#",
                     ButtonText = "Tìm hiểu thêm"
                 })
             </div>
@@ -46,7 +45,7 @@
                     Icon = "fas fa-microscope",
                     Title = "Xét nghiệm",
                     Description = "Dịch vụ xét nghiệm đa dạng với trang thiết bị hiện đại, kết quả nhanh chóng và chính xác.",
-                    ButtonUrl = "/Lab",
+                    ButtonUrl = "#",
                     ButtonText = "Tìm hiểu thêm"
                 })
             </div>
@@ -55,7 +54,7 @@
                     Icon = "fas fa-x-ray",
                     Title = "Chẩn đoán hình ảnh",
                     Description = "Các dịch vụ chẩn đoán hình ảnh hiện đại như X-quang, CT, MRI với độ chính xác cao.",
-                    ButtonUrl = "/Imaging",
+                    ButtonUrl = "#",
                     ButtonText = "Tìm hiểu thêm"
                 })
             </div>
@@ -64,7 +63,7 @@
                     Icon = "fas fa-pills",
                     Title = "Nhà thuốc",
                     Description = "Nhà thuốc cung cấp đầy đủ các loại thuốc với đội ngũ dược sĩ tư vấn chuyên nghiệp.",
-                    ButtonUrl = "/Pharmacy",
+                    ButtonUrl = "#",
                     ButtonText = "Tìm hiểu thêm"
                 })
             </div>
@@ -77,7 +76,7 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-6 mb-4 mb-lg-0">
-                <img src="/images/why-choose-us.jpg" alt="Why Choose Us" class="img-fluid rounded-3 shadow">
+                <img src="/uploads/about/43c67ab8-f66f-4253-83fb-2905386added.jpg" alt="Why Choose Us" class="img-fluid rounded-3 shadow">
             </div>
             <div class="col-lg-6">
                 <span class="badge bg-primary mb-3 px-3 py-2">Tại sao chọn chúng tôi?</span>
@@ -115,57 +114,6 @@
                         <p class="text-muted mb-0">Đội ngũ nhân viên thân thiện, tận tâm, luôn sẵn sàng hỗ trợ bạn 24/7.</p>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Testimonials Section -->
-<section class="py-5">
-    <div class="container">
-        <div class="text-center mb-5">
-            <span class="badge bg-primary mb-3 px-3 py-2">Đánh giá từ khách hàng</span>
-            <h2 class="h1 mb-4">Khách hàng nói gì về chúng tôi?</h2>
-        </div>
-        <div class="row">
-            <div class="col-lg-4 mb-4">
-                @await Html.PartialAsync("_TestimonialCard", new {
-                    Quote = "Tôi rất hài lòng với dịch vụ tại đây. Các bác sĩ rất chuyên nghiệp và tận tâm. Cảm ơn OneTouch Medical!",
-                    Name = "Nguyễn Văn A",
-                    Title = "Khách hàng",
-                    ImageUrl = "/images/testimonial-1.jpg"
-                })
-            </div>
-            <div class="col-lg-4 mb-4">
-                @await Html.PartialAsync("_TestimonialCard", new {
-                    Quote = "Đội ngũ y bác sĩ chuyên nghiệp, trang thiết bị hiện đại. Tôi sẽ giới thiệu cho bạn bè và người thân.",
-                    Name = "Trần Thị B",
-                    Title = "Khách hàng",
-                    ImageUrl = "/images/testimonial-2.jpg"
-                })
-            </div>
-            <div class="col-lg-4 mb-4">
-                @await Html.PartialAsync("_TestimonialCard", new {
-                    Quote = "Dịch vụ đặt lịch trực tuyến rất tiện lợi, không phải chờ đợi. Nhân viên nhiệt tình, thân thiện.",
-                    Name = "Lê Văn C",
-                    Title = "Khách hàng",
-                    ImageUrl = "/images/testimonial-3.jpg"
-                })
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- CTA Section -->
-<section class="py-5 bg-primary text-white">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-8 mb-4 mb-lg-0">
-                <h2 class="h1 mb-2">Bạn cần tư vấn?</h2>
-                <p class="lead mb-0">Liên hệ với chúng tôi ngay để được tư vấn miễn phí về sức khỏe</p>
-            </div>
-            <div class="col-lg-4 text-lg-end">
-                <a href="/Contact" class="btn btn-light btn-lg">Liên hệ ngay</a>
             </div>
         </div>
     </div>
