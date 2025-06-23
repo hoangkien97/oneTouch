@@ -25,16 +25,16 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card h-100 border-0 shadow-sm">
-                <div class="card-body text-center p-4">
-                    <i class="fas fa-history text-primary fa-3x mb-3"></i>
-                    <h3 class="h5 mb-3">Lịch sử khám</h3>
-                    <p class="text-muted mb-3">Xem lịch sử khám bệnh của bạn</p>
-                    <a href="/Appointments/History" class="btn btn-primary">Xem lịch sử</a>
+            <div class="col-md-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <i class="fas fa-history text-primary fa-3x mb-3"></i>
+                        <h3 class="h5 mb-3">Lịch sử khám</h3>
+                        <p class="text-muted mb-3">Xem lịch sử khám bệnh của bạn</p>
+                        <a href="/Appointments/History" class="btn btn-primary">Xem lịch sử</a>
+                    </div>
                 </div>
             </div>
-        </div>
         <div class="col-md-3">
             <div class="card h-100 border-0 shadow-sm">
                 <div class="card-body text-center p-4">
@@ -48,39 +48,68 @@
         <div class="col-md-3">
             <div class="card h-100 border-0 shadow-sm">
                 <div class="card-body text-center p-4">
-                    <i class="fas fa-stethoscope text-primary fa-3x mb-3"></i>
-                    <h3 class="h5 mb-3">Dịch vụ y tế</h3>
-                    <p class="text-muted mb-3">Xem các dịch vụ y tế có sẵn</p>
-                    <a href="/Services" class="btn btn-primary">Xem dịch vụ</a>
+                    <i class="fas fa-star text-primary fa-3x mb-3"></i>
+                    <h3 class="h5 mb-3">Feedback & Đánh giá</h3>
+                    <p class="text-muted mb-3">Gửi nhận xét và đánh giá cho lịch đã khám</p>
+                    <a href="/Appointments/History" class="btn btn-primary">Đánh giá ngay</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Upcoming Appointments -->
-    @foreach (var appointment in Model.UpcomingAppointments)
-    {
-        <div class="list-group-item list-group-item-action">
-            <div class="d-flex w-100 justify-content-between align-items-center">
-                <div>
-                    <h5 class="mb-1">
-                        @appointment.Schedule?.Doctor?.User?.FullName
-                        -
-                        @appointment.Schedule?.Doctor?.Specialty?.Name
-                    </h5>
-                    <p class="mb-1">
-                        <i class="fas fa-calendar-alt text-primary me-2"></i>
-                        @appointment.Schedule?.Date?.ToString("dd/MM/yyyy")
-                        |
-                        @appointment.Schedule?.StartTime?.ToString("hh\\:mm")
-                    </p>
-                </div>
-                <a href="/Appointments/Details/@appointment.AppointmentId" class="btn btn-outline-primary">
-                    Chi tiết
-                </a>
+    <!-- Top-rated Doctors Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <span class="badge bg-primary text-white mb-3 px-3 py-2">Đội ngũ chuyên gia</span>
+                <h2 class="h1 mb-4">Bác sĩ nổi bật của chúng tôi</h2>
+                <p class="lead text-muted w-75 mx-auto">
+                    Gặp gỡ đội ngũ bác sĩ chuyên nghiệp và giàu kinh nghiệm, được đánh giá cao bởi các bệnh nhân của OneTouch Medical.
+                </p>
             </div>
+            
+            @if (Model.TopDoctors != null && Model.TopDoctors.Any())
+            {
+                <div class="row justify-content-center">
+                    @foreach (var doctor in Model.TopDoctors)
+                    {
+                        <partial name="Shared/_TopDoctorCard" model="doctor" />
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="text-center">
+                    <p>Hiện chưa có thông tin bác sĩ nổi bật.</p>
+                </div>
+            }
         </div>
-    }
+    </section>
+
+    @* <!-- Upcoming Appointments --> *@
+    @* @foreach (var appointment in Model.UpcomingAppointments) *@
+    @* { *@
+    @*     <div class="list-group-item list-group-item-action"> *@
+    @*         <div class="d-flex w-100 justify-content-between align-items-center"> *@
+    @*             <div> *@
+    @*                 <h5 class="mb-1"> *@
+    @*                     @appointment.Schedule?.Doctor?.User?.FullName *@
+    @*                     - *@
+    @*                     @appointment.Schedule?.Doctor?.Specialty?.Name *@
+    @*                 </h5> *@
+    @*                 <p class="mb-1"> *@
+    @*                     <i class="fas fa-calendar-alt text-primary me-2"></i> *@
+    @*                     @appointment.Schedule?.Date?.ToString("dd/MM/yyyy") *@
+    @*                     | *@
+    @*                     @appointment.Schedule?.StartTime?.ToString("hh\\:mm") *@
+    @*                 </p> *@
+    @*             </div> *@
+    @*             <a href="/Appointments/Details/@appointment.AppointmentId" class="btn btn-outline-primary"> *@
+    @*                 Chi tiết *@
+    @*             </a> *@
+    @*         </div> *@
+    @*     </div> *@
+    @* } *@
 
     <!-- Health Tips -->
     <div class="card border-0 shadow-sm">

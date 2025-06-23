@@ -4,6 +4,8 @@ using OneTouch.Models;
 using OneTouch.Services.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace OneTouch.Pages.User
 {
@@ -11,17 +13,21 @@ namespace OneTouch.Pages.User
     {
         private readonly IAppointmentService _appointmentService;
         private readonly IUserService _userService;
+        private readonly OneTouchDbContext _context;
 
         public HomeModel(
             IAppointmentService appointmentService,
-            IUserService userService)
+            IUserService userService,
+            OneTouchDbContext context)
         {
             _appointmentService = appointmentService;
             _userService = userService;
+            _context = context;
         }
 
         public string UserName { get; set; }
         public List<Appointment> UpcomingAppointments { get; set; }
+        public List<DoctorViewModel> TopDoctors { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -47,9 +53,36 @@ namespace OneTouch.Pages.User
             // Get upcoming appointments
             UpcomingAppointments = await _appointmentService.GetUpcomingAppointmentsAsync(userId);
 
+            // Get Top 3 Rated Doctors
+            TopDoctors = await _context.Doctors
+                .Include(d => d.User)
+                .Include(d => d.Specialty)
+                .Include(d => d.Schedules)
+                    .ThenInclude(s => s.Appointments)
+                        .ThenInclude(a => a.Feedbacks)
+                .Where(d => d.User != null && d.Schedules.SelectMany(s => s.Appointments).SelectMany(a => a.Feedbacks).Any(f => f.Rating.HasValue))
+                .Select(d => new DoctorViewModel
+                {
+                    DoctorId = d.DoctorId,
+                    FullName = d.User.FullName,
+                    SpecialtyName = d.Specialty.Name,
+                    AvatarPath = d.AvatarPath,
+                    Description = d.Description,
+                    AverageRating = d.Schedules
+                                        .SelectMany(s => s.Appointments)
+                                        .SelectMany(a => a.Feedbacks)
+                                        .Average(f => f.Rating.Value),
+                    RatingCount = d.Schedules
+                                        .SelectMany(s => s.Appointments)
+                                        .SelectMany(a => a.Feedbacks)
+                                        .Count(f => f.Rating.HasValue)
+                })
+                .OrderByDescending(d => d.AverageRating)
+                .ThenByDescending(d => d.RatingCount)
+                .Take(3)
+                .ToListAsync();
+
             return Page();
         }
     }
-
-     
 } 

@@ -1,0 +1,259 @@
+@page
+@model OneTouch.Pages.Appointments.CreateModel
+@{
+    ViewData["Title"] = "Đặt lịch khám";
+}
+
+@await Html.PartialAsync("Shared/_PageHeader", new { 
+    Title = "Đặt Lịch Khám",
+    Subtitle = "Hoàn thành các bước dưới đây để đặt lịch hẹn với bác sĩ của chúng tôi."
+})
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="appointment-form-container">
+                @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+                {
+                    <div class="alert alert-danger" role="alert">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        @Model.ErrorMessage
+                    </div>
+                }
+
+                @if (!string.IsNullOrEmpty(Model.SuccessMessage))
+                {
+                    <div class="alert alert-success" role="alert">
+                        <i class="fas fa-check-circle me-2"></i>
+                        @Model.SuccessMessage
+                    </div>
+                }
+
+                <form method="post" id="appointmentForm">
+                    <!-- Step 1: Filter -->
+                    <div class="form-step card shadow-sm mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-filter me-2 text-primary"></i>Lọc theo yêu cầu</h5>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-semibold">Chuyên khoa</label>
+                                    <select id="specialtySelect" class="form-select" onchange="onSpecialtyChange()">
+                                        <option value="">Tất cả chuyên khoa</option>
+                                        @foreach (var specialty in Model.Specialties)
+                                        {
+                                            <option value="@specialty.SpecialtyId" selected="@(specialty.SpecialtyId == Model.PreselectedSpecialtyId)">@specialty.Name</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-semibold">Bác sĩ</label>
+                                    <select id="doctorSelect" class="form-select" onchange="onDoctorChange()">
+                                        <option value="">Tất cả bác sĩ</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Date and Time -->
+                    <div class="form-step card shadow-sm mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-calendar-alt me-2 text-primary"></i>Chọn ngày và giờ</h5>
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Ngày khám</label>
+                                <input type="date" id="dateSelect" class="form-control" min="@DateTime.Now.ToString("yyyy-MM-dd")" onchange="onDateChange()" />
+                            </div>
+
+                            <div>
+                                <label class="form-label fw-semibold">Giờ khám có sẵn</label>
+                                <div id="timeSlots" class="row g-2">
+                                    <div class="col-12"><div class="alert alert-secondary">Vui lòng chọn ngày để xem các khung giờ có sẵn.</div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Notes -->
+                    <div class="form-step card shadow-sm mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-pencil-alt me-2 text-primary"></i>Ghi chú thêm</h5>
+                            <div class="mb-3">
+                                <label asp-for="Input.Note" class="form-label fw-semibold">Ghi chú (tùy chọn)</label>
+                                <textarea asp-for="Input.Note" class="form-control" rows="4" placeholder="Nhập các triệu chứng, câu hỏi hoặc thông tin khác cho bác sĩ..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="hidden" asp-for="Input.ScheduleId" id="selectedScheduleId" />
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg" id="submitBtn" disabled>
+                            <i class="fas fa-check-circle me-2"></i>Xác nhận đặt lịch
+                        </button>
+                        <a href="/" class="btn btn-outline-secondary">Quay lại trang chủ</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        let schedules = [];
+        let selectedDoctorId = null;
+
+        async function onSpecialtyChange() {
+            const specialtyId = document.getElementById('specialtySelect').value;
+            const doctorSelect = document.getElementById('doctorSelect');
+            
+            // Reset doctor selection
+            doctorSelect.innerHTML = '<option value="">Tất cả bác sĩ</option>';
+            selectedDoctorId = null;
+            
+            if (!specialtyId) {
+                // Load all doctors
+                await loadDoctors();
+            } else {
+                // Load doctors by specialty
+                await loadDoctors(specialtyId);
+            }
+            
+            // Refresh time slots if date is selected
+            const date = document.getElementById('dateSelect').value;
+            if (date) {
+                await loadTimeSlots(date);
+            }
+        }
+
+        async function onDoctorChange() {
+            const doctorId = document.getElementById('doctorSelect').value;
+            selectedDoctorId = doctorId || null;
+            
+            // Refresh time slots if date is selected
+            const date = document.getElementById('dateSelect').value;
+            if (date) {
+                await loadTimeSlots(date);
+            }
+        }
+
+        async function loadDoctors(specialtyId = null) {
+            try {
+                const url = specialtyId 
+                    ? `/api/doctors?specialtyId=${specialtyId}`
+                    : '/api/doctors';
+                    
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error('Failed to load doctors');
+                }
+                
+                const doctors = await response.json();
+                const doctorSelect = document.getElementById('doctorSelect');
+                
+                doctors.forEach(doctor => {
+                    const option = document.createElement('option');
+                    option.value = doctor.doctorId;
+                    option.textContent = `BS. ${doctor.fullName} - ${doctor.specialtyName}`;
+                    doctorSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error loading doctors:', error);
+            }
+        }
+
+        async function onDateChange() {
+            const date = document.getElementById('dateSelect').value;
+            if (!date) {
+                document.getElementById('timeSlots').innerHTML = '';
+                document.getElementById('selectedScheduleId').value = '';
+                document.getElementById('submitBtn').disabled = true;
+                return;
+            }
+            
+            await loadTimeSlots(date);
+        }
+
+        async function loadTimeSlots(date) {
+            const timeSlots = document.getElementById('timeSlots');
+            timeSlots.innerHTML = '<div class="col-12 text-center"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>';
+            document.getElementById('selectedScheduleId').value = '';
+            document.getElementById('submitBtn').disabled = true;
+
+            try {
+                let url = `/api/schedules?date=${date}`;
+                if (selectedDoctorId) {
+                    url += `&doctorId=${selectedDoctorId}`;
+                }
+                
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error('Failed to load schedules');
+                }
+                
+                schedules = await response.json();
+                const timeSlots = document.getElementById('timeSlots');
+                timeSlots.innerHTML = '';
+                
+                if (schedules.length === 0) {
+                    timeSlots.innerHTML = '<div class="col-12"><div class="alert alert-info">Không có lịch khám nào trong ngày này. Vui lòng chọn ngày khác.</div></div>';
+                    return;
+                }
+                
+                schedules.forEach(schedule => {
+                    const slot = document.createElement('div');
+                    slot.className = 'col-md-4 mb-3';
+                    const isAvailable = schedule.currentPatients < schedule.maxPatients;
+                    const disabled = isAvailable ? '' : 'disabled';
+                    slot.innerHTML = `
+                        <button type="button" class="btn time-slot-btn w-100 h-100" ${disabled} 
+                                data-schedule-id="${schedule.scheduleId}" onclick="selectTimeSlot(this, ${schedule.scheduleId})">
+                            <div class="time-info">
+                                <strong class="d-block">${schedule.startTime} - ${schedule.endTime}</strong>
+                            </div>
+                            <div class="doctor-info fs-sm">
+                                <span class="d-block text-muted">BS. ${schedule.doctorName}</span>
+                            </div>
+                            <div class="patient-count badge bg-light text-dark mt-2">
+                                ${schedule.currentPatients}/${schedule.maxPatients} đã đặt
+                            </div>
+                        </button>
+                    `;
+                    timeSlots.appendChild(slot);
+                });
+            } catch (error) {
+                console.error('Error loading schedules:', error);
+                timeSlots.innerHTML = '<div class="col-12"><div class="alert alert-danger">Lỗi khi tải lịch khám. Vui lòng thử lại.</div></div>';
+            }
+        }
+
+        function selectTimeSlot(buttonElement, scheduleId) {
+            document.getElementById('selectedScheduleId').value = scheduleId;
+            document.getElementById('submitBtn').disabled = false;
+            
+            // Highlight selected slot
+            const buttons = document.querySelectorAll('#timeSlots .time-slot-btn');
+            buttons.forEach(button => {
+                button.classList.remove('selected');
+                button.classList.remove('btn-primary', 'text-white');
+            });
+
+            buttonElement.classList.add('selected');
+            buttonElement.classList.add('btn-primary', 'text-white');
+        }
+
+        // Load all doctors on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadDoctors().then(() => {
+                const preselectedId = @(Model.PreselectedSpecialtyId.HasValue ? Model.PreselectedSpecialtyId.Value.ToString() : "null");
+                if (preselectedId) {
+                    const specialtySelect = document.getElementById('specialtySelect');
+                    specialtySelect.value = preselectedId;
+                    // Manually trigger the change event to load doctors
+                    onSpecialtyChange();
+                }
+            });
+        });
+    </script>
+} 

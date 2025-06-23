@@ -44,6 +44,59 @@ namespace OneTouch.Pages.Account
                 return Page();
             }
 
+            // Nếu là xác thực đăng ký
+            if (Request.Query.ContainsKey("register") && TempData["RegisterOtp"] != null)
+            {
+                var otp = TempData["RegisterOtp"]?.ToString();
+                var phone = TempData["RegisterPhone"]?.ToString();
+                var fullName = TempData["RegisterFullName"]?.ToString();
+                var email = TempData["RegisterEmail"]?.ToString();
+                var passwordHash = TempData["RegisterPasswordHash"]?.ToString();
+
+                // Kiểm tra đủ thông tin
+                if (string.IsNullOrEmpty(otp) || string.IsNullOrEmpty(phone) || string.IsNullOrEmpty(fullName) || string.IsNullOrEmpty(passwordHash))
+                {
+                    ErrorMessage = "Thiếu thông tin đăng ký. Vui lòng đăng ký lại.";
+                    return Page();
+                }
+
+                if (Input.Otp != otp || Input.Phone != phone)
+                {
+                    ErrorMessage = "Mã OTP không đúng!";
+                    return Page();
+                }
+
+                // Kiểm tra lại số điện thoại chưa tồn tại
+                if (_context.Users.Any(u => u.Phone == phone))
+                {
+                    ErrorMessage = "Số điện thoại đã được sử dụng!";
+                    return Page();
+                }
+
+                // Tạo user mới
+                var newUser = new OneTouch.Models.User
+                {
+                    FullName = fullName,
+                    Phone = phone,
+                    Email = string.IsNullOrEmpty(email) ? null : email,
+                    PasswordHash = passwordHash,
+                    Role = "patient",
+                    CreatedAt = DateTime.Now
+                };
+                _context.Users.Add(newUser);
+                await _context.SaveChangesAsync();
+
+                // Xóa TempData liên quan đăng ký
+                TempData.Remove("RegisterOtp");
+                TempData.Remove("RegisterPhone");
+                TempData.Remove("RegisterFullName");
+                TempData.Remove("RegisterEmail");
+                TempData.Remove("RegisterPasswordHash");
+
+                SuccessMessage = "Đăng ký thành công! Vui lòng đăng nhập.";
+                return RedirectToPage("/Account/Login");
+            }
+
             var user = _context.Users.FirstOrDefault(u => u.Phone == Input.Phone);
             if (user == null)
             {

@@ -11,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddControllers();
 
 // Add DbContext
 builder.Services.AddDbContext<OneTouchDbContext>(options =>
@@ -33,6 +34,25 @@ builder.Services.AddScoped<ValidationService>();
 builder.Services.AddScoped<ImageService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<ISmsService, VonageSmsService>();
+//builder.Services.AddHttpClient<ChatbotService>();
+//builder.Services.AddScoped<ChatbotService>();
+
+
+
+builder.Services.AddHttpClient("Gemini", client =>
+{
+    client.Timeout = TimeSpan.FromSeconds(60); // Increase timeout for AI responses
+    client.DefaultRequestHeaders.Accept.Clear();
+    client.DefaultRequestHeaders.Accept.Add(
+        new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json")
+    );
+
+    // Optional: Add User-Agent
+    client.DefaultRequestHeaders.UserAgent.ParseAdd("OneTouch-Medical/1.0");
+});
+
+// Add general HttpClient for test controller
+builder.Services.AddHttpClient();
 
 var app = builder.Build();
 
@@ -54,7 +74,7 @@ app.UseSession();
 app.UseAuthorization();
 
 app.MapRazorPages();
-
+app.MapControllers();
 app.Run();
 
 app.UseSession();
