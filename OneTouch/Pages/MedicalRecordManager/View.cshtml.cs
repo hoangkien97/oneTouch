@@ -9,11 +9,11 @@ using OneTouch.Models;
 
 namespace OneTouch.Pages.MedicalRecordManager
 {
-    public class IndexModel : PageModel
+    public class ViewModel : PageModel
     {
         private readonly OneTouch.Models.OneTouchDbContext _context;
 
-        public IndexModel(OneTouch.Models.OneTouchDbContext context)
+        public ViewModel(OneTouch.Models.OneTouchDbContext context)
         {
             _context = context;
         }

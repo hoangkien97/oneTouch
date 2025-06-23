@@ -89,7 +89,6 @@ namespace OneTouch.Pages.MedicalRecordManager
         .Where(a => a.AppointmentId == MedicalRecord.AppointmentId)
         .Select(a => a.Schedule!.DoctorId)
         .FirstOrDefaultAsync();
-
             return RedirectToPage("/DoctorManager/PatientForDoctorManager", new { doctorId });
         }
     }
