@@ -59,9 +59,9 @@ namespace OneTouch.Controllers
             var knowledgeBase = new Dictionary<string, string>
             {
                 // Thông tin liên hệ
-                ["số điện thoại"] = "Số điện thoại OneTouch Medical: 0123-456-789",
-                ["điện thoại"] = "Số điện thoại OneTouch Medical: 0123-456-789",
-                ["liên hệ"] = "Liên hệ OneTouch Medical:\n📞 Điện thoại: 0123-456-789\n📧 Email: info@onetouchmedical.com\n🏥 Địa chỉ: 123 Đường ABC, Quận XYZ, TP.HCM",
+                ["số điện thoại"] = "Số điện thoại OneTouch Medical: 0973418074 (Ms Hương)",
+                ["điện thoại"] = "Số điện thoại OneTouch Medical: 0973418074 (Ms Hương)",
+                ["liên hệ"] = "Liên hệ OneTouch Medical:\n📞 Điện thoại: 0973418074 (Ms Hương)\n📧 Email: onetouchforcontact@gmail.com\n🏥 Địa chỉ: Khu CNC,Hòa Lạc, Hà Nội",
 
                 // Giá dịch vụ
                 ["giá khám tổng quát"] = "Giá khám tổng quát: 200.000 VNĐ",
@@ -73,14 +73,14 @@ namespace OneTouch.Controllers
                 ["thời gian"] = "Giờ làm việc OneTouch Medical:\n• Thứ 2-6: 8:00 - 17:00\n• Thứ 7: 8:00 - 12:00\n• Chủ nhật: Nghỉ",
 
                 // Địa chỉ
-                ["địa chỉ"] = "Địa chỉ OneTouch Medical: 123 Đường ABC, Quận XYZ, TP.HCM",
-                ["ở đâu"] = "OneTouch Medical tọa lạc tại: 123 Đường ABC, Quận XYZ, TP.HCM",
+                ["địa chỉ"] = "Địa chỉ OneTouch Medical: Khu CNC,Hòa Lạc, Hà Nội",
+                ["ở đâu"] = "OneTouch Medical tọa lạc tại: Khu CNC,Hòa Lạc, Hà Nội",
 
                 // Dịch vụ
                 ["dịch vụ"] = "Dịch vụ OneTouch Medical:\n• Khám tổng quát\n• Khám chuyên khoa\n• Xét nghiệm\n• Siêu âm\n• Chụp X-quang\n• Tư vấn sức khỏe",
 
                 // Đặt lịch
-                ["đặt lịch"] = "Để đặt lịch khám, vui lòng:\n📞 Gọi: 0123-456-789\n💻 Truy cập website: www.onetouchmedical.com\n🏥 Đến trực tiếp phòng khám",
+                ["đặt lịch"] = "Để đặt lịch khám, vui lòng:\n📞 Gọi: 0973418074 (Ms Hương)\n💻 Truy cập website: www.onetouchmedical.com\n🏥 Đến trực tiếp phòng khám",
 
                 // Chào hỏi
                 ["xin chào"] = "Xin chào! Tôi là trợ lý AI của OneTouch Medical. Tôi có thể giúp bạn tìm hiểu về dịch vụ, giá cả, đặt lịch khám. Bạn cần hỗ trợ gì?",
@@ -123,9 +123,9 @@ namespace OneTouch.Controllers
 
 THÔNG TIN PHÒNG KHÁM:
 - Tên: OneTouch Medical
-- Địa chỉ: 123 Đường ABC, Quận XYZ, TP.HCM
-- Điện thoại: 0123-456-789
-- Email: info@onetouchmedical.com
+- Địa chỉ: Khu CNC,Hòa Lạc, Hà Nội
+- Điện thoại: 0973418074 (Ms Hương)
+- Email: onetouchforcontact@gmail.com
 - Giờ làm việc: T2-T6: 8:00-17:00, T7: 8:00-12:00, CN: Nghỉ
 
 DỊCH VỤ & GIÁ:

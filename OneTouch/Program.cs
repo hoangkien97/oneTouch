@@ -53,6 +53,8 @@ builder.Services.AddHttpClient("Gemini", client =>
 
 // Add general HttpClient for test controller
 builder.Services.AddHttpClient();
+builder.Services.AddScoped<DoctorScheduleService>();
+builder.Services.AddHostedService<CronJobService>();
 
 var app = builder.Build();
 

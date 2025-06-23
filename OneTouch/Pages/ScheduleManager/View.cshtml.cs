@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,16 +10,16 @@ using OneTouch.Models;
 
 namespace OneTouch.Pages.ScheduleManager
 {
-    public class IndexModel : PageModel
+    public class ViewModel : PageModel
     {
         private readonly OneTouch.Models.OneTouchDbContext _context;
 
-        public IndexModel(OneTouch.Models.OneTouchDbContext context)
+        public ViewModel(OneTouch.Models.OneTouchDbContext context)
         {
             _context = context;
         }
 
-        public IList<Schedule> Schedule { get; set; } = default!;
+        public IList<Schedule> Schedule { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
