@@ -1,54 +1,50 @@
-﻿@page
+﻿@page "{userId:int}"
 @model OneTouch.Pages.MedicalRecordManager.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lịch sử bệnh án";
 }
 
-<h1>Index</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.MedicalRecord[0].Diagnosis)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MedicalRecord[0].DoctorNote)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MedicalRecord[0].CreatedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MedicalRecord[0].Appointment)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.MedicalRecord) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Diagnosis)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DoctorNote)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Appointment.AppointmentId)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.RecordId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.RecordId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.RecordId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+<div class="container mt-4">
+    <h2 class="text-primary mb-4">📋 Lịch Sử Bệnh Án - @Model.PatientName</h2>
+
+    @if (!Model.MedicalRecords.Any())
+    {
+        <div class="alert alert-info">Không có bệnh án nào.</div>
+    }
+    else
+    {
+        <table class="table table-bordered shadow-sm">
+            <thead class="table-light">
+                <tr>
+                    <th>🗓 Ngày tạo</th>
+                    <th>🧾 Chẩn đoán</th>
+                    <th>📝 Ghi chú bác sĩ</th>
+                    <th>👨‍⚕️ Bác sĩ</th>
+                    <th>🏥 Chuyên ngành</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var record in Model.MedicalRecords)
+                {
+                    var doctor = record.Appointment?.Schedule?.Doctor;
+                    <tr>
+                        <td>@record.CreatedAt?.ToString("dd/MM/yyyy")</td>
+                        <td>@record.Diagnosis</td>
+                        <td>@record.DoctorNote</td>
+                        <td>@doctor?.User?.FullName</td>
+                        <td>@doctor?.Specialty?.Name</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    <a asp-page="/DoctorManager/PatientForDoctorManager"
+       asp-route-doctorId="@Model.MedicalRecords.FirstOrDefault()?.Appointment?.Schedule?.DoctorId"
+       class="btn btn-secondary mt-3">
+        ⬅️ Quay lại danh sách bệnh nhân
+    </a>
+</div>

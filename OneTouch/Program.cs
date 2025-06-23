@@ -33,6 +33,8 @@ builder.Services.AddScoped<ValidationService>();
 builder.Services.AddScoped<ImageService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<ISmsService, VonageSmsService>();
+builder.Services.AddScoped<DoctorScheduleService>();
+builder.Services.AddHostedService<CronJobService>();
 
 var app = builder.Build();
 

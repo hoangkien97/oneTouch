@@ -18,12 +18,41 @@ namespace OneTouch.Pages.MedicalRecordManager
             _context = context;
         }
 
-        public IList<MedicalRecord> MedicalRecord { get;set; } = default!;
+        [BindProperty(SupportsGet = true)]
+        public int UserId { get; set; }
 
-        public async Task OnGetAsync()
+        public string? PatientName { get; set; }
+
+        public List<MedicalRecord> MedicalRecords { get; set; } = new();
+
+        public async Task<IActionResult> OnGetAsync()
         {
-            MedicalRecord = await _context.MedicalRecords
-                .Include(m => m.Appointment).ToListAsync();
+            // Lấy bệnh nhân
+            var user = await _context.Users.FindAsync(UserId);
+
+            Console.WriteLine($"UserId: {UserId}");
+
+            if (user == null)
+                return NotFound("Không tìm thấy bệnh nhân.");
+
+            PatientName = user.FullName;
+
+            // Lấy danh sách MedicalRecords kèm thông tin bác sĩ & chuyên ngành
+            MedicalRecords = await _context.MedicalRecords
+                .Include(r => r.Appointment)
+                    .ThenInclude(a => a.Schedule)
+                        .ThenInclude(s => s.Doctor)
+                            .ThenInclude(d => d.User)
+                .Include(r => r.Appointment)
+                    .ThenInclude(a => a.Schedule)
+                        .ThenInclude(s => s.Doctor)
+                            .ThenInclude(d => d.Specialty)
+                .Where(r => r.Appointment != null && r.Appointment.UserId == UserId)
+                .OrderByDescending(r => r.CreatedAt)
+                .ToListAsync();
+
+            return Page();
         }
     }
 }
+

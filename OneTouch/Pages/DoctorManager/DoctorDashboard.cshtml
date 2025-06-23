@@ -7,81 +7,119 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<div class="container py-4">
-    <h1 class="mb-4 text-primary">🎓 Doctor Dashboard</h1>
+<style>
+    .sidebar {
+        position: fixed;
+        top: 56px; /* chiều cao của navbar bootstrap */
+        left: 0;
+        width: 240px;
+        height: calc(100vh - 56px);
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-right: 1px solid #dee2e6;
+        overflow-y: auto;
+    }
 
-    <div class="row mb-5">
-        <div class="col-md-6">
-            <div class="card shadow-sm">
-                <div class="card-body text-center">
-                    <h5 class="card-title">📅 Quản lý lịch làm việc</h5>
-                    <p class="card-text">Xem toàn bộ lịch làm việc của bạn và chi tiết các ca khám bệnh.</p>
-                    <a class="btn btn-outline-primary" asp-page="/Doctor/MySchedules" asp-route-doctorId="@Model.DoctorId">
-                        Xem Lịch Làm Việc
-                    </a>
+    .main-content {
+        margin-left: 260px; /* = sidebar width + padding */
+        padding: 80px 20px 20px; /* thêm padding-top để tránh header */
+    }
+
+    .day-column {
+        min-width: 200px;
+    }
+</style>
+
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <h4 class="text-primary">📋 Chức năng</h4>
+    <ul class="nav flex-column">
+        <li class="nav-item mb-2">
+            <a class="btn btn-outline-primary w-100" asp-page="/DoctorManager/DoctorDashboard" asp-route-doctorId="@Model.DoctorId">🏠 Trang chính</a>
+        </li>
+        <li class="nav-item mb-2">
+            <a class="btn btn-outline-secondary w-100" asp-page="/ScheduleManager/WeeklyView" asp-route-doctorId="@Model.DoctorId">📅 Lịch theo tuần</a>
+        </li>
+        <li class="nav-item mb-2">
+            <a class="btn btn-outline-info w-100" asp-page="/DoctorManager/PatientForDoctorManager" asp-route-doctorId="@Model.DoctorId">🧑‍🤝‍🧑 Bệnh nhân</a>
+        </li>
+        <li class="nav-item mb-2">
+            <a class="btn btn-outline-success w-100" asp-page="/MedicalRecordManager/Create">💊 Tạo đơn thuốc</a>
+        </li>
+    </ul>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+    <h2 class="mb-4 text-primary">🎓 Bảng điều khiển Bác sĩ</h2>
+
+    <form method="get" class="row g-3 align-items-center mb-4">
+        <div class="col-auto">
+            <label for="week" class="col-form-label">🗓️ Chọn tuần:</label>
+        </div>
+        <div class="col-auto">
+            <input type="week" name="SelectedWeek" id="week" class="form-control" value="@Model.SelectedWeek" />
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Xem</button>
+        </div>
+    </form>
+
+    <h4 class="text-secondary mb-3">🗓️ Lịch làm việc (Thứ 2 → Thứ 6)</h4>
+
+    <div class="row">
+        @foreach (var day in Model.Weekdays)
+        {
+            var schedulesInDay = Model.WeeklySchedules
+            .Where(s => s.Date == day)
+            .OrderBy(s => s.StartTime)
+            .ToList();
+
+            <div class="col-md-2 mb-3">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-header text-center bg-light fw-bold">
+                        @day.ToString("dddd", new System.Globalization.CultureInfo("vi-VN"))<br />
+                        @day.ToString("dd/MM/yyyy")
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        @if (schedulesInDay.Any())
+                        {
+                            @foreach (var schedule in schedulesInDay)
+                            {
+                                <li class="list-group-item">
+                                    <div class="fw-semibold">@schedule.StartTime - @schedule.EndTime</div>
+                                    <div class="small text-muted">Tối đa: @schedule.MaxPatients BN</div>
+                                    <div class="mt-2">
+                                        @if (schedule.Appointments.Any())
+                                        {
+                                            @foreach (var appointment in schedule.Appointments)
+                                            {
+                                                <a asp-page="/MedicalRecordManager/Create"
+                                                   asp-route-appointmentId="@appointment.AppointmentId"
+                                                   class="btn btn-sm btn-outline-success w-100 mb-1">
+                                                    Ghi đơn
+                                                </a>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted small">Chưa có cuộc hẹn</span>
+                                        }
+                                    </div>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li class="list-group-item text-muted text-center">
+                                Không có ca khám
+                            </li>
+                        }
+                    </ul>
                 </div>
             </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class="card shadow-sm">
-                <div class="card-body text-center">
-                    <h5 class="card-title">💊 Tạo đơn thuốc</h5>
-                    <p class="card-text">Tạo đơn thuốc cho bệnh nhân từ các cuộc hẹn gần đây.</p>
-                    <a class="btn btn-outline-success" asp-page="/Doctor/CreateMedicalRecord">
-                        Tạo Đơn Thuốc
-                    </a>
-                </div>
-            </div>
-        </div>
+        }
     </div>
 
-    <h3 class="mb-3 text-secondary">📌 Lịch Làm Việc Gần Đây</h3>
-
-    @if (Model.Schedules == null || !Model.Schedules.Any())
-    {
-        <div class="alert alert-info">Chưa có lịch làm việc nào.</div>
-    }
-    else
-    {
-        <div class="table-responsive">
-            <table class="table table-hover align-middle shadow-sm">
-                <thead class="table-light">
-                    <tr>
-                        <th>Ngày</th>
-                        <th>Thời gian</th>
-                        <th>Số BN Tối Đa</th>
-                        <th>Hành động</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var schedule in Model.Schedules.Take(5))
-                    {
-                        <tr>
-                            <td>@schedule.Date?.ToString("dd/MM/yyyy")</td>
-                            <td>@schedule.StartTime - @schedule.EndTime</td>
-                            <td>@schedule.MaxPatients</td>
-                            <td>
-                                @if (schedule.Appointments.Any())
-                                {
-                                    @foreach (var appointment in schedule.Appointments)
-                                    {
-                                        <a asp-page="/Doctor/CreateMedicalRecord"
-                                           asp-route-appointmentId="@appointment.AppointmentId"
-                                           class="btn btn-sm btn-outline-success me-1 mb-1">
-                                            Ghi đơn
-                                        </a>
-                                    }
-                                }
-                                else
-                                {
-                                    <span class="text-muted">Chưa có cuộc hẹn</span>
-                                }
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    }
 </div>
