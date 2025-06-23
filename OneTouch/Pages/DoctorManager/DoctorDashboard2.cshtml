@@ -1,5 +1,5 @@
 ﻿@page "{doctorId:int}"
-@model OneTouch.Pages.DoctorManager.DoctorDashboardModel
+@model OneTouch.Pages.DoctorManager.DoctorDashboard2Model
 
 @{
     ViewData["Title"] = "Doctor Dashboard";
@@ -36,7 +36,7 @@
     <h4 class="text-primary">📋 Chức năng</h4>
     <ul class="nav flex-column">
         <li class="nav-item mb-2">
-            <a class="btn btn-outline-primary w-100" asp-page="/DoctorManager/DoctorDashboard" asp-route-doctorId="@Model.DoctorId">🏠 Trang chính</a>
+            <a class="btn btn-outline-primary w-100" asp-page="/DoctorManager/DoctorDashboard2" asp-route-doctorId="@Model.DoctorId">🏠 Trang chính</a>
         </li>
         <li class="nav-item mb-2">
             <a class="btn btn-outline-secondary w-100" asp-page="/ScheduleManager/WeeklyView" asp-route-doctorId="@Model.DoctorId">📅 Lịch theo tuần</a>

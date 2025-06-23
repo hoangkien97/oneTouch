@@ -6,7 +6,7 @@ using System.Globalization;
 
 namespace OneTouch.Pages.DoctorManager
 {
-    public class DoctorDashboardModel : PageModel
+    public class DoctorDashboard2Model : PageModel
     {
         private readonly OneTouchDbContext _context;
 
@@ -17,7 +17,7 @@ namespace OneTouch.Pages.DoctorManager
         [BindProperty(SupportsGet = true)]
         public string? SelectedWeek { get; set; }
 
-        public DoctorDashboardModel(OneTouchDbContext context)
+        public DoctorDashboard2Model(OneTouchDbContext context)
         {
             _context = context;
         }
