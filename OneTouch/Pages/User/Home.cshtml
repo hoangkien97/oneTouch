@@ -59,103 +59,30 @@
     </div>
 </section>
 
-<!-- Upcoming Appointments -->
-@if (Model.UpcomingAppointments != null && Model.UpcomingAppointments.Count > 0)
-{
-    <section class="py-4">
-        <div class="container">
-            <div class="card border-0 shadow-sm mb-3">
-                <div class="card-body">
-                    <h3 class="card-title mb-4"><i class="fas fa-calendar-alt text-primary me-2"></i>Lịch hẹn sắp tới</h3>
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle">
-                            <thead>
-                                <tr>
-                                    <th>Bác sĩ</th>
-                                    <th>Chuyên khoa</th>
-                                    <th>Ngày</th>
-                                    <th>Giờ</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var appt in Model.UpcomingAppointments)
-                                {
-                                    <tr>
-                                        <td>@appt.Schedule?.Doctor?.User?.FullName</td>
-                                        <td>@appt.Schedule?.Doctor?.Specialty?.Name</td>
-                                        <td>@appt.Schedule?.Date?.ToString("dd/MM/yyyy")</td>
-                                        <td>@appt.Schedule?.StartTime?.ToString("hh\\:mm")</td>
-                                        <td><a href="/Appointments/Details/@appt.AppointmentId" class="btn btn-outline-primary btn-sm">Chi tiết</a></td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-}
-
-<!-- Health Tips Carousel -->
-<section class="py-4">
-    <div class="container">
-        <div class="card border-0 shadow-sm mb-3">
-            <div class="card-body">
-                <h3 class="card-title mb-4"><i class="fas fa-heartbeat text-danger me-2"></i>Mẹo sức khỏe</h3>
-                <div id="healthTipsCarousel" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <div class="d-flex align-items-center gap-3">
-                                <i class="fas fa-tint text-primary fa-2x"></i>
-                                <div>
-                                    <h4 class="h6 mb-1">Uống đủ nước</h4>
-                                    <p class="text-muted mb-0">Uống ít nhất 2 lít nước mỗi ngày để duy trì sức khỏe tốt</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="d-flex align-items-center gap-3">
-                                <i class="fas fa-running text-success fa-2x"></i>
-                                <div>
-                                    <h4 class="h6 mb-1">Tập thể dục thường xuyên</h4>
-                                    <p class="text-muted mb-0">Dành 30 phút mỗi ngày để tập thể dục giúp tăng cường sức khỏe</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="d-flex align-items-center gap-3">
-                                <i class="fas fa-apple-alt text-warning fa-2x"></i>
-                                <div>
-                                    <h4 class="h6 mb-1">Ăn uống lành mạnh</h4>
-                                    <p class="text-muted mb-0">Bổ sung đầy đủ chất dinh dưỡng từ thực phẩm tươi</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="d-flex align-items-center gap-3">
-                                <i class="fas fa-bed text-info fa-2x"></i>
-                                <div>
-                                    <h4 class="h6 mb-1">Ngủ đủ giấc</h4>
-                                    <p class="text-muted mb-0">Ngủ 7-8 tiếng mỗi ngày giúp phục hồi năng lượng</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#healthTipsCarousel" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Trước</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#healthTipsCarousel" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Sau</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+    @* <!-- Upcoming Appointments --> *@
+    @* @foreach (var appointment in Model.UpcomingAppointments) *@
+    @* { *@
+    @*     <div class="list-group-item list-group-item-action"> *@
+    @*         <div class="d-flex w-100 justify-content-between align-items-center"> *@
+    @*             <div> *@
+    @*                 <h5 class="mb-1"> *@
+    @*                     @appointment.Schedule?.Doctor?.User?.FullName *@
+    @*                     - *@
+    @*                     @appointment.Schedule?.Doctor?.Specialty?.Name *@
+    @*                 </h5> *@
+    @*                 <p class="mb-1"> *@
+    @*                     <i class="fas fa-calendar-alt text-primary me-2"></i> *@
+    @*                     @appointment.Schedule?.Date?.ToString("dd/MM/yyyy") *@
+    @*                     | *@
+    @*                     @appointment.Schedule?.StartTime?.ToString("hh\\:mm") *@
+    @*                 </p> *@
+    @*             </div> *@
+    @*             <a href="/Appointments/Details/@appointment.AppointmentId" class="btn btn-outline-primary"> *@
+    @*                 Chi tiết *@
+    @*             </a> *@
+    @*         </div> *@
+    @*     </div> *@
+    @* } *@
 
 <!-- Testimonial Section -->
 <section class="py-4">

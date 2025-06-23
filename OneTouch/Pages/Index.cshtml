@@ -121,26 +121,31 @@
 </section>
 
 <!-- Doctors Section -->
-<section class="py-5">
+<section class="py-5 bg-light">
     <div class="container">
         <div class="text-center mb-5">
-            <span class="badge bg-primary mb-3 px-3 py-2">Đội ngũ chuyên gia</span>
-            <h2 class="h1 mb-4">Các bác sĩ của chúng tôi</h2>
-            <p class="lead text-muted">
-                Gặp gỡ đội ngũ bác sĩ chuyên nghiệp và giàu kinh nghiệm của OneTouch Medical
+            <span class="badge bg-primary text-white mb-3 px-3 py-2">Đội ngũ chuyên gia</span>
+            <h2 class="h1 mb-4">Bác sĩ nổi bật của chúng tôi</h2>
+            <p class="lead text-muted w-75 mx-auto">
+                Gặp gỡ đội ngũ bác sĩ chuyên nghiệp và giàu kinh nghiệm, được đánh giá cao bởi các bệnh nhân của OneTouch Medical.
             </p>
         </div>
-        <div class="row justify-content-center">
-            <div class="d-flex flex-wrap justify-content-center align-items-start gap-4">
-                @foreach (var image in Model.DoctorImages)
+        
+        @if (Model.TopDoctors != null && Model.TopDoctors.Any())
+        {
+            <div class="row justify-content-center">
+                @foreach (var doctor in Model.TopDoctors)
                 {
-                    <div class="text-center">
-                        <img src="@image.FilePath" alt="@image.Description" class="img-fluid rounded-circle mb-3" style="width: 120px; height: 120px; object-fit: cover; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
-                        <div class="fw-semibold">@image.Description</div>
-                    </div>
+                    <partial name="Shared/_TopDoctorCard" model="doctor" />
                 }
             </div>
-        </div>
+        }
+        else
+        {
+            <div class="text-center">
+                <p>Hiện chưa có thông tin bác sĩ nổi bật.</p>
+            </div>
+        }
     </div>
 </section>
 

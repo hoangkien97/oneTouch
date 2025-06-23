@@ -1,0 +1,30 @@
+@model OneTouch.Pages.DoctorViewModel
+
+<div class="col-lg-4 col-md-6 mb-4">
+    <div class="doctor-card card h-100 text-center border-0 shadow-sm">
+        <div class="p-3">
+             <img src="@(!string.IsNullOrEmpty(Model.AvatarPath) ? Model.AvatarPath : "/uploads/doctor/default-avatar.png")" 
+                 alt="Bác sĩ @Model.FullName" class="img-fluid rounded-circle" 
+                 style="width: 150px; height: 150px; object-fit: cover;">
+        </div>
+        <div class="card-body pt-2">
+            <h5 class="card-title fw-bold">@Model.FullName</h5>
+            <h6 class="card-subtitle mb-2 text-primary">@Model.SpecialtyName</h6>
+            <div class="d-flex justify-content-center align-items-center my-3">
+                @for (int i = 1; i <= 5; i++)
+                {
+                    <i class="fa-solid fa-star @(i <= Model.AverageRating ? "text-warning" : "text-light")"></i>
+                }
+                <span class="ms-2 text-muted">(@Model.AverageRating.ToString("0.0"))</span>
+            </div>
+            <p class="card-text text-muted small">
+                @Model.Description
+            </p>
+        </div>
+        <div class="card-footer bg-white border-0 pb-3">
+            <a href="/Appointments/Create?doctorId=@Model.DoctorId" class="btn btn-outline-primary">
+                <i class="fas fa-calendar-check me-2"></i>Đặt lịch ngay
+            </a>
+        </div>
+    </div>
+</div> 
