@@ -1,0 +1,69 @@
+@page
+@model OneTouch.Pages.Specialties.IndexModel
+@{
+    ViewData["Title"] = "Chuyên khoa";
+}
+
+<style>
+    .specialty-card {
+        display: block;
+        padding: 2rem 1rem;
+        text-align: center;
+        border-radius: 0.5rem;
+        background-color: #fff;
+        border: 1px solid #e9ecef;
+        text-decoration: none;
+        color: #495057;
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+
+    .specialty-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+        color: var(--primary);
+    }
+
+    .specialty-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: var(--primary);
+    }
+
+    .specialty-name {
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="display-5 fw-bold">Khám Chuyên Khoa</h1>
+        <p class="lead text-muted">Chọn chuyên khoa bạn quan tâm để bắt đầu đặt lịch khám.</p>
+    </div>
+
+    @if (Model.Specialties != null && Model.Specialties.Any())
+    {
+        <div class="row g-4">
+            @foreach (var specialtyVm in Model.Specialties)
+            {
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <a href="/Appointments/Create?specialtyId=@specialtyVm.Specialty.SpecialtyId" class="specialty-card">
+                        <div class="specialty-icon">
+                            <i class="@specialtyVm.IconClass"></i>
+                        </div>
+                        <div class="specialty-name">
+                            @specialtyVm.Specialty.Name
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="text-center">
+            <p>Không có chuyên khoa nào được tìm thấy.</p>
+        </div>
+    }
+</div> 

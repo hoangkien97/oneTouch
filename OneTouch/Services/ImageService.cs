@@ -111,5 +111,13 @@ namespace OneTouch.Services
                 .Include(d => d.User)
                 .ToListAsync();
         }
+
+        public async Task<List<Doctor>> GetAllDoctorsWithUserAndSpecialtyAsync()
+        {
+            return await _context.Doctors
+                .Include(d => d.User)
+                .Include(d => d.Specialty)
+                .ToListAsync();
+        }
     }
 } 

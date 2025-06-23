@@ -1,0 +1,87 @@
+﻿@page
+@model OneTouch.Pages.DoctorManager.DoctorDashboardModel
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Quản lý bác sĩ";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<div class="container py-4">
+    <h1 class="mb-4 text-primary">🎓 Doctor Dashboard</h1>
+
+    <div class="row mb-5">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">📅 Quản lý lịch làm việc</h5>
+                    <p class="card-text">Xem toàn bộ lịch làm việc của bạn và chi tiết các ca khám bệnh.</p>
+                    <a class="btn btn-outline-primary" asp-page="/Doctor/MySchedules" asp-route-doctorId="@Model.DoctorId">
+                        Xem Lịch Làm Việc
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">💊 Tạo đơn thuốc</h5>
+                    <p class="card-text">Tạo đơn thuốc cho bệnh nhân từ các cuộc hẹn gần đây.</p>
+                    <a class="btn btn-outline-success" asp-page="/Doctor/CreateMedicalRecord">
+                        Tạo Đơn Thuốc
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="mb-3 text-secondary">📌 Lịch Làm Việc Gần Đây</h3>
+
+    @if (Model.Schedules == null || !Model.Schedules.Any())
+    {
+        <div class="alert alert-info">Chưa có lịch làm việc nào.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-hover align-middle shadow-sm">
+                <thead class="table-light">
+                    <tr>
+                        <th>Ngày</th>
+                        <th>Thời gian</th>
+                        <th>Số BN Tối Đa</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var schedule in Model.Schedules.Take(5))
+                    {
+                        <tr>
+                            <td>@schedule.Date?.ToString("dd/MM/yyyy")</td>
+                            <td>@schedule.StartTime - @schedule.EndTime</td>
+                            <td>@schedule.MaxPatients</td>
+                            <td>
+                                @if (schedule.Appointments.Any())
+                                {
+                                    @foreach (var appointment in schedule.Appointments)
+                                    {
+                                        <a asp-page="/Doctor/CreateMedicalRecord"
+                                           asp-route-appointmentId="@appointment.AppointmentId"
+                                           class="btn btn-sm btn-outline-success me-1 mb-1">
+                                            Ghi đơn
+                                        </a>
+                                    }
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Chưa có cuộc hẹn</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

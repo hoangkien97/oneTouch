@@ -1,7 +1,8 @@
 @page
 @model OneTouch.Pages.Admin.Images.IndexModel
 @{
-    ViewData["Title"] = "Quản lý ảnh";
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Quản lý hình ảnh";
 }
 
 <div class="container py-4">
@@ -23,7 +24,8 @@
                                 <option value="hero">Hero Image</option>
                                 <option value="feature">Feature Image</option>
                                 <option value="testimonial">Testimonial Image</option>
-                                <option value="doctor">Doctor Avatar</option>
+                                <option value="doctor">Doctor Image</option>
+                                <option value="about">About Image</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -41,18 +43,38 @@
         @foreach (var image in Model.Images)
         {
             <div class="col-md-4 mb-4">
-                <div class="card">
-                    <img src="@image.FilePath" class="card-img-top" alt="@image.Description">
+                <div class="card shadow-sm border-0 h-100">
+                    <img src="@image.FilePath" class="card-img-top" alt="@image.Description" style="object-fit:cover; height:220px;">
                     <div class="card-body">
                         <h5 class="card-title">@image.Type</h5>
                         <p class="card-text">@image.Description</p>
+                        <!--
                         <form method="post" asp-page-handler="Delete" asp-route-id="@image.ImageId" 
                               onsubmit="return confirm('Bạn có chắc muốn xóa ảnh này?');">
                             <button type="submit" class="btn btn-danger">Xóa</button>
                         </form>
+                        -->
                     </div>
                 </div>
             </div>
         }
     </div>
-</div> 
+</div>
+
+<style>
+.card-img-top {
+    border-radius: 12px 12px 0 0;
+}
+.card {
+    border-radius: 12px;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+}
+.card:hover {
+    box-shadow: 0 8px 32px rgba(102,126,234,0.15);
+}
+.card-title {
+    color: #667eea;
+    font-weight: 600;
+}
+</style> 

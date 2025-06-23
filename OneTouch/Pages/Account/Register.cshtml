@@ -29,6 +29,10 @@
                     <label for="password" class="form-label">Mật khẩu</label>
                     <input asp-for="Input.Password" class="form-control" id="password" type="password" required />
                 </div>
+                <div class="mb-3">
+                    <label for="confirmPassword" class="form-label">Xác nhận mật khẩu</label>
+                    <input asp-for="Input.ConfirmPassword" class="form-control" id="confirmPassword" type="password" required />
+                </div>
                 <button type="submit" class="btn btn-primary w-100">Đăng ký</button>
             </form>
         </div>

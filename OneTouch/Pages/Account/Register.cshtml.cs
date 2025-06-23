@@ -4,16 +4,24 @@ using OneTouch.Models;
 using OneTouch.Services;
 using System.Threading.Tasks;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using OneTouch.Services.Interfaces;
+using System;
 
 namespace OneTouch.Pages.Account
 {
     public class RegisterModel : PageModel
     {
         private readonly OneTouchDbContext _context;
+        private readonly ISmsService _smsService;
+        private readonly IConfiguration _configuration;
 
-        public RegisterModel(OneTouchDbContext context)
+        public RegisterModel(OneTouchDbContext context, ISmsService smsService, IConfiguration configuration)
         {
             _context = context;
+            _smsService = smsService;
+            _configuration = configuration;
         }
 
         [BindProperty]
@@ -27,6 +35,7 @@ namespace OneTouch.Pages.Account
             public string Phone { get; set; }
             public string Email { get; set; }
             public string Password { get; set; }
+            public string ConfirmPassword { get; set; }
         }
 
         public void OnGet()
@@ -57,6 +66,13 @@ namespace OneTouch.Pages.Account
                 return Page();
             }
 
+            // Kiểm tra xác nhận mật khẩu
+            if (Input.Password != Input.ConfirmPassword)
+            {
+                ErrorMessage = "Mật khẩu xác nhận không khớp!";
+                return Page();
+            }
+
             if (!string.IsNullOrWhiteSpace(Input.Email) && !ValidationService.IsValidEmail(Input.Email))
             {
                 ErrorMessage = "Email không hợp lệ!";
@@ -82,21 +98,20 @@ namespace OneTouch.Pages.Account
                 }
             }
 
-            var user = new OneTouch.Models.User
-            {
-                FullName = Input.FullName,
-                Phone = Input.Phone,
-                Email = Input.Email,
-                PasswordHash = PasswordService.HashPassword(Input.Password),
-                Role = "patient", // Mặc định là patient
-                CreatedAt = System.DateTime.Now
-            };
+            // Sinh OTP
+            //var otp = "123456";
+            var otp = new Random().Next(100000, 999999).ToString();
+            TempData["RegisterOtp"] = otp;
+            TempData["RegisterPhone"] = Input.Phone;
+            TempData["RegisterFullName"] = Input.FullName;
+            TempData["RegisterEmail"] = Input.Email ?? string.Empty;
+            TempData["RegisterPasswordHash"] = PasswordService.HashPassword(Input.Password);
 
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            // Gửi OTP qua SMS
+            await _smsService.SendOtpAsync(Input.Phone, otp);
 
-            // Đăng ký xong chuyển sang trang đăng nhập
-            return RedirectToPage("/Account/Login");
+            // Chuyển hướng sang trang nhập OTP
+            return RedirectToPage("/Account/VerifyOtp", new { phone = Input.Phone, register = true });
         }
     }
 }

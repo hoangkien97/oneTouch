@@ -20,20 +20,26 @@ namespace OneTouch.Controllers
         [HttpGet]
         public async Task<IActionResult> GetDoctors([FromQuery] int? specialtyId)
         {
-            if (!specialtyId.HasValue)
-            {
-                return BadRequest("Specialty ID is required");
-            }
-
-            var doctors = await _context.Doctors
+            var query = _context.Doctors
                 .Include(d => d.User)
                 .Include(d => d.Specialty)
-                .Where(d => d.SpecialtyId == specialtyId)
+                .Where(d => d.User != null);
+
+            if (specialtyId.HasValue)
+            {
+                query = query.Where(d => d.SpecialtyId == specialtyId);
+            }
+
+            var doctors = await query
                 .Select(d => new
                 {
                     d.DoctorId,
-                    FullName = d.User.FullName,
-                    Specialty = d.Specialty.Name
+                    d.User.FullName,
+                    d.User.Email,
+                    d.ExperienceYears,
+                    d.Description,
+                    SpecialtyName = d.Specialty.Name,
+                    d.AvatarPath
                 })
                 .ToListAsync();
 
