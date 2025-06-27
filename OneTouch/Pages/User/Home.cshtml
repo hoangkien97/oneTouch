@@ -4,158 +4,150 @@
     ViewData["Title"] = "Trang chủ";
 }
 
-<div class="container py-4">
-    <!-- Welcome Section -->
-    <div class="mb-4">
-        <h2 class="mb-2">Xin chào, @Model.UserName</h2>
-        <p class="text-muted">
-            Chào mừng bạn đến với hệ thống đặt lịch khám bệnh OneTouch Medical
-        </p>
+<!-- Hero Section -->
+<section class="hero-section position-relative text-white py-5 mb-4" style="min-height: 320px; background: linear-gradient(90deg, #0d6efd 60%, #6c63ff 100%), url('/uploads/hero/1e1305b2-90bb-49fb-bd85-3016499c19c4.jpg') center center/cover no-repeat;">
+    <div class="container position-relative py-4" style="z-index: 2;">
+        <div class="row align-items-center">
+            <div class="col-lg-8 animate-fadeInUp">
+                <span class="badge bg-warning mb-3 px-3 py-2">Chào mừng trở lại!</span>
+                <h1 class="display-5 fw-bold mb-3">Xin chào, @Model.UserName</h1>
+                <p class="lead mb-4">Chúc bạn một ngày tốt lành cùng OneTouch Medical. Đặt lịch, quản lý sức khỏe và nhận tư vấn dễ dàng!</p>
+                <a href="/Appointments/Create" class="btn btn-light btn-lg shadow">Đặt lịch khám ngay</a>
+            </div>
+        </div>
     </div>
+    <div class="overlay" style="background: rgba(0,0,0,0.2); position: absolute; top:0; left:0; width:100%; height:100%; z-index:1;"></div>
+</section>
 
-    <!-- Quick Actions -->
-    <div class="row g-4 mb-4">
-        <div class="col-md-3">
-            <div class="card h-100 border-0 shadow-sm">
-                <div class="card-body text-center p-4">
-                    <i class="fas fa-calendar-plus text-primary fa-3x mb-3"></i>
-                    <h3 class="h5 mb-3">Đặt lịch khám</h3>
-                    <p class="text-muted mb-3">Đặt lịch khám với bác sĩ chuyên khoa</p>
+<!-- Quick Actions -->
+<section class="py-2">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="feature-card text-center shadow-hover h-100">
+                    <div class="feature-icon mx-auto mb-3"><i class="fas fa-calendar-plus"></i></div>
+                    <h3 class="h5 mb-2">Đặt lịch khám</h3>
+                    <p class="text-muted mb-3">Đặt lịch với bác sĩ chuyên khoa</p>
                     <a href="/Appointments/Create" class="btn btn-primary">Đặt lịch</a>
                 </div>
             </div>
-        </div>
             <div class="col-md-3">
-                <div class="card h-100 border-0 shadow-sm">
-                    <div class="card-body text-center p-4">
-                        <i class="fas fa-history text-primary fa-3x mb-3"></i>
-                        <h3 class="h5 mb-3">Lịch sử khám</h3>
-                        <p class="text-muted mb-3">Xem lịch sử khám bệnh của bạn</p>
-                        <a href="/Appointments/History" class="btn btn-primary">Xem lịch sử</a>
-                    </div>
+                <div class="feature-card text-center shadow-hover h-100">
+                    <div class="feature-icon mx-auto mb-3"><i class="fas fa-history"></i></div>
+                    <h3 class="h5 mb-2">Lịch sử khám</h3>
+                    <p class="text-muted mb-3">Xem lại lịch sử khám bệnh</p>
+                    <a href="/Appointments/History" class="btn btn-primary">Xem lịch sử</a>
                 </div>
             </div>
-        <div class="col-md-3">
-            <div class="card h-100 border-0 shadow-sm">
-                <div class="card-body text-center p-4">
-                    <i class="fas fa-user text-primary fa-3x mb-3"></i>
-                    <h3 class="h5 mb-3">Hồ sơ cá nhân</h3>
+            <div class="col-md-3">
+                <div class="feature-card text-center shadow-hover h-100">
+                    <div class="feature-icon mx-auto mb-3"><i class="fas fa-user"></i></div>
+                    <h3 class="h5 mb-2">Hồ sơ cá nhân</h3>
                     <p class="text-muted mb-3">Cập nhật thông tin cá nhân</p>
                     <a href="/Profile" class="btn btn-primary">Cập nhật</a>
                 </div>
             </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card h-100 border-0 shadow-sm">
-                <div class="card-body text-center p-4">
-                    <i class="fas fa-star text-primary fa-3x mb-3"></i>
-                    <h3 class="h5 mb-3">Feedback & Đánh giá</h3>
-                    <p class="text-muted mb-3">Gửi nhận xét và đánh giá cho lịch đã khám</p>
+            <div class="col-md-3">
+                <div class="feature-card text-center shadow-hover h-100">
+                    <div class="feature-icon mx-auto mb-3"><i class="fas fa-star"></i></div>
+                    <h3 class="h5 mb-2">Đánh giá & Góp ý</h3>
+                    <p class="text-muted mb-3">Gửi nhận xét cho dịch vụ</p>
                     <a href="/Appointments/History" class="btn btn-primary">Đánh giá ngay</a>
                 </div>
             </div>
         </div>
     </div>
+</section>
 
-    <!-- Top-rated Doctors Section -->
-    <section class="py-5">
-        <div class="container">
-            <div class="text-center mb-5">
-                <span class="badge bg-primary text-white mb-3 px-3 py-2">Đội ngũ chuyên gia</span>
-                <h2 class="h1 mb-4">Bác sĩ nổi bật của chúng tôi</h2>
-                <p class="lead text-muted w-75 mx-auto">
-                    Gặp gỡ đội ngũ bác sĩ chuyên nghiệp và giàu kinh nghiệm, được đánh giá cao bởi các bệnh nhân của OneTouch Medical.
-                </p>
-            </div>
-            
-            @if (Model.TopDoctors != null && Model.TopDoctors.Any())
-            {
-                <div class="row justify-content-center">
-                    @foreach (var doctor in Model.TopDoctors)
-                    {
-                        <partial name="Shared/_TopDoctorCard" model="doctor" />
-                    }
-                </div>
-            }
-            else
-            {
-                <div class="text-center">
-                    <p>Hiện chưa có thông tin bác sĩ nổi bật.</p>
-                </div>
-            }
+<!-- Top Doctors Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="badge bg-primary text-white mb-3 px-3 py-2">Đội ngũ chuyên gia</span>
+            <h2 class="h1 mb-4">Bác sĩ nổi bật của chúng tôi</h2>
+            <p class="lead text-muted w-75 mx-auto">
+                Gặp gỡ đội ngũ bác sĩ chuyên nghiệp và giàu kinh nghiệm, được đánh giá cao bởi các bệnh nhân của OneTouch Medical.
+            </p>
         </div>
-    </section>
+        
+        @if (Model.TopDoctors != null && Model.TopDoctors.Any())
+        {
+            <div class="row justify-content-center">
+                @foreach (var doctor in Model.TopDoctors)
+                {
+                    <partial name="Shared/_TopDoctorCard" model="doctor" />
+                }
+            </div>
+        }
+        else
+        {
+            <div class="text-center">
+                <p>Hiện chưa có thông tin bác sĩ nổi bật.</p>
+            </div>
+        }
+    </div>
+</section>
 
-    @* <!-- Upcoming Appointments --> *@
-    @* @foreach (var appointment in Model.UpcomingAppointments) *@
-    @* { *@
-    @*     <div class="list-group-item list-group-item-action"> *@
-    @*         <div class="d-flex w-100 justify-content-between align-items-center"> *@
-    @*             <div> *@
-    @*                 <h5 class="mb-1"> *@
-    @*                     @appointment.Schedule?.Doctor?.User?.FullName *@
-    @*                     - *@
-    @*                     @appointment.Schedule?.Doctor?.Specialty?.Name *@
-    @*                 </h5> *@
-    @*                 <p class="mb-1"> *@
-    @*                     <i class="fas fa-calendar-alt text-primary me-2"></i> *@
-    @*                     @appointment.Schedule?.Date?.ToString("dd/MM/yyyy") *@
-    @*                     | *@
-    @*                     @appointment.Schedule?.StartTime?.ToString("hh\\:mm") *@
-    @*                 </p> *@
-    @*             </div> *@
-    @*             <a href="/Appointments/Details/@appointment.AppointmentId" class="btn btn-outline-primary"> *@
-    @*                 Chi tiết *@
-    @*             </a> *@
-    @*         </div> *@
-    @*     </div> *@
-    @* } *@
-
-    <!-- Health Tips -->
-    <div class="card border-0 shadow-sm">
-        <div class="card-body">
-            <h3 class="card-title mb-4">Mẹo sức khỏe</h3>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="d-flex">
-                        <i class="fas fa-tint text-primary fa-2x me-3"></i>
-                        <div>
-                            <h4 class="h6 mb-2">Uống đủ nước</h4>
-                            <p class="text-muted mb-0">
-                                Uống ít nhất 2 lít nước mỗi ngày để duy trì sức khỏe tốt
-                            </p>
+<!-- Testimonial Section -->
+<section class="py-4">
+    <div class="container">
+        <div class="card border-0 shadow-sm mb-3">
+            <div class="card-body">
+                <h3 class="card-title mb-4"><i class="fas fa-comment-dots text-primary me-2"></i>Khách hàng nói gì?</h3>
+                <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="d-flex align-items-center gap-3">
+                                <img src="/uploads/hero/1e1305b2-90bb-49fb-bd85-3016499c19c4.jpg" class="rounded-circle" style="width:64px; height:64px; object-fit:cover;" alt="Khách hàng 1">
+                                <div>
+                                    <strong>Nguyễn Văn A</strong>
+                                    <p class="mb-0 text-muted">"Dịch vụ rất chuyên nghiệp, bác sĩ tận tâm và thân thiện. Tôi rất hài lòng!"</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="d-flex align-items-center gap-3">
+                                <img src="/uploads/doctor/7c3b95b0-b5ed-4d6a-a892-c570d88921e7.jpg" class="rounded-circle" style="width:64px; height:64px; object-fit:cover;" alt="Khách hàng 2">
+                                <div>
+                                    <strong>Trần Thị B</strong>
+                                    <p class="mb-0 text-muted">"Đặt lịch khám online rất tiện lợi, tiết kiệm thời gian. Sẽ giới thiệu cho bạn bè!"</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="d-flex align-items-center gap-3">
+                                <img src="/uploads/doctor/a9fff910-2fc0-4ddf-88dc-1a37afabd7bd.jpg" class="rounded-circle" style="width:64px; height:64px; object-fit:cover;" alt="Khách hàng 3">
+                                <div>
+                                    <strong>Lê Minh C</strong>
+                                    <p class="mb-0 text-muted">"Trang web dễ sử dụng, giao diện đẹp mắt, đội ngũ hỗ trợ nhiệt tình."</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="d-flex">
-                        <i class="fas fa-running text-primary fa-2x me-3"></i>
-                        <div>
-                            <h4 class="h6 mb-2">Tập thể dục thường xuyên</h4>
-                            <p class="text-muted mb-0">
-                                Dành 30 phút mỗi ngày để tập thể dục giúp tăng cường sức khỏe
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="d-flex">
-                        <i class="fas fa-apple-alt text-primary fa-2x me-3"></i>
-                        <div>
-                            <h4 class="h6 mb-2">Ăn uống lành mạnh</h4>
-                            <p class="text-muted mb-0">
-                                Bổ sung đầy đủ chất dinh dưỡng từ các loại thực phẩm tươi
-                            </p>
-                        </div>
-                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Trước</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Sau</span>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
 
 @section Scripts {
     <script>
-        // Add any page-specific JavaScript here
+        // Kích hoạt carousel Bootstrap nếu cần
+        var healthTipsCarousel = document.getElementById('healthTipsCarousel');
+        if (healthTipsCarousel) {
+            var carousel1 = new bootstrap.Carousel(healthTipsCarousel, { interval: 4000 });
+        }
+        var testimonialCarousel = document.getElementById('testimonialCarousel');
+        if (testimonialCarousel) {
+            var carousel2 = new bootstrap.Carousel(testimonialCarousel, { interval: 6000 });
+        }
     </script>
 } 
