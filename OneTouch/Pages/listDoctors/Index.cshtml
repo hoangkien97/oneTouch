@@ -1,0 +1,59 @@
+@page
+@model OneTouch.Pages.listDoctors.IndexModel
+@{
+    ViewData["Title"] = "Danh sách Bác sĩ";
+}
+
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="badge bg-primary text-white mb-3 px-3 py-2">Đội ngũ bác sĩ</span>
+            <h2 class="h1 mb-4">Danh sách Bác sĩ</h2>
+        </div>
+        @if (Model.Doctors != null && Model.Doctors.Any())
+        {
+            <div class="row justify-content-center">
+                @foreach (var doctor in Model.Doctors)
+                {
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="doctor-card card h-100 text-center border-0 shadow-sm">
+                            <div class="p-3">
+                                <img src="@(!string.IsNullOrEmpty(doctor.AvatarPath) ? doctor.AvatarPath : "/uploads/doctor/default-avatar.png")"
+                                     alt="Bác sĩ @doctor.FullName" class="img-fluid rounded-circle"
+                                     style="width: 120px; height: 120px; object-fit: cover;">
+                            </div>
+                            <div class="card-body pt-2">
+                                <h5 class="card-title fw-bold">@doctor.FullName</h5>
+                                <h6 class="card-subtitle mb-2 text-primary">@doctor.SpecialtyName</h6>
+                                <div class="d-flex justify-content-center align-items-center my-2">
+                                    @for (int i = 1; i <= 5; i++)
+                                    {
+                                        <i class="fa-solid fa-star @(i <= doctor.AverageRating ? "text-warning" : "text-light")"></i>
+                                    }
+                                    <span class="ms-2 text-muted">(@doctor.AverageRating.ToString("0.0"))</span>
+                                </div>
+                                <p class="card-text text-muted small">
+                                    @doctor.Description
+                                </p>
+                            </div>
+                            <div class="card-footer bg-white border-0 pb-3">
+                                <a asp-page="/listDoctors/Detail" asp-route-doctorId="@doctor.DoctorId" class="btn btn-outline-info me-2">
+                                    <i class="fas fa-info-circle me-2"></i>Xem chi tiết
+                                </a>
+                                <a href="/Appointments/Create?doctorId=@doctor.DoctorId" class="btn btn-outline-primary">
+                                    <i class="fas fa-calendar-check me-2"></i>Đặt lịch ngay
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="text-center">
+                <p>Hiện chưa có thông tin bác sĩ.</p>
+            </div>
+        }
+    </div>
+</section> 

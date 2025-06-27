@@ -1,0 +1,49 @@
+﻿@page
+@model OneTouch.Pages.AppointmentManager.ViewModel
+
+@{
+    ViewData["Title"] = "Appointment";
+}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-primary">Appointments</h2>
+        <a class="btn btn-success" asp-page="Create"><i class="fas fa-plus"></i> Create New</a>
+    </div>
+
+    <div class="table-responsive shadow-sm rounded">
+        <table class="table table-bordered table-hover table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Appointment[0].Status)</th>
+                    <th>@Html.DisplayNameFor(model => model.Appointment[0].CreatedAt)</th>
+                    <th>@Html.DisplayNameFor(model => model.Appointment[0].Note)</th>
+                    <th>Schedule ID</th>
+                    <th>User ID</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Appointment)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                        <td>@Html.DisplayFor(modelItem => item.CreatedAt)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Note)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Schedule.ScheduleId)</td>
+                        <td>@Html.DisplayFor(modelItem => item.User.UserId)</td>
+                        <td>
+                            <a class="btn btn-sm btn-primary" asp-page="./Edit" asp-route-id="@item.AppointmentId"><i class="fas fa-edit"></i> Edit</a>
+                            <a class="btn btn-sm btn-info" asp-page="./Details" asp-route-id="@item.AppointmentId"><i class="fas fa-info-circle"></i> Details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Font Awesome for icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>

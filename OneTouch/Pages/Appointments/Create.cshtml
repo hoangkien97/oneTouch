@@ -84,12 +84,27 @@
                         </div>
                     </div>
 
+                    <!-- Step 4: Payment Method -->
+                    <div class="form-step card shadow-sm mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-credit-card me-2 text-primary"></i>Chọn hình thức thanh toán</h5>
+                            <div class="mb-3">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" asp-for="Input.PaymentMethod" id="payOnline" value="VnPay" checked />
+                                    <label class="form-check-label" for="payOnline">Thanh toán online (VNPay)</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" asp-for="Input.PaymentMethod" id="payOffline" value="Offline" />
+                                    <label class="form-check-label" for="payOffline">Thanh toán tại quầy</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <input type="hidden" asp-for="Input.ScheduleId" id="selectedScheduleId" />
 
                     <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-primary btn-lg" id="submitBtn" disabled>
-                            <i class="fas fa-check-circle me-2"></i>Xác nhận đặt lịch
-                        </button>
+                        <button type="submit" class="btn btn-primary">Đặt lịch khám</button>
                         <a href="/" class="btn btn-outline-secondary">Quay lại trang chủ</a>
                     </div>
                 </form>
@@ -102,7 +117,7 @@
     <partial name="_ValidationScriptsPartial" />
     <script>
         let schedules = [];
-        let selectedDoctorId = null;
+        let selectedDoctorId = @(Model.PreselectedDoctorId.HasValue ? Model.PreselectedDoctorId.Value.ToString() : "null");
 
         async function onSpecialtyChange() {
             const specialtyId = document.getElementById('specialtySelect').value;
@@ -143,21 +158,26 @@
                 const url = specialtyId 
                     ? `/api/doctors?specialtyId=${specialtyId}`
                     : '/api/doctors';
-                    
                 const response = await fetch(url);
                 if (!response.ok) {
                     throw new Error('Failed to load doctors');
                 }
-                
                 const doctors = await response.json();
                 const doctorSelect = document.getElementById('doctorSelect');
-                
+                doctorSelect.innerHTML = '<option value="">Tất cả bác sĩ</option>';
                 doctors.forEach(doctor => {
                     const option = document.createElement('option');
                     option.value = doctor.doctorId;
                     option.textContent = `BS. ${doctor.fullName} - ${doctor.specialtyName}`;
+                    if (selectedDoctorId && doctor.doctorId == selectedDoctorId) {
+                        option.selected = true;
+                    }
                     doctorSelect.appendChild(option);
                 });
+                // Nếu có selectedDoctorId thì trigger change để load lịch
+                if (selectedDoctorId && doctorSelect.value == selectedDoctorId) {
+                    onDoctorChange();
+                }
             } catch (error) {
                 console.error('Error loading doctors:', error);
             }
@@ -168,7 +188,6 @@
             if (!date) {
                 document.getElementById('timeSlots').innerHTML = '';
                 document.getElementById('selectedScheduleId').value = '';
-                document.getElementById('submitBtn').disabled = true;
                 return;
             }
             
@@ -179,7 +198,6 @@
             const timeSlots = document.getElementById('timeSlots');
             timeSlots.innerHTML = '<div class="col-12 text-center"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>';
             document.getElementById('selectedScheduleId').value = '';
-            document.getElementById('submitBtn').disabled = true;
 
             try {
                 let url = `/api/schedules?date=${date}`;
@@ -230,7 +248,6 @@
 
         function selectTimeSlot(buttonElement, scheduleId) {
             document.getElementById('selectedScheduleId').value = scheduleId;
-            document.getElementById('submitBtn').disabled = false;
             
             // Highlight selected slot
             const buttons = document.querySelectorAll('#timeSlots .time-slot-btn');

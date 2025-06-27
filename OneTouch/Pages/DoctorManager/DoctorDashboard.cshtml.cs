@@ -12,7 +12,7 @@ namespace OneTouch.Pages.DoctorManager
         public List<Schedule> Schedules { get; set; } = new();
 
         public int DoctorId { get; set; }
-        public DoctorDashboardModel(OneTouch.Models.OneTouchDbContext context) 
+        public DoctorDashboardModel(OneTouch.Models.OneTouchDbContext context)
         {
             _context = context;
         }
