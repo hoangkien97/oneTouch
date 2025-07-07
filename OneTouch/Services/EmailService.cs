@@ -162,7 +162,7 @@ namespace OneTouch.Services
                     <li>Vui lòng đến trước giờ hẹn 15 phút để làm thủ tục</li>
                     <li>Mang theo giấy tờ tùy thân và thẻ bảo hiểm (nếu có)</li>
                     <li>Nếu cần hủy lịch, vui lòng liên hệ ít nhất 24 giờ trước</li>
-                    <li>Mọi thắc mắc vui lòng liên hệ: <strong>1900-xxxx</strong></li>
+                    <li>Mọi thắc mắc vui lòng liên hệ: <strong>+84973418074 (Ms Hương)</strong></li>
                 </ul>
             </div>
         </div>
