@@ -50,7 +50,7 @@ namespace OneTouch.Pages.Account
             }
 
             var user = _context.Users.FirstOrDefault(u => u.Phone == Input.Phone);
-
+            
             if (user == null || !PasswordService.VerifyPassword(Input.Password, user.PasswordHash))
             {
                 ErrorMessage = "Số điện thoại hoặc mật khẩu không đúng!";
@@ -67,9 +67,28 @@ namespace OneTouch.Pages.Account
             {
                 return RedirectToPage("/Admin/Dashboard");
             }
+            else if (user.Role == "doctor")
+            {
+
+                var doctor = _context.Doctors.FirstOrDefault(d => d.UserId == user.UserId);
+                if (doctor == null)
+                {
+                    ErrorMessage = "Không tìm thấy thông tin bác sĩ tương ứng.";
+                    return Page();
+                }
+
+                return RedirectToPage("/DoctorManager/DoctorDashboard2", new { doctorId = doctor.DoctorId });
+
+            }
+            else if (user.Role == "patient")
+            {
+                
+                return RedirectToPage("/User/Home");
+            }
+            
             else
             {
-                // Mặc định là patient
+                
                 return RedirectToPage("/User/Home");
             }
         }
