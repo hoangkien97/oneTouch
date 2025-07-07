@@ -1,0 +1,75 @@
+﻿@page "{id:int}"
+@model OneTouch.Pages.DoctorManager.MedicineForDoctorManagerModel
+@{
+
+    ViewData["Title"] = "Đơn thuốc";
+}
+
+<h2>Đơn thuốc cho hồ sơ bệnh án #@Model.RecordId</h2> 
+
+@if (Model.ExistingMedicines.Any())
+{
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>Tên thuốc</th>
+                <th>Đơn vị</th>
+                <th>Số lượng</th>
+                <th>Liều dùng</th>
+                <th>Hướng dẫn</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ExistingMedicines)
+            {
+                <tr>
+                    <td>@item.MedicineName</td>
+                    <td>@item.Unit</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Dosage</td>
+                    <td>@item.Instructions</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p><em>Chưa có đơn thuốc.</em></p>
+}
+
+<hr />
+
+<h3>Thêm thuốc mới</h3>
+<form method="post">
+    <div class="mb-2">
+        <label class="form-label">Tên thuốc</label>
+        <input asp-for="NewMedicine.MedicineName" class="form-control" />
+    </div>
+    <div class="mb-2">
+        <label class="form-label">Mô tả</label>
+        <input asp-for="NewMedicine.Description" class="form-control" />
+    </div>
+    <div class="mb-2">
+        <label class="form-label">Đơn vị</label>
+        <input asp-for="NewMedicine.Unit" class="form-control" />
+    </div>
+    <div class="mb-2">
+        <label class="form-label">Giá</label>
+        <input asp-for="NewMedicine.Price" class="form-control" type="number" step="0.01" />
+    </div>
+    <div class="mb-2">
+        <label class="form-label">Số lượng</label>
+        <input asp-for="NewMedicine.Quantity" class="form-control" />
+    </div>
+    <div class="mb-2">
+        <label class="form-label">Liều dùng</label>
+        <input asp-for="NewMedicine.Dosage" class="form-control" />
+    </div>
+    <div class="mb-2">
+        <label class="form-label">Hướng dẫn</label>
+        <input asp-for="NewMedicine.Instructions" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2">Thêm thuốc</button>
+</form>

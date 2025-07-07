@@ -5,121 +5,234 @@
     ViewData["Title"] = "Doctor Dashboard";
 }
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap & Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet" />
+
+<div class="page-wrapper">
+    <!-- Sidebar -->
+    <div class="sidebar d-flex flex-column">
+        <h4 class="text-primary fw-bold mb-4">
+            <i class="bi bi-ui-checks-grid"></i> Chức năng
+        </h4>
+
+        <ul class="nav nav-pills flex-column gap-2">
+            <li class="nav-item">
+                <a class="nav-link sidebar-link"
+                   asp-page="/DoctorManager/DoctorDashboard2"
+                   asp-route-doctorId="@Model.DoctorId">
+                    <i class="bi bi-house-door me-2"></i> Trang chính
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link sidebar-link"
+                   asp-page="/ScheduleManager/WeeklyView"
+                   asp-route-doctorId="@Model.DoctorId">
+                    <i class="bi bi-calendar-week me-2"></i> Lịch theo tuần
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link sidebar-link"
+                   asp-page="/DoctorManager/PatientForDoctorManager"
+                   asp-route-doctorId="@Model.DoctorId">
+                    <i class="bi bi-people me-2"></i> Bệnh nhân
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link sidebar-link"
+                   asp-page="/DoctorManager/ViewMedicalRecord"
+                   asp-route-doctorId="@Model.DoctorId">
+                    <i class="bi bi-capsule me-2"></i> Tạo đơn thuốc
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="content-area d-flex flex-column flex-grow-1">
+        <!-- Main Content -->
+        <main class="main-content flex-grow-1">
+            <h2 class="mb-4 text-primary fw-bold">🎓 Bảng điều khiển Bác sĩ</h2>
+
+            <!-- Form chọn tuần -->
+            <form method="get" class="row g-3 align-items-center mb-4">
+                <div class="col-auto">
+                    <label for="week" class="col-form-label fw-semibold">
+                        🗓️ Chọn tuần:
+                    </label>
+                </div>
+                <div class="col-auto">
+                    <input type="week" name="SelectedWeek" id="week" class="form-control" value="@Model.SelectedWeek" />
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary">
+                        Xem
+                    </button>
+                </div>
+            </form>
+
+            <h4 class="text-secondary mb-3 fw-bold">
+                🗓️ Lịch làm việc (Thứ 2 → Thứ 6)
+            </h4>
+
+            <div class="row g-3">
+                @foreach (var day in Model.Weekdays)
+                {
+                    var schedulesInDay = Model.WeeklySchedules
+                    .Where(s => s.Date == day)
+                    .OrderBy(s => s.StartTime)
+                    .ToList();
+
+                    <div class="col-md-2">
+                        <div class="card schedule-card shadow-sm h-100">
+                            <div class="card-header text-center card-day-header">
+                                <div class="fw-bold">
+                                    @day.ToString("dddd", new System.Globalization.CultureInfo("vi-VN"))
+                                </div>
+                                <div class="small">
+                                    @day.ToString("dd/MM/yyyy")
+                                </div>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                @if (schedulesInDay.Any())
+                                {
+                                    @foreach (var schedule in schedulesInDay)
+                                    {
+                                        <li class="list-group-item">
+                                            <div class="schedule-time mb-2">
+                                                <i class="bi bi-clock"></i>
+                                                @schedule.StartTime - @schedule.EndTime
+                                            </div>
+                                            <div class="text-muted small mb-2">
+                                                Tối đa: @schedule.MaxPatients BN
+                                            </div>
+                                            @if (schedule.Appointments.Any())
+                                            {
+                                                @foreach (var appointment in schedule.Appointments)
+                                                {
+                                                    <a asp-page="/MedicalRecordManager/Create"
+                                                       asp-route-appointmentId="@appointment.AppointmentId"
+                                                       class="btn btn-sm btn-outline-success w-100 mb-2">
+                                                        Ghi đơn
+                                                    </a>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <div class="no-schedule">Chưa có cuộc hẹn</div>
+                                            }
+                                        </li>
+                                    }
+                                }
+                                else
+                                {
+                                    <li class="list-group-item text-center text-muted">
+                                        Không có ca khám
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                }
+            </div>
+        </main>
+
+    </div>
+</div>
+
 
 <style>
+    :root {
+        --navbar-height: 72px;
+        --sidebar-width: 240px;
+    }
+
+    .page-wrapper {
+        margin-top: var(--navbar-height);
+        display: flex;
+        min-height: calc(100vh - var(--navbar-height));
+    }
+
     .sidebar {
-        position: fixed;
-        top: 56px; /* chiều cao của navbar bootstrap */
-        left: 0;
-        width: 240px;
-        height: calc(100vh - 56px);
+        width: var(--sidebar-width);
         background-color: #f8f9fa;
-        padding: 20px;
         border-right: 1px solid #dee2e6;
         overflow-y: auto;
+        padding: 20px;
+    }
+
+    .content-area {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        min-height: 0;
     }
 
     .main-content {
-        margin-left: 260px; /* = sidebar width + padding */
-        padding: 80px 20px 20px; /* thêm padding-top để tránh header */
+        flex-grow: 1;
+        padding: 20px;
     }
 
-    .day-column {
-        min-width: 200px;
+    .footer {
+        background-color: #343a40;
+        color: #fff;
+        padding: 20px;
     }
-</style>
 
+    /* Sidebar link styles */
+    .sidebar-link {
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        color: #333;
+        font-weight: 500;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+    }
 
-<!-- Sidebar -->
-<div class="sidebar">
-    <h4 class="text-primary">📋 Chức năng</h4>
-    <ul class="nav flex-column">
-        <li class="nav-item mb-2">
-            <a class="btn btn-outline-primary w-100" asp-page="/DoctorManager/DoctorDashboard2" asp-route-doctorId="@Model.DoctorId">🏠 Trang chính</a>
-        </li>
-        <li class="nav-item mb-2">
-            <a class="btn btn-outline-secondary w-100" asp-page="/ScheduleManager/WeeklyView" asp-route-doctorId="@Model.DoctorId">📅 Lịch theo tuần</a>
-        </li>
-        <li class="nav-item mb-2">
-            <a class="btn btn-outline-info w-100" asp-page="/DoctorManager/PatientForDoctorManager" asp-route-doctorId="@Model.DoctorId">🧑‍🤝‍🧑 Bệnh nhân</a>
-        </li>
-        <li class="nav-item mb-2">
-            <a class="btn btn-outline-success w-100" asp-page="/MedicalRecordManager/Create">💊 Tạo đơn thuốc</a>
-        </li>
-    </ul>
-</div>
-
-<!-- Main Content -->
-<div class="main-content">
-    <h2 class="mb-4 text-primary">🎓 Bảng điều khiển Bác sĩ</h2>
-
-    <form method="get" class="row g-3 align-items-center mb-4">
-        <div class="col-auto">
-            <label for="week" class="col-form-label">🗓️ Chọn tuần:</label>
-        </div>
-        <div class="col-auto">
-            <input type="week" name="SelectedWeek" id="week" class="form-control" value="@Model.SelectedWeek" />
-        </div>
-        <div class="col-auto">
-            <button type="submit" class="btn btn-primary">Xem</button>
-        </div>
-    </form>
-
-    <h4 class="text-secondary mb-3">🗓️ Lịch làm việc (Thứ 2 → Thứ 6)</h4>
-
-    <div class="row">
-        @foreach (var day in Model.Weekdays)
-        {
-            var schedulesInDay = Model.WeeklySchedules
-            .Where(s => s.Date == day)
-            .OrderBy(s => s.StartTime)
-            .ToList();
-
-            <div class="col-md-2 mb-3">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-header text-center bg-light fw-bold">
-                        @day.ToString("dddd", new System.Globalization.CultureInfo("vi-VN"))<br />
-                        @day.ToString("dd/MM/yyyy")
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        @if (schedulesInDay.Any())
-                        {
-                            @foreach (var schedule in schedulesInDay)
-                            {
-                                <li class="list-group-item">
-                                    <div class="fw-semibold">@schedule.StartTime - @schedule.EndTime</div>
-                                    <div class="small text-muted">Tối đa: @schedule.MaxPatients BN</div>
-                                    <div class="mt-2">
-                                        @if (schedule.Appointments.Any())
-                                        {
-                                            @foreach (var appointment in schedule.Appointments)
-                                            {
-                                                <a asp-page="/MedicalRecordManager/Create"
-                                                   asp-route-appointmentId="@appointment.AppointmentId"
-                                                   class="btn btn-sm btn-outline-success w-100 mb-1">
-                                                    Ghi đơn
-                                                </a>
-                                            }
-                                        }
-                                        else
-                                        {
-                                            <span class="text-muted small">Chưa có cuộc hẹn</span>
-                                        }
-                                    </div>
-                                </li>
-                            }
-                        }
-                        else
-                        {
-                            <li class="list-group-item text-muted text-center">
-                                Không có ca khám
-                            </li>
-                        }
-                    </ul>
-                </div>
-            </div>
+        .sidebar-link:hover {
+            background-color: #0d6efd;
+            color: #fff;
+            text-decoration: none;
         }
-    </div>
 
-</div>
+        .sidebar-link.active {
+            background-color: #0d6efd;
+            color: #fff;
+        }
+
+    /* Card header gradient */
+    .card-day-header {
+        background: linear-gradient(45deg, #0d6efd, #6610f2);
+        color: #fff;
+    }
+
+    .schedule-time {
+        font-weight: 600;
+    }
+
+    .no-schedule {
+        font-size: 0.9em;
+        color: #999;
+        text-align: center;
+    }
+
+    /* Responsive mobile layout */
+@@media (max-width: 991.98px) {
+     .page-wrapper{
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #dee2e6;
+        margin-bottom: 20px;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding-top: 20px;
+    }
+
+}
+</style>

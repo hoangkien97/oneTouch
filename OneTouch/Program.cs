@@ -15,7 +15,7 @@ builder.Services.AddControllers();
 
 // Add DbContext
 builder.Services.AddDbContext<OneTouchDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("MyCnn")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add AutoMapper
 builder.Services.AddAutoMapper(typeof(Program));

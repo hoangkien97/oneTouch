@@ -4,26 +4,168 @@
     ViewData["Title"] = "Danh sách Bệnh nhân";
 }
 
+<!-- Bootstrap & Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet" />
+<link href="~/css/dashboard2.css" rel="stylesheet" />
+
+<div class="page-wrapper">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h4 class="text-primary fw-bold mb-4">
+            <i class="bi bi-ui-checks-grid"></i> Chức năng
+        </h4>
+        <ul class="nav flex-column gap-2">
+            <li class="nav-item">
+                <a class="nav-link sidebar-link" asp-page="/DoctorManager/DoctorDashboard2" asp-route-doctorId="@Model.DoctorId">
+                    <i class="bi bi-house-door me-2"></i> Trang chính
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link sidebar-link" asp-page="/ScheduleManager/WeeklyView" asp-route-doctorId="@Model.DoctorId">
+                    <i class="bi bi-calendar-week me-2"></i> Lịch theo tuần
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link sidebar-link active" asp-page="/DoctorManager/PatientForDoctorManager" asp-route-doctorId="@Model.DoctorId">
+                    <i class="bi bi-people me-2"></i> Bệnh nhân
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link sidebar-link" asp-page="/MedicalRecordManager/Create">
+                    <i class="bi bi-capsule me-2"></i> Tạo đơn thuốc
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="content-area d-flex flex-column flex-grow-1">
+        <!-- Main Content -->
+        <main class="main-content flex-grow-1">
+            <h2 class="text-primary mb-4">🧑‍⚕️ Danh sách Bệnh nhân của Bác sĩ #@Model.DoctorId</h2>
+
+            <form method="get" class="input-group mb-4">
+                <input type="hidden" name="doctorId" value="@Model.DoctorId" />
+                <input type="text" name="SearchTerm" value="@Model.SearchTerm" class="form-control" placeholder="🔍 Tìm theo tên hoặc SĐT..." />
+                <button type="submit" class="btn btn-outline-primary">Tìm kiếm</button>
+            </form>
+
+            @if (!Model.Patients.Any())
+            {
+                <div class="alert alert-info">Chưa có bệnh nhân nào khám với bác sĩ này.</div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover shadow-sm bg-white rounded">
+                        <thead class="table-light">
+                            <tr>
+                                <th>👤 Họ tên</th>
+                                <th>📧 Email</th>
+                                <th>📞 Số điện thoại</th>
+                                <th class="text-center">🔧 Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var patient in Model.Patients)
+                            {
+                                <tr>
+                                    <td>@patient.FullName</td>
+                                    <td>@patient.Email</td>
+                                    <td>@patient.Phone</td>
+                                    <td class="text-center">
+                                        <a class="btn btn-sm btn-outline-info me-1"
+                                           asp-page="/MedicalRecordManager/View"
+                                           asp-route-userId="@patient.UserId">
+                                            📄 Hồ sơ
+                                        </a>
+                                        <a class="btn btn-sm btn-outline-success"
+                                           asp-page="/MedicalRecordManager/Create"
+                                           asp-route-userId="@patient.UserId"
+                                           asp-route-doctorId="@Model.DoctorId">
+                                            💊 Tạo đơn
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- PHÂN TRANG -->
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        @for (int i = 1; i <= Model.TotalPages; i++)
+                        {
+                            <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                                <a class="page-link"
+                                   asp-page="/DoctorManager/PatientForDoctorManager"
+                                   asp-route-doctorId="@Model.DoctorId"
+                                   asp-route-Page="@i"
+                                   asp-route-SearchTerm="@Model.SearchTerm">@i</a>
+                            </li>
+                        }
+                    </ul>
+                </nav>
+            }
+        </main>
+
+    </div>
+</div>
+
 <style>
+    :root {
+        --navbar-height: 56px;
+        --sidebar-width: 240px;
+    }
+
+    .page-wrapper {
+        margin-top: var(--navbar-height);
+        display: flex;
+        min-height: calc(100vh - var(--navbar-height));
+    }
+
     .sidebar {
-        position: fixed;
-        top: 56px;
-        left: 0;
-        width: 240px;
-        height: calc(100vh - 56px);
+        width: var(--sidebar-width);
         background-color: #ffffff;
-        padding: 20px;
         border-right: 1px solid #dee2e6;
+        padding: 20px;
         box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
-        z-index: 1000;
+    }
+
+    .content-area {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
     }
 
     .main-content {
-        margin-left: 260px;
+        flex-grow: 1;
         padding: 40px 30px;
         background-color: #f8f9fa;
         min-height: 100vh;
     }
+
+    .sidebar-link {
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        color: #333;
+        font-weight: 500;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+    }
+
+        .sidebar-link:hover {
+            background-color: #0d6efd;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .sidebar-link.active {
+            background-color: #0d6efd;
+            color: #fff;
+        }
 
     .table th,
     .table td {
@@ -48,92 +190,34 @@
         font-size: 0.875rem;
         padding: 0.25rem 0.5rem;
     }
+
+    .footer {
+        background-color: #343a40;
+        color: #fff;
+        padding: 20px;
+    }
+
+ @@media (max-width: 991.98px) {
+        .page-wrapper
+
+    {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #dee2e6;
+        margin-bottom: 20px;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding-top: 20px;
+    }
+
+    .footer {
+        margin-left: 0;
+    }
+ }
 </style>
-
-<!-- Sidebar -->
-<div class="sidebar">
-    <h4 class="text-primary">📋 Chức năng</h4>
-    <ul class="nav flex-column">
-        <li class="nav-item mb-2">
-            <a class="btn btn-outline-primary w-100" asp-page="/DoctorManager/DoctorDashboard2" asp-route-doctorId="@Model.DoctorId">🏠 Trang chính</a>
-        </li>
-        <li class="nav-item mb-2">
-            <a class="btn btn-outline-secondary w-100" asp-page="/ScheduleManager/WeeklyView" asp-route-doctorId="@Model.DoctorId">📅 Lịch theo tuần</a>
-        </li>
-        <li class="nav-item mb-2">
-            <a class="btn btn-outline-info w-100" asp-page="/DoctorManager/PatientForDoctorManager" asp-route-doctorId="@Model.DoctorId">🧑‍🤝‍🧑 Bệnh nhân</a>
-        </li>
-        <li class="nav-item mb-2">
-            <a class="btn btn-outline-success w-100" asp-page="/MedicalRecordManager/Create">💊 Tạo đơn thuốc</a>
-        </li>
-    </ul>
-</div>
-
-<!-- Main content -->
-<div class="main-content">
-    <h2 class="text-primary mb-4">🧑‍⚕️ Danh sách Bệnh nhân của Bác sĩ #@Model.DoctorId</h2>
-
-    <form method="get" class="input-group mb-4">
-        <input type="hidden" name="doctorId" value="@Model.DoctorId" />
-        <input type="text" name="SearchTerm" value="@Model.SearchTerm" class="form-control" placeholder="🔍 Tìm theo tên hoặc SĐT..." />
-        <button type="submit" class="btn btn-outline-primary">Tìm kiếm</button>
-    </form>
-
-    @if (!Model.Patients.Any())
-    {
-        <div class="alert alert-info">Chưa có bệnh nhân nào khám với bác sĩ này.</div>
-    }
-    else
-    {
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover shadow-sm bg-white rounded">
-                <thead class="table-light">
-                    <tr>
-                        <th>👤 Họ tên</th>
-                        <th>📧 Email</th>
-                        <th>📞 Số điện thoại</th>
-                        <th class="text-center">🔧 Hành động</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var patient in Model.Patients)
-                    {
-                        <tr>
-                            <td>@patient.FullName</td>
-                            <td>@patient.Email</td>
-                            <td>@patient.Phone</td>
-                            <td class="text-center">
-                                <a class="btn btn-sm btn-outline-info me-1"
-                                   asp-page="/MedicalRecordManager/View"
-                                   asp-route-userId="@patient.UserId">
-                                    📄 Hồ sơ
-                                </a>
-                                <a class="btn btn-sm btn-outline-success"
-                                   asp-page="/MedicalRecordManager/Create"
-                                   asp-route-userId="@patient.UserId">
-                                    💊 Tạo đơn
-                                </a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-
-        <!-- PHÂN TRANG -->
-        <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-center">
-                @for (int i = 1; i <= Model.TotalPages; i++)
-                {
-                    <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
-                        <a class="page-link"
-                           asp-page="/DoctorManager/PatientForDoctorManager"
-                           asp-route-doctorId="@Model.DoctorId"
-                           asp-route-Page="@i"
-                           asp-route-SearchTerm="@Model.SearchTerm">@i</a>
-                    </li>
-                }
-            </ul>
-        </nav>
-    }
-</div>
