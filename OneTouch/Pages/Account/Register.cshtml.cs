@@ -14,14 +14,10 @@ namespace OneTouch.Pages.Account
     public class RegisterModel : PageModel
     {
         private readonly OneTouchDbContext _context;
-        private readonly ISmsService _smsService;
-        private readonly IConfiguration _configuration;
 
-        public RegisterModel(OneTouchDbContext context, ISmsService smsService, IConfiguration configuration)
+        public RegisterModel(OneTouchDbContext context)
         {
             _context = context;
-            _smsService = smsService;
-            _configuration = configuration;
         }
 
         [BindProperty]
@@ -98,20 +94,20 @@ namespace OneTouch.Pages.Account
                 }
             }
 
-            // Sinh OTP
-            //var otp = "123456";
-            var otp = new Random().Next(100000, 999999).ToString();
-            TempData["RegisterOtp"] = otp;
-            TempData["RegisterPhone"] = Input.Phone;
-            TempData["RegisterFullName"] = Input.FullName;
-            TempData["RegisterEmail"] = Input.Email ?? string.Empty;
-            TempData["RegisterPasswordHash"] = PasswordService.HashPassword(Input.Password);
+ 
+            var newUser = new OneTouch.Models.User
+            {
+                FullName = Input.FullName,
+                Phone = Input.Phone,
+                Email = string.IsNullOrEmpty(Input.Email) ? null : Input.Email,
+                PasswordHash = PasswordService.HashPassword(Input.Password),
+                Role = "patient",
+                CreatedAt = DateTime.Now
+            };
+            _context.Users.Add(newUser);
+            await _context.SaveChangesAsync();
 
-            // Gửi OTP qua SMS
-            await _smsService.SendOtpAsync(Input.Phone, otp);
-
-            // Chuyển hướng sang trang nhập OTP
-            return RedirectToPage("/Account/VerifyOtp", new { phone = Input.Phone, register = true });
+            return RedirectToPage("/Account/Login");
         }
     }
 }

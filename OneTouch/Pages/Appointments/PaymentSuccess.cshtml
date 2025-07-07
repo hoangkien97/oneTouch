@@ -15,7 +15,20 @@
                     </h4>
                 </div>
                 <div class="card-body">
-                    @if (Model.IsSuccess)
+                    @if (string.IsNullOrEmpty(Model.TransactionId) && string.IsNullOrEmpty(Model.Error))
+                    {
+                        <div class="alert alert-warning text-center">
+                            <i class="fas fa-exclamation-triangle fa-3x mb-3 text-warning"></i>
+                            <h5 class="text-warning">Không có thông tin giao dịch</h5>
+                            <p>Trang này chỉ hiển thị kết quả thanh toán sau khi hoàn thành giao dịch.</p>
+                            <p class="text-muted">Nếu bạn vừa thực hiện thanh toán, vui lòng đợi một chút hoặc kiểm tra email xác nhận.</p>
+                            <div class="mt-4">
+                                <a href="/User/Home" class="btn btn-primary me-2">Về trang chủ</a>
+                                <a href="/Appointments/Create" class="btn btn-outline-secondary">Đặt lịch mới</a>
+                            </div>
+                        </div>
+                    }
+                    else if (Model.IsSuccess)
                     {
                         <div class="alert alert-success text-center">
                             <i class="fas fa-check-circle fa-3x mb-3 text-success"></i>

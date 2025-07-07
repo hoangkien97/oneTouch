@@ -166,6 +166,41 @@ namespace OneTouch.Pages.Appointments
                 System.Diagnostics.Debug.WriteLine($"[VNPay] Redirect URL: {redirectUrl}");
                 return Redirect(redirectUrl);
             }
+            else if (Input.PaymentMethod == "VietQr")
+            {
+                // Chuyển hướng sang PaymentController để lấy URL VietQR
+                var paymentInfo = new PaymentInformationModel
+                {
+                    OrderType = "appointment",
+                    Amount = (double)amount,
+                    OrderDescription = "Thanh toán đặt lịch khám",
+                    Name = User.Identity.Name ?? "Khách hàng",
+                    ScheduleId = Input.ScheduleId,
+                    UserId = userId,
+                    Note = Input.Note
+                };
+                
+                // Log để debug
+                System.Diagnostics.Debug.WriteLine($"[VietQR] PaymentInfo - Amount: {paymentInfo.Amount}, ScheduleId: {paymentInfo.ScheduleId}, UserId: {paymentInfo.UserId}");
+                
+                // Chuyển hướng trực tiếp với query string
+                var queryParams = new List<string>
+                {
+                    $"OrderType={Uri.EscapeDataString(paymentInfo.OrderType)}",
+                    $"Amount={paymentInfo.Amount:F0}",
+                    $"OrderDescription={Uri.EscapeDataString(paymentInfo.OrderDescription)}",
+                    $"Name={Uri.EscapeDataString(paymentInfo.Name)}",
+                    $"ScheduleId={paymentInfo.ScheduleId}",
+                    $"UserId={paymentInfo.UserId}",
+                    $"Note={Uri.EscapeDataString(paymentInfo.Note ?? "")}"
+                };
+                
+                var queryString = string.Join("&", queryParams);
+                var redirectUrl = $"/Payment/CreatePaymentUrlVietQr?{queryString}";
+                
+                System.Diagnostics.Debug.WriteLine($"[VietQR] Redirect URL: {redirectUrl}");
+                return Redirect(redirectUrl);
+            }
 
             // Nếu chọn offline, tạo như cũ
             var appointment = new Appointment

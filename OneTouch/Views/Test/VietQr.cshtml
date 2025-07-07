@@ -1,0 +1,135 @@
+@{
+    ViewData["Title"] = "Test VietQR";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-qrcode me-2"></i>
+                        Test VietQR Payment
+                    </h4>
+                </div>
+                <div class="card-body text-center">
+                    <div class="alert alert-info">
+                        <h5><i class="fas fa-info-circle me-2"></i>Test VietQR</h5>
+                        <p class="mb-0">Đây là trang test để kiểm tra tính năng VietQR</p>
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(ViewBag.QrCodeUrl))
+                    {
+                        <div class="qr-container mb-4">
+                            <img src="@ViewBag.QrCodeUrl" alt="VietQR Code" class="img-fluid border rounded" style="max-width: 300px;" />
+                        </div>
+
+                        <div class="payment-info mb-4">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="info-item">
+                                        <strong>Số tiền:</strong>
+                                        <span class="text-primary fw-bold">@ViewBag.Amount.ToString("N0") VNĐ</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="info-item">
+                                        <strong>Mô tả:</strong>
+                                        <span class="text-muted">@ViewBag.Description</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bank-info mb-4">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <h6 class="card-title"><i class="fas fa-university me-2"></i>Thông tin tài khoản</h6>
+                                    <div class="row text-start">
+                                        <div class="col-md-6">
+                                            <p class="mb-1"><strong>Ngân hàng:</strong> BIDV</p>
+                                            <p class="mb-1"><strong>Số tài khoản:</strong> 4270981804</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="mb-1"><strong>Chủ tài khoản:</strong> HOANG TRUNG KIEN</p>
+                                            <p class="mb-1"><strong>Nội dung:</strong> @ViewBag.Description</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="action-buttons">
+                            <a href="@ViewBag.PaymentUrl" target="_blank" class="btn btn-success me-2">
+                                <i class="fas fa-external-link-alt me-2"></i>Mở link thanh toán
+                            </a>
+                            <button type="button" class="btn btn-info me-2" onclick="copyPaymentUrl()">
+                                <i class="fas fa-copy me-2"></i>Copy URL
+                            </button>
+                            <a href="/" class="btn btn-outline-secondary">
+                                <i class="fas fa-home me-2"></i>Về trang chủ
+                            </a>
+                        </div>
+
+                        <div class="mt-4">
+                            <details class="alert alert-secondary">
+                                <summary>Debug Info</summary>
+                                <p><strong>Payment URL:</strong> <small class="text-muted">@ViewBag.PaymentUrl</small></p>
+                                <p><strong>QR Code URL:</strong> <small class="text-muted">@ViewBag.QrCodeUrl</small></p>
+                            </details>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-warning">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            Không thể tạo QR code. Vui lòng kiểm tra cấu hình.
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function copyPaymentUrl() {
+        navigator.clipboard.writeText('@ViewBag.PaymentUrl').then(function() {
+            alert('Đã copy URL thanh toán vào clipboard!');
+        }, function(err) {
+            console.error('Could not copy text: ', err);
+        });
+    }
+</script>
+
+<style>
+    .qr-container {
+        padding: 20px;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 10px;
+        display: inline-block;
+    }
+
+    .info-item {
+        padding: 10px;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    .action-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .bank-info .card {
+        border: 2px solid #dee2e6;
+    }
+
+    .bank-info .card-title {
+        color: #495057;
+        font-weight: 600;
+    }
+</style> 

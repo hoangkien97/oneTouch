@@ -39,6 +39,7 @@ builder.Services.AddScoped<ImageService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<ISmsService, VonageSmsService>();
 builder.Services.AddScoped<IVnPayService, VnPayService>();
+builder.Services.AddScoped<IVietQrService, VietQrService>();
 //builder.Services.AddHttpClient<ChatbotService>();
 //builder.Services.AddScoped<ChatbotService>();
 
