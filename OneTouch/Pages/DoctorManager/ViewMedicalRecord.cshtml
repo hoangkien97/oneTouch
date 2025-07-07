@@ -1,0 +1,41 @@
+﻿@page
+@model OneTouch.Pages.DoctorManager.ViewMedicalRecordModel
+@{
+    ViewData["Title"] = "Danh sách hồ sơ bệnh án";
+}
+<h2>Hồ sơ bệnh án của bác sĩ</h2>
+
+@if (Model.Records.Any())
+{
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>Bệnh nhân</th>
+                <th>Ngày tạo</th>
+                <th>Chẩn đoán</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var record in Model.Records)
+            {
+                <tr>
+                    <td>@record.PatientName</td>
+                    <td>@record.CreatedAt?.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>@record.Diagnosis</td>
+                    <td>
+                        <a class="btn btn-primary"
+                           asp-page="/DoctorManager/MedicineForDoctorManager"
+                           asp-route-id="@record.RecordId">
+                            Tạo đơn thuốc
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p><em>Chưa có hồ sơ bệnh án nào.</em></p>
+}

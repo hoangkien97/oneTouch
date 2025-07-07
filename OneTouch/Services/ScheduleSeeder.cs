@@ -1,5 +1,6 @@
 ﻿using OneTouch.Models;
 using System.Collections.Generic;
+
 namespace OneTouch.Services
 {
     public class ScheduleSeeder
@@ -10,33 +11,32 @@ namespace OneTouch.Services
         public static List<Schedule> GenerateDoctorSchedulesForDate(DateOnly date, int doctorId)
         {
             var list = new List<Schedule>();
+
             // Chỉ làm từ Thứ 2 → Thứ 6
             if (date.DayOfWeek < DayOfWeek.Monday || date.DayOfWeek > DayOfWeek.Friday)
                 return list;
 
-            var start = new TimeOnly(7, 0);
-            var end = new TimeOnly(17, 0);
-            var lunchStart = new TimeOnly(12, 0);
-            var lunchEnd = new TimeOnly(13, 0);
-
-            while (start < end)
+            var slots = new List<(TimeOnly start, TimeOnly end)>
             {
-                var next = start.AddMinutes(30);
-                // Bỏ khung trưa
-                if (!(start >= lunchStart && next <= lunchEnd))
+                (new TimeOnly(7,30), new TimeOnly(9,30)),
+                (new TimeOnly(9,30), new TimeOnly(11,30)),
+                (new TimeOnly(13,30), new TimeOnly(15,30)),
+                (new TimeOnly(15,30), new TimeOnly(17,30))
+            };
+
+            foreach (var slot in slots)
+            {
+                list.Add(new Schedule
                 {
-                    list.Add(new Schedule
-                    {
-                        Date = date,
-                        StartTime = start,
-                        EndTime = next,
-                        DoctorId = doctorId,
-                        MaxPatients = 1,
-                        Appointments = null
-                    });
-                }
-                start = next;
+                    Date = date,
+                    StartTime = slot.start,
+                    EndTime = slot.end,
+                    DoctorId = doctorId,
+                    MaxPatients = 5,
+                    Appointments = null
+                });
             }
+
             return list;
         }
 
@@ -47,11 +47,13 @@ namespace OneTouch.Services
         {
             var all = new List<Schedule>();
             int daysInMonth = DateTime.DaysInMonth(year, month);
+
             for (int d = 1; d <= daysInMonth; d++)
             {
                 var date = new DateOnly(year, month, d);
                 all.AddRange(GenerateDoctorSchedulesForDate(date, doctorId));
             }
+
             return all;
         }
     }

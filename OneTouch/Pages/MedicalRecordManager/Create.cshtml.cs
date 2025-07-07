@@ -30,11 +30,8 @@ namespace OneTouch.Pages.MedicalRecordManager
         [BindProperty(SupportsGet = true)]
         public int DoctorId { get; set; }
 
-        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnGetAsync()
         {
-
-
             var latestAppointment = await _context.Appointments
                 .Include(a => a.User)
                 .Where(a => a.UserId == UserId)
@@ -44,22 +41,11 @@ namespace OneTouch.Pages.MedicalRecordManager
             if (latestAppointment == null)
                 return NotFound("Không tìm thấy cuộc hẹn nào cho bệnh nhân này.");
 
-            DoctorId = latestAppointment.Schedule?.DoctorId ?? 0;
-
             PatientName = latestAppointment.User?.FullName ?? "Không rõ";
 
-            var existingRecord = await _context.MedicalRecords
-                .FirstOrDefaultAsync(r => r.AppointmentId == latestAppointment.AppointmentId);
-
-            if (existingRecord != null)
-            {
-                MedicalRecord = existingRecord;
-            }
-            else
-            {
-                MedicalRecord.AppointmentId = latestAppointment.AppointmentId;
-                MedicalRecord.CreatedAt = DateTime.Now;
-            }
+            // Luôn gán thông tin cho MedicalRecord mới
+            MedicalRecord.AppointmentId = latestAppointment.AppointmentId;
+            MedicalRecord.CreatedAt = DateTime.Now;
 
             return Page();
         }
@@ -69,28 +55,18 @@ namespace OneTouch.Pages.MedicalRecordManager
             if (!ModelState.IsValid)
                 return Page();
 
-            var existing = await _context.MedicalRecords
-                .FirstOrDefaultAsync(r => r.AppointmentId == MedicalRecord.AppointmentId);
-
-            if (existing != null)
-            {
-                existing.Diagnosis = MedicalRecord.Diagnosis;
-                existing.DoctorNote = MedicalRecord.DoctorNote;
-                existing.CreatedAt = DateTime.Now;
-            }
-            else
-            {
-                MedicalRecord.CreatedAt = DateTime.Now;
-                _context.MedicalRecords.Add(MedicalRecord);
-            }
+            MedicalRecord.CreatedAt = DateTime.Now;
+            _context.MedicalRecords.Add(MedicalRecord);
 
             await _context.SaveChangesAsync();
+
             var doctorId = await _context.Appointments
-        .Where(a => a.AppointmentId == MedicalRecord.AppointmentId)
-        .Select(a => a.Schedule!.DoctorId)
-        .FirstOrDefaultAsync();
+                .Where(a => a.AppointmentId == MedicalRecord.AppointmentId)
+                .Select(a => a.Schedule!.DoctorId)
+                .FirstOrDefaultAsync();
+
             return RedirectToPage("/DoctorManager/PatientForDoctorManager", new { doctorId });
         }
+
     }
 }
-
