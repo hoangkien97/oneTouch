@@ -19,7 +19,7 @@ namespace OneTouch.Services
             _serviceProvider = serviceProvider;
             // Biểu thức cron: chạy lúc 00:00 hàng ngày
             //_cronExpression = CronExpression.Parse("0 0 * * *"); // phút 0, giờ 0, mỗi ngày
-            _cronExpression = CronExpression.Parse("19 21 * * *"); // phút 0, giờ 0, mỗi ngày
+            _cronExpression = CronExpression.Parse("23 09 * * *"); // phút 0, giờ 0, mỗi ngày
             _timeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time"); // Việt Nam
         }
 
