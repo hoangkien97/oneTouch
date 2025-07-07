@@ -1,0 +1,155 @@
+@page
+@model OneTouch.Pages.Appointments.VietQrPaymentModel
+@{
+    ViewData["Title"] = "Thanh toán VietQR";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-qrcode me-2"></i>
+                        Thanh toán bằng VietQR
+                    </h4>
+                </div>
+                <div class="card-body text-center">
+                    <div class="alert alert-info">
+                        <h5><i class="fas fa-info-circle me-2"></i>Hướng dẫn thanh toán</h5>
+                        <p class="mb-0">Quét mã QR bên dưới bằng ứng dụng ngân hàng của bạn để thanh toán</p>
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(Model.QrCodeUrl))
+                    {
+                        <div class="qr-container mb-4">
+                            <img src="@Model.QrCodeUrl" alt="VietQR Code" class="img-fluid border rounded" style="max-width: 300px;" />
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-warning">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            Không thể tạo QR code. Vui lòng thử lại.
+                        </div>
+                    }
+
+                    <div class="payment-info mb-4">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="info-item">
+                                    <strong>Số tiền:</strong>
+                                    <span class="text-primary fw-bold">@Model.Amount.ToString("N0") VNĐ</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="info-item">
+                                    <strong>Nội dung:</strong>
+                                    <span class="text-muted">@Model.OrderDescription</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bank-info mb-4">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h6 class="card-title"><i class="fas fa-university me-2"></i>Thông tin tài khoản</h6>
+                                <div class="row text-start">
+                                    <div class="col-md-6">
+                                        <p class="mb-1"><strong>Ngân hàng:</strong> BIDV</p>
+                                        <p class="mb-1"><strong>Số tài khoản:</strong> 4270981804</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p class="mb-1"><strong>Chủ tài khoản:</strong> HOANG TRUNG KIEN</p>
+                                        <p class="mb-1"><strong>Nội dung:</strong> @Model.OrderDescription</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button type="button" class="btn btn-success me-2" onclick="copyPaymentUrl()">
+                            <i class="fas fa-copy me-2"></i>Copy link thanh toán
+                        </button>
+                        <a href="@Model.PaymentUrl" target="_blank" class="btn btn-primary me-2">
+                            <i class="fas fa-external-link-alt me-2"></i>Mở link thanh toán
+                        </a>
+                        <button type="button" class="btn btn-warning me-2" onclick="checkPaymentStatus()">
+                            <i class="fas fa-sync-alt me-2"></i>Kiểm tra thanh toán
+                        </button>
+                        <a href="/Appointments/Create" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>Quay lại
+                        </a>
+                    </div>
+
+                    <div class="mt-4">
+                        <div class="alert alert-warning">
+                            <small>
+                                <i class="fas fa-exclamation-triangle me-1"></i>
+                                <strong>Lưu ý:</strong> Sau khi thanh toán thành công, hệ thống sẽ tự động xác nhận đặt lịch của bạn. 
+                                Bạn sẽ nhận được email xác nhận trong thời gian sớm nhất.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function copyPaymentUrl() {
+        navigator.clipboard.writeText('@Model.PaymentUrl').then(function() {
+            alert('Đã copy link thanh toán vào clipboard!');
+        }, function(err) {
+            console.error('Could not copy text: ', err);
+        });
+    }
+
+    function checkPaymentStatus() {
+        // Có thể implement polling để kiểm tra trạng thái thanh toán
+        alert('Tính năng đang được phát triển. Vui lòng kiểm tra email xác nhận sau khi thanh toán.');
+    }
+
+    // Auto refresh QR code every 30 seconds
+    setInterval(function() {
+        var img = document.querySelector('.qr-container img');
+        if (img) {
+            img.src = img.src + '&t=' + new Date().getTime();
+        }
+    }, 30000);
+</script>
+
+<style>
+    .qr-container {
+        padding: 20px;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 10px;
+        display: inline-block;
+    }
+
+    .info-item {
+        padding: 10px;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    .action-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .bank-info .card {
+        border: 2px solid #dee2e6;
+    }
+
+    .bank-info .card-title {
+        color: #495057;
+        font-weight: 600;
+    }
+</style> 

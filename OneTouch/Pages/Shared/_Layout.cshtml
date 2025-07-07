@@ -89,7 +89,7 @@
                             <a class="nav-link fw-medium" asp-area="" asp-page="/Services">Dịch vụ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link fw-medium" asp-area="" asp-page="/Doctors">Bác sĩ</a>
+                            <a class="nav-link fw-medium" asp-area="" asp-page="/listDoctors/Index">Bác sĩ</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link fw-medium" asp-area="" asp-page="/Contact">Liên hệ</a>
@@ -103,13 +103,15 @@
                         }
                         else
                         {
+                            var userName = Context.Session.GetString("UserName");
                             <div class="dropdown">
                                 <button class="btn btn-outline-primary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-user me-2"></i>Tài khoản
+                                    <i class="fas fa-user me-2"></i>@(string.IsNullOrEmpty(userName) ? "Tài khoản" : userName)
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                                     <li><a class="dropdown-item" href="/Profile"><i class="fas fa-user-circle me-2"></i>Hồ sơ</a></li>
                                     <li><a class="dropdown-item" href="/Appointments/History"><i class="fas fa-history me-2"></i>Lịch sử khám</a></li>
+                                    <li><a class="dropdown-item" href="/Account/ChangePassword"><i class="fas fa-key me-2"></i>Đổi mật khẩu</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item text-danger" asp-page="/Account/Logout"><i class="fas fa-sign-out-alt me-2"></i>Đăng xuất</a></li>
                                 </ul>
@@ -120,6 +122,17 @@
             </div>
         </nav>
     </header>
+
+    <!-- Health Tips Ticker -->
+    <div class="health-tips-ticker bg-primary text-white py-2" style="overflow:hidden; position:relative;">
+        <div class="ticker-content" style="white-space:nowrap; display:inline-block; animation: ticker 25s linear infinite;">
+            <i class="fas fa-tint me-2"></i>Uống ít nhất 2 lít nước mỗi ngày để duy trì sức khỏe tốt
+            <span class="mx-4">|</span>
+            <i class="fas fa-running me-2"></i>Dành 30 phút mỗi ngày để tập thể dục giúp tăng cường sức khỏe
+            <span class="mx-4">|</span>
+            <i class="fas fa-apple-alt me-2"></i>Bổ sung đầy đủ chất dinh dưỡng từ các loại thực phẩm tươi
+        </div>
+    </div>
 
     <!-- Main Content -->
     <main role="main" class="flex-grow-1">

@@ -105,8 +105,8 @@ namespace OneTouch.Pages.Account
                 if (userByPhone != null)
                 {
                     // Generate OTP
-                    //var otp = new Random().Next(100000, 999999).ToString();
-                    var otp = "123456";
+                    var otp = new Random().Next(100000, 999999).ToString();
+                    //var otp = "123456";
 
                     var otpExpiry = DateTime.UtcNow.AddMinutes(5);
 

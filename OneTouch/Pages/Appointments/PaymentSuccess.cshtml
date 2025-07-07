@@ -1,0 +1,61 @@
+@page
+@model OneTouch.Pages.Appointments.PaymentSuccessModel
+@{
+    ViewData["Title"] = "Kết quả thanh toán";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-credit-card me-2"></i>
+                        Kết quả thanh toán
+                    </h4>
+                </div>
+                <div class="card-body">
+                    @if (string.IsNullOrEmpty(Model.TransactionId) && string.IsNullOrEmpty(Model.Error))
+                    {
+                        <div class="alert alert-warning text-center">
+                            <i class="fas fa-exclamation-triangle fa-3x mb-3 text-warning"></i>
+                            <h5 class="text-warning">Không có thông tin giao dịch</h5>
+                            <p>Trang này chỉ hiển thị kết quả thanh toán sau khi hoàn thành giao dịch.</p>
+                            <p class="text-muted">Nếu bạn vừa thực hiện thanh toán, vui lòng đợi một chút hoặc kiểm tra email xác nhận.</p>
+                            <div class="mt-4">
+                                <a href="/User/Home" class="btn btn-primary me-2">Về trang chủ</a>
+                                <a href="/Appointments/Create" class="btn btn-outline-secondary">Đặt lịch mới</a>
+                            </div>
+                        </div>
+                    }
+                    else if (Model.IsSuccess)
+                    {
+                        <div class="alert alert-success text-center">
+                            <i class="fas fa-check-circle fa-3x mb-3 text-success"></i>
+                            <h5 class="text-success">Thanh toán thành công!</h5>
+                            <p><strong>Mã giao dịch:</strong> @Model.TransactionId</p>
+                            <p><strong>Thời gian:</strong> @Model.PayDate</p>
+                            <p class="mt-3">Đặt lịch khám của bạn đã được xác nhận. Bạn sẽ nhận được email xác nhận trong thời gian sớm nhất.</p>
+                            <div class="mt-4">
+                                <a href="/User/Home" class="btn btn-success me-2">Về trang chủ</a>
+                                <a href="/Appointments/History" class="btn btn-outline-primary">Xem lịch sử đặt lịch</a>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-danger text-center">
+                            <i class="fas fa-times-circle fa-3x mb-3 text-danger"></i>
+                            <h5 class="text-danger">Thanh toán thất bại!</h5>
+                            <p class="text-danger">@Model.Error</p>
+                            <div class="mt-4">
+                                <a href="/" class="btn btn-danger me-2">Về trang chủ</a>
+                                <a href="/Appointments/Create" class="btn btn-outline-primary">Thử lại</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

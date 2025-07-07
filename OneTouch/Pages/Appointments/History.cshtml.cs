@@ -45,9 +45,10 @@ namespace OneTouch.Pages.Appointments
                     .ThenInclude(s => s.Doctor)
                         .ThenInclude(d => d.User)
                 .Include(a => a.Feedbacks)
+                .Include(a => a.Invoice)
                 .Where(a => a.UserId == userId)
                 .OrderByDescending(a => a.Schedule.Date)
-                .ThenBy(a => a.Schedule.StartTime)
+                .ThenByDescending(a => a.Schedule.StartTime)
                 .ToListAsync();
             return Page();
         }

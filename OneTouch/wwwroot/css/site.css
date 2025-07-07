@@ -519,3 +519,17 @@ main {
     box-shadow: none;
     border-color: #dee2e6;
 }
+
+@keyframes ticker {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
+.health-tips-ticker {
+    font-size: 1rem;
+    font-weight: 500;
+    border-top: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+}
+.health-tips-ticker .ticker-content i {
+    color: #ffe066;
+}

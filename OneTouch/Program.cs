@@ -20,7 +20,11 @@ builder.Services.AddDbContext<OneTouchDbContext>(options =>
 // Add AutoMapper
 builder.Services.AddAutoMapper(typeof(Program));
 
-builder.Services.AddSession();
+builder.Services.AddSession(options =>
+{
+    options.Cookie.SameSite = SameSiteMode.Lax;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+});
 
 // Register Repositories
 builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
@@ -34,6 +38,8 @@ builder.Services.AddScoped<ValidationService>();
 builder.Services.AddScoped<ImageService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<ISmsService, VonageSmsService>();
+builder.Services.AddScoped<IVnPayService, VnPayService>();
+builder.Services.AddScoped<IVietQrService, VietQrService>();
 //builder.Services.AddHttpClient<ChatbotService>();
 //builder.Services.AddScoped<ChatbotService>();
 
@@ -66,6 +72,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+// Always use HTTPS redirection, even in development
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -78,5 +85,3 @@ app.UseAuthorization();
 app.MapRazorPages();
 app.MapControllers();
 app.Run();
-
-app.UseSession();

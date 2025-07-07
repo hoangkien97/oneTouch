@@ -27,7 +27,9 @@
                         <th>Giờ khám</th>
                         <th>Bác sĩ</th>
                         <th>Ghi chú</th>
+                        <th>Giá tiền</th>
                         <th>Trạng thái</th>
+                        <th>Thanh toán</th>
                         <th>Thao tác</th>
                     </tr>
                 </thead>
@@ -39,6 +41,7 @@
                         <td>@appt.Schedule?.StartTime?.ToString("hh:mm") - @appt.Schedule?.EndTime?.ToString("hh:mm")</td>
                         <td>@appt.Schedule?.Doctor?.User?.FullName</td>
                         <td>@appt.Note</td>
+                        <td>@(appt.Invoice != null ? string.Format("{0:N0} VNĐ", appt.Invoice.TotalAmount) : "")</td>
                         <td>
                             @if (appt.Status == "Cancelled")
                             {
@@ -51,6 +54,20 @@
                             else
                             {
                                 <span class="badge bg-success">Sắp tới</span>
+                            }
+                        </td>
+                        <td>
+                            @if (appt.Invoice != null && appt.Invoice.PaymentMethod == "Offline")
+                            {
+                                <span class="badge bg-info text-dark">Thanh toán tại quầy</span>
+                            }
+                            else if (appt.Invoice != null && appt.Invoice.PaymentStatus == "Paid")
+                            {
+                                <span class="badge bg-success">Đã thanh toán</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-warning text-dark">Chưa thanh toán</span>
                             }
                         </td>
                         <td>
