@@ -126,7 +126,7 @@ namespace OneTouch.Pages.Appointments
             decimal amount = 300000; // fallback mặc định chuyên khoa
             if (!string.IsNullOrEmpty(specialtyName) && (specialtyName.Contains("tổng quát") || specialtyName.Contains("tong quat")))
             {
-                amount = 5000;
+                amount = 200000;
             }
             if (amount <= 0) amount = 200000; // Bảo vệ cuối cùng, không bao giờ gửi 0 sang VNPay
             System.Diagnostics.Debug.WriteLine($"[VNPay] specialtyName: {specialtyName}, amount: {amount}");
