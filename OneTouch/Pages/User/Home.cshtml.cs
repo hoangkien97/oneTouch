@@ -28,6 +28,7 @@ namespace OneTouch.Pages.User
         public string UserName { get; set; }
         public List<Appointment> UpcomingAppointments { get; set; }
         public List<DoctorViewModel> TopDoctors { get; set; }
+        public List<TestimonialViewModel> Testimonials { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -82,7 +83,29 @@ namespace OneTouch.Pages.User
                 .Take(3)
                 .ToListAsync();
 
+            // Lấy 5 feedback mới nhất có comment và rating, kèm tên khách hàng
+            Testimonials = await _context.Feedbacks
+                .Where(f => f.Rating.HasValue && !string.IsNullOrEmpty(f.Comment))
+                .OrderByDescending(f => f.CreatedAt)
+                .Take(5)
+                .Select(f => new TestimonialViewModel
+                {
+                    CustomerName = f.Appointment.User.FullName ?? ("Khách hàng " + f.Appointment.UserId),
+                    AvatarPath = "/uploads/hero/Icon1T.jpg",
+                    Comment = f.Comment,
+                    Rating = f.Rating.Value
+                })
+                .ToListAsync();
+
             return Page();
         }
+    }
+
+    public class TestimonialViewModel
+    {
+        public string CustomerName { get; set; }
+        public string AvatarPath { get; set; }
+        public string Comment { get; set; }
+        public int Rating { get; set; }
     }
 } 

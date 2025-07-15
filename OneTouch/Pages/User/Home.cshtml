@@ -96,33 +96,45 @@
                 <h3 class="card-title mb-4"><i class="fas fa-comment-dots text-primary me-2"></i>Khách hàng nói gì?</h3>
                 <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <div class="d-flex align-items-center gap-3">
-                                <img src="/uploads/hero/1e1305b2-90bb-49fb-bd85-3016499c19c4.jpg" class="rounded-circle" style="width:64px; height:64px; object-fit:cover;" alt="Khách hàng 1">
-                                <div>
-                                    <strong>Nguyễn Văn A</strong>
-                                    <p class="mb-0 text-muted">"Dịch vụ rất chuyên nghiệp, bác sĩ tận tâm và thân thiện. Tôi rất hài lòng!"</p>
+                        @if (Model.Testimonials != null && Model.Testimonials.Any())
+                        {
+                            var idx = 0;
+                            foreach (var fb in Model.Testimonials)
+                            {
+                                <div class="carousel-item @(idx == 0 ? "active" : "")">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'><circle cx='32' cy='32' r='32' fill='%23e9ecef'/><circle cx='32' cy='26' r='14' fill='%23adb5bd'/><ellipse cx='32' cy='50' rx='18' ry='10' fill='%23dee2e6'/></svg>" class="rounded-circle" style="width:64px; height:64px; object-fit:cover;" alt="@fb.CustomerName">
+                                        <div>
+                                            <strong>@fb.CustomerName</strong>
+                                            <div class="mb-1">
+                                                @for (int i = 0; i < fb.Rating; i++)
+                                                {
+                                                    <i class="fas fa-star text-warning"></i>
+                                                }
+                                                @for (int i = fb.Rating; i < 5; i++)
+                                                {
+                                                    <i class="far fa-star text-warning"></i>
+                                                }
+                                            </div>
+                                            <p class="mb-0 text-muted">"@fb.Comment"</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                idx++;
+                            }
+                        }
+                        else
+                        {
+                            <div class="carousel-item active">
+                                <div class="d-flex align-items-center gap-3">
+                                    <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'><circle cx='32' cy='32' r='32' fill='%23e9ecef'/><circle cx='32' cy='26' r='14' fill='%23adb5bd'/><ellipse cx='32' cy='50' rx='18' ry='10' fill='%23dee2e6'/></svg>" class="rounded-circle" style="width:64px; height:64px; object-fit:cover;" alt="Khách hàng">
+                                    <div>
+                                        <strong>Chưa có đánh giá</strong>
+                                        <p class="mb-0 text-muted">Hãy là người đầu tiên để lại nhận xét về dịch vụ của chúng tôi!</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="d-flex align-items-center gap-3">
-                                <img src="/uploads/doctor/7c3b95b0-b5ed-4d6a-a892-c570d88921e7.jpg" class="rounded-circle" style="width:64px; height:64px; object-fit:cover;" alt="Khách hàng 2">
-                                <div>
-                                    <strong>Trần Thị B</strong>
-                                    <p class="mb-0 text-muted">"Đặt lịch khám online rất tiện lợi, tiết kiệm thời gian. Sẽ giới thiệu cho bạn bè!"</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="d-flex align-items-center gap-3">
-                                <img src="/uploads/doctor/a9fff910-2fc0-4ddf-88dc-1a37afabd7bd.jpg" class="rounded-circle" style="width:64px; height:64px; object-fit:cover;" alt="Khách hàng 3">
-                                <div>
-                                    <strong>Lê Minh C</strong>
-                                    <p class="mb-0 text-muted">"Trang web dễ sử dụng, giao diện đẹp mắt, đội ngũ hỗ trợ nhiệt tình."</p>
-                                </div>
-                            </div>
-                        </div>
+                        }
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>

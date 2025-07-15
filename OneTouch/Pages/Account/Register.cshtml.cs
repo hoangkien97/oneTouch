@@ -107,6 +107,7 @@ namespace OneTouch.Pages.Account
             _context.Users.Add(newUser);
             await _context.SaveChangesAsync();
 
+            TempData["SuccessMessage"] = "Đăng ký thành công! Vui lòng đăng nhập.";
             return RedirectToPage("/Account/Login");
         }
     }
