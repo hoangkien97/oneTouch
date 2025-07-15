@@ -27,15 +27,16 @@ namespace OneTouch.Services
             var accountName = _configuration["VietQr:AccountName"];
             var amount = ((int)model.Amount).ToString();
 
-            // Sinh mã code thanh toán nếu chưa có
+            // Sinh mã code thanh toán theo cấu trúc DH + số nguyên (3-10 ký tự)
             string paymentCode = model.Note;
-            if (string.IsNullOrEmpty(paymentCode) || !paymentCode.StartsWith("PAY"))
+            if (string.IsNullOrEmpty(paymentCode) || !paymentCode.StartsWith("DH"))
             {
-                paymentCode = $"PAY{DateTime.Now:yyyyMMddHHmmssfff}{model.UserId}";
+                var number = (DateTime.UtcNow.Ticks % 1000000000).ToString(); // 9 ký tự
+                paymentCode = $"DH{number}";
             }
 
-            // Nội dung chuyển khoản có mã code
-            var content = Uri.EscapeDataString($"{model.OrderDescription ?? "Thanh toan dat lich kham"} | Code: {paymentCode}");
+            // Nội dung chuyển khoản chỉ là mã code
+            var content = Uri.EscapeDataString(paymentCode);
 
             // Trả về trực tiếp URL ảnh QR code VietQR
             return $"https://img.vietqr.io/image/{bankCode}-{accountNo}-compact2.png?amount={amount}&addInfo={content}&accountName={Uri.EscapeDataString(accountName)}";
