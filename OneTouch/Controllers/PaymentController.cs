@@ -577,7 +577,7 @@ namespace OneTouch.Controllers
                         PaymentMethod = "VietQR",
                         CreatedAt = DateTime.Now,
                         // Lưu mã code thanh toán vào trường PaymentId nếu có
-                        PaymentId = paymentCode
+                        //PaymentId = paymentCode
                     };
                     _context.Invoices.Add(invoice);
                     await _context.SaveChangesAsync();

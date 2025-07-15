@@ -102,9 +102,9 @@
                             foreach (var fb in Model.Testimonials)
                             {
                                 <div class="carousel-item @(idx == 0 ? "active" : "")">
-                                    <div class="d-flex align-items-center gap-3">
+                            <div class="d-flex align-items-center gap-3">
                                         <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'><circle cx='32' cy='32' r='32' fill='%23e9ecef'/><circle cx='32' cy='26' r='14' fill='%23adb5bd'/><ellipse cx='32' cy='50' rx='18' ry='10' fill='%23dee2e6'/></svg>" class="rounded-circle" style="width:64px; height:64px; object-fit:cover;" alt="@fb.CustomerName">
-                                        <div>
+                                <div>
                                             <strong>@fb.CustomerName</strong>
                                             <div class="mb-1">
                                                 @for (int i = 0; i < fb.Rating; i++)
@@ -115,10 +115,10 @@
                                                 {
                                                     <i class="far fa-star text-warning"></i>
                                                 }
-                                            </div>
+                                </div>
                                             <p class="mb-0 text-muted">"@fb.Comment"</p>
-                                        </div>
-                                    </div>
+                            </div>
+                        </div>
                                 </div>
                                 idx++;
                             }
@@ -126,9 +126,9 @@
                         else
                         {
                             <div class="carousel-item active">
-                                <div class="d-flex align-items-center gap-3">
+                            <div class="d-flex align-items-center gap-3">
                                     <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'><circle cx='32' cy='32' r='32' fill='%23e9ecef'/><circle cx='32' cy='26' r='14' fill='%23adb5bd'/><ellipse cx='32' cy='50' rx='18' ry='10' fill='%23dee2e6'/></svg>" class="rounded-circle" style="width:64px; height:64px; object-fit:cover;" alt="Khách hàng">
-                                    <div>
+                                <div>
                                         <strong>Chưa có đánh giá</strong>
                                         <p class="mb-0 text-muted">Hãy là người đầu tiên để lại nhận xét về dịch vụ của chúng tôi!</p>
                                     </div>
