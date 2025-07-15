@@ -511,6 +511,7 @@ namespace OneTouch.Controllers
         {
             try
             {
+                // KHÔNG kiểm tra IP, chấp nhận mọi IP gửi webhook
                 // Log payload for debugging
                 System.Diagnostics.Debug.WriteLine($"[VietQR Webhook] Payload: {payload}");
 
@@ -544,6 +545,13 @@ namespace OneTouch.Controllers
                 }
                 string note = appointmentParts[3];
 
+                // Sinh mã code thanh toán nếu chưa có
+                string paymentCode = transactionId;
+                if (string.IsNullOrEmpty(paymentCode))
+                {
+                    paymentCode = $"PAY{DateTime.Now:yyyyMMddHHmmssfff}{userId}";
+                }
+
                 // Check if appointment already exists
                 var existingAppointment = _context.Appointments.FirstOrDefault(a => a.ScheduleId == scheduleId && a.UserId == userId);
                 if (existingAppointment == null)
@@ -567,7 +575,9 @@ namespace OneTouch.Controllers
                         TotalAmount = paidAmount > 0 ? paidAmount : amount,
                         PaymentStatus = "Paid",
                         PaymentMethod = "VietQR",
-                        CreatedAt = DateTime.Now
+                        CreatedAt = DateTime.Now,
+                        // Lưu mã code thanh toán vào trường PaymentId nếu có
+                        PaymentId = paymentCode
                     };
                     _context.Invoices.Add(invoice);
                     await _context.SaveChangesAsync();
@@ -575,7 +585,7 @@ namespace OneTouch.Controllers
                     // Send confirmation email (optional)
                     try
                     {
-                        await _emailService.SendAppointmentConfirmationEmailAsync(appointment, invoice, transactionId);
+                        await _emailService.SendAppointmentConfirmationEmailAsync(appointment, invoice, paymentCode);
                     }
                     catch (Exception emailEx)
                     {
@@ -588,7 +598,7 @@ namespace OneTouch.Controllers
                     System.Diagnostics.Debug.WriteLine($"[VietQR Webhook] Appointment already exists with ID: {existingAppointment.AppointmentId}");
                 }
 
-                return Ok(new { status = "success" });
+                return Ok(new { status = "success", paymentCode });
             }
             catch (Exception ex)
             {

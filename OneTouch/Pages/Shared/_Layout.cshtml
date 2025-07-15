@@ -57,8 +57,8 @@
     </div>
 
     <!-- Main Header -->
-    <header class="main-header bg-white shadow-sm sticky-top">
-        <nav class="navbar navbar-expand-lg navbar-light py-3">
+    <header class="main-header bg-white shadow-sm sticky-top" style="padding-top: 0; padding-bottom: 0;">
+        <nav class="navbar navbar-expand-lg navbar-light" style="padding-top: 4px; padding-bottom: 4px; min-height: 44px;">
             <div class="container">
                 @{
                     var userRole = Context.Session.GetString("UserRole");
@@ -74,7 +74,7 @@
                     }
                 }
                 <a class="navbar-brand" href="@homeLink">
-                    <i class="fas fa-hospital me-2 text-primary"></i>
+                    <img src="/uploads/hero/Icon1T.jpg" alt="OneTouch Medical Logo" class="me-2 align-middle" style="max-height: 80px; width: auto; object-fit: contain; vertical-align: middle; display: inline-block;" />
                     <span class="fw-bold">OneTouch</span> Medical
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">

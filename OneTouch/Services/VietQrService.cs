@@ -26,7 +26,16 @@ namespace OneTouch.Services
             var accountNo = _configuration["VietQr:AccountNo"];
             var accountName = _configuration["VietQr:AccountName"];
             var amount = ((int)model.Amount).ToString();
-            var content = Uri.EscapeDataString(model.OrderDescription ?? "Thanh toan dat lich kham");
+
+            // Sinh mã code thanh toán nếu chưa có
+            string paymentCode = model.Note;
+            if (string.IsNullOrEmpty(paymentCode) || !paymentCode.StartsWith("PAY"))
+            {
+                paymentCode = $"PAY{DateTime.Now:yyyyMMddHHmmssfff}{model.UserId}";
+            }
+
+            // Nội dung chuyển khoản có mã code
+            var content = Uri.EscapeDataString($"{model.OrderDescription ?? "Thanh toan dat lich kham"} | Code: {paymentCode}");
 
             // Trả về trực tiếp URL ảnh QR code VietQR
             return $"https://img.vietqr.io/image/{bankCode}-{accountNo}-compact2.png?amount={amount}&addInfo={content}&accountName={Uri.EscapeDataString(accountName)}";
@@ -49,7 +58,7 @@ namespace OneTouch.Services
 
         public string GenerateQrCode(string paymentUrl)
         {
-            // Không cần dùng Google Charts nữa, trả về luôn paymentUrl
+           
             return paymentUrl;
         }
     }
