@@ -1,0 +1,363 @@
+@page
+@model OneTouch.Pages.Admin.DashboardModel
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "_AdminLayout";
+}
+
+<div class="admin-dashboard-content">
+    <!-- Stats Cards -->
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="stats-card stats-card-primary">
+                <div class="stats-card-body">
+                    <div class="stats-card-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stats-card-content">
+                        <h3 class="stats-card-number">@Model.TotalUsers</h3>
+                        <p class="stats-card-label">Tổng người dùng</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="stats-card stats-card-success">
+                <div class="stats-card-body">
+                    <div class="stats-card-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <div class="stats-card-content">
+                        <h3 class="stats-card-number">@Model.TotalDoctors</h3>
+                        <p class="stats-card-label">Bác sĩ</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="stats-card stats-card-warning">
+                <div class="stats-card-body">
+                    <div class="stats-card-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="stats-card-content">
+                        <h3 class="stats-card-number">@Model.TotalAppointments</h3>
+                        <p class="stats-card-label">Lịch hẹn</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="stats-card stats-card-info">
+                <div class="stats-card-body">
+                    <div class="stats-card-icon">
+                        <i class="fas fa-clinic-medical"></i>
+                    </div>
+                    <div class="stats-card-content">
+                        <h3 class="stats-card-number">@Model.TotalClinics</h3>
+                        <p class="stats-card-label">Phòng khám</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="admin-card">
+                <div class="admin-card-header">
+                    <h5 class="admin-card-title">
+                        <i class="fas fa-bolt me-2"></i>
+                        Thao tác nhanh
+                    </h5>
+                </div>
+                <div class="admin-card-body">
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <a href="/AppointmentManager" class="quick-action-btn">
+                                <div class="quick-action-icon">
+                                    <i class="fas fa-calendar-plus"></i>
+                                </div>
+                                <span>Quản lý lịch hẹn</span>
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="/DoctorManager" class="quick-action-btn">
+                                <div class="quick-action-icon">
+                                    <i class="fas fa-user-md"></i>
+                                </div>
+                                <span>Quản lý bác sĩ</span>
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="/ScheduleManager" class="quick-action-btn">
+                                <div class="quick-action-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <span>Quản lý lịch làm việc</span>
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="/MedicalRecordManager" class="quick-action-btn">
+                                <div class="quick-action-icon">
+                                    <i class="fas fa-file-medical"></i>
+                                </div>
+                                <span>Quản lý hồ sơ bệnh án</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Activities -->
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="admin-card">
+                <div class="admin-card-header">
+                    <h5 class="admin-card-title">
+                        <i class="fas fa-history me-2"></i>
+                        Lịch hẹn gần đây
+                    </h5>
+                </div>
+                <div class="admin-card-body">
+                    @if (Model.RecentAppointments.Any())
+                    {
+                        <div class="activity-list">
+                            @foreach (var appointment in Model.RecentAppointments)
+                            {
+                                <div class="activity-item">
+                                    <div class="activity-icon">
+                                        <i class="fas fa-calendar-check"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <div class="activity-title">@appointment.PatientName</div>
+                                        <div class="activity-subtitle">@appointment.DoctorName - @(appointment.AppointmentDate.HasValue ? appointment.AppointmentDate.Value.ToString("dd/MM/yyyy HH:mm") : "-")</div>
+                                    </div>
+                                    <div class="activity-status @appointment.Status.ToLower()">
+                                        @appointment.Status
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted text-center py-3">Chưa có lịch hẹn nào</p>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="admin-card">
+                <div class="admin-card-header">
+                    <h5 class="admin-card-title">
+                        <i class="fas fa-user-plus me-2"></i>
+                        Người dùng mới
+                    </h5>
+                </div>
+                <div class="admin-card-body">
+                    @if (Model.RecentUsers.Any())
+                    {
+                        <div class="activity-list">
+                            @foreach (var user in Model.RecentUsers)
+                            {
+                                <div class="activity-item">
+                                    <div class="activity-icon">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <div class="activity-title">@user.FullName</div>
+                                        <div class="activity-subtitle">@user.Phone - @user.CreatedAt.ToString("dd/MM/yyyy")</div>
+                                    </div>
+                                    <div class="activity-status @user.Role.ToLower()">
+                                        @user.Role
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted text-center py-3">Chưa có người dùng mới</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.admin-dashboard-content {
+    background: #f8f9fa;
+    min-height: calc(100vh - 80px);
+    padding: 0;
+}
+
+.stats-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+.stats-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+.stats-card-body {
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+}
+
+.stats-card-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+    margin-right: 1rem;
+}
+
+.stats-card-primary .stats-card-icon { background: linear-gradient(45deg, #667eea, #764ba2); }
+.stats-card-success .stats-card-icon { background: linear-gradient(45deg, #11998e, #38ef7d); }
+.stats-card-warning .stats-card-icon { background: linear-gradient(45deg, #f093fb, #f5576c); }
+.stats-card-info .stats-card-icon { background: linear-gradient(45deg, #4facfe, #00f2fe); }
+
+.stats-card-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0;
+    color: #2c3e50;
+}
+
+.stats-card-label {
+    margin: 0;
+    color: #7f8c8d;
+    font-weight: 500;
+}
+
+.admin-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.admin-card-header {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    padding: 1.5rem;
+}
+
+.admin-card-title {
+    margin: 0;
+    font-weight: 600;
+}
+
+.admin-card-body {
+    padding: 1.5rem;
+}
+
+.quick-action-btn {
+    display: block;
+    text-decoration: none;
+    color: #2c3e50;
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.quick-action-btn:hover {
+    background: white;
+    border-color: #667eea;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    color: #667eea;
+    text-decoration: none;
+}
+
+.quick-action-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: #667eea;
+}
+
+.activity-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.activity-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid #ecf0f1;
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+.activity-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #ecf0f1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    color: #667eea;
+}
+
+.activity-content {
+    flex: 1;
+}
+
+.activity-title {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 0.25rem;
+}
+
+.activity-subtitle {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+}
+
+.activity-status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.activity-status.confirmed { background: #d4edda; color: #155724; }
+.activity-status.pending { background: #fff3cd; color: #856404; }
+.activity-status.cancelled { background: #f8d7da; color: #721c24; }
+.activity-status.patient { background: #d1ecf1; color: #0c5460; }
+.activity-status.admin { background: #e2e3e5; color: #383d41; }
+
+@@media (max-width: 768px) {
+    .stats-card-body {
+        padding: 1.5rem;
+    }
+    
+    .stats-card-number {
+        font-size: 2rem;
+    }
+}
+</style> 

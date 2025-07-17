@@ -1,0 +1,37 @@
+﻿@page
+@model OneTouch.Pages.MedicalRecordManager.CreateModel
+
+@{
+    ViewData["Title"] = "Đơn Khám Bệnh";
+}
+
+
+
+<div class="container mt-4">
+    <h2 class="text-primary mb-4">💊 Đơn Khám Bệnh</h2>
+
+    <h5>Bệnh nhân: <strong>@Model.PatientName</strong></h5>
+
+    <form method="post">
+        <input type="hidden" asp-for="MedicalRecord.AppointmentId" />
+
+        <div class="mb-3">
+            <label asp-for="MedicalRecord.Diagnosis" class="form-label">Chẩn đoán</label>
+            <textarea asp-for="MedicalRecord.Diagnosis" class="form-control" rows="3"></textarea>
+            <span asp-validation-for="MedicalRecord.Diagnosis" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="MedicalRecord.DoctorNote" class="form-label">Ghi chú bác sĩ</label>
+            <textarea asp-for="MedicalRecord.DoctorNote" class="form-control" rows="3"></textarea>
+            <span asp-validation-for="MedicalRecord.DoctorNote" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-success">💾 Lưu đơn</button>
+        <a asp-page="/DoctorManager/PatientForDoctorManager"
+           asp-route-doctorId="@Model.DoctorId"
+           class="btn btn-secondary ms-2">
+            ⬅️ Quay lại
+        </a>
+    </form>
+</div>

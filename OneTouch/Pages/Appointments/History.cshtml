@@ -1,0 +1,122 @@
+@page
+@model OneTouch.Pages.Appointments.HistoryModel
+@{
+    ViewData["Title"] = "Lịch sử khám";
+}
+<div class="container py-4">
+    <h2 class="mb-4">Lịch sử khám của bạn</h2>
+    @if (!string.IsNullOrEmpty(Model.SuccessMessage))
+    {
+        <div class="alert alert-success">@Model.SuccessMessage</div>
+    }
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="alert alert-danger">@Model.ErrorMessage</div>
+    }
+    @if (Model.Appointments == null || !Model.Appointments.Any())
+    {
+        <div class="alert alert-info">Bạn chưa có lịch hẹn nào.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Ngày khám</th>
+                        <th>Giờ khám</th>
+                        <th>Bác sĩ</th>
+                        <th>Ghi chú</th>
+                        <th>Giá tiền</th>
+                        <th>Trạng thái</th>
+                        <th>Thanh toán</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var appt in Model.Appointments)
+                {
+                    <tr>
+                        <td>@appt.Schedule?.Date?.ToString("dd/MM/yyyy")</td>
+                        <td>@appt.Schedule?.StartTime?.ToString("hh:mm") - @appt.Schedule?.EndTime?.ToString("hh:mm")</td>
+                        <td>@appt.Schedule?.Doctor?.User?.FullName</td>
+                        <td>@appt.Note</td>
+                        <td>@(appt.Invoice != null ? string.Format("{0:N0} VNĐ", appt.Invoice.TotalAmount) : "")</td>
+                        <td>
+                            @if (appt.Status == "Cancelled")
+                            {
+                                <span class="badge bg-danger">Đã hủy</span>
+                            }
+                            else if (appt.Schedule?.Date < DateOnly.FromDateTime(DateTime.Now))
+                            {
+                                <span class="badge bg-secondary">Đã khám</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-success">Sắp tới</span>
+                            }
+                        </td>
+                        <td>
+                            @if (appt.Invoice != null && appt.Invoice.PaymentMethod == "Offline")
+                            {
+                                <span class="badge bg-info text-dark">Thanh toán tại quầy</span>
+                            }
+                            else if (appt.Invoice != null && appt.Invoice.PaymentStatus == "Paid")
+                            {
+                                <span class="badge bg-success">Đã thanh toán</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-warning text-dark">Chưa thanh toán</span>
+                            }
+                        </td>
+                        <td>
+                            @if (appt.Status != "Cancelled" && appt.Schedule?.Date >= DateOnly.FromDateTime(DateTime.Now))
+                            {
+                                <form method="post" asp-page-handler="Cancel" asp-route-id="@appt.AppointmentId" onsubmit="return confirm('Bạn có chắc chắn muốn hủy lịch khám này?');">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Hủy lịch</button>
+                                </form>
+                            }
+                            @* Feedback & Rating *@
+                            @if (appt.Status != "Cancelled" && appt.Schedule?.Date < DateOnly.FromDateTime(DateTime.Now))
+                            {
+                                if (appt.Feedbacks != null && appt.Feedbacks.Any())
+                                {
+                                    var fb = appt.Feedbacks.First();
+                                    <div class="mt-2">
+                                        <span class="text-warning">@for (int i = 0; i < fb.Rating; i++) { <text>★</text> }@for (int i = fb.Rating ?? 0; i < 5; i++) { <text>☆</text> }</span><br />
+                                        <span class="text-muted">@fb.Comment</span>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <form method="post" asp-page-handler="Feedback">
+                                        <input type="hidden" name="FeedbackAppointmentId" value="@appt.AppointmentId" />
+                                        <div class="mt-2">
+                                            <div class="mb-1">
+                                                <span>Đánh giá: </span>
+                                                @for (int i = 1; i <= 5; i++)
+                                                {
+                                                    <label class="me-1">
+                                                        <input type="radio" name="FeedbackRating" value="@i" required />
+                                                        <span class="text-warning">★</span>
+                                                    </label>
+                                                }
+                                            </div>
+                                            <div class="mb-1">
+                                                <textarea name="FeedbackComment" class="form-control form-control-sm" placeholder="Nhận xét..." rows="1" maxlength="255"></textarea>
+                                            </div>
+                                            <button type="submit" class="btn btn-sm btn-success">Gửi feedback</button>
+                                        </div>
+                                    </form>
+                                }
+                            }
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+    <a href="/User/Home" class="btn btn-outline-secondary mt-3">Quay lại trang chủ</a>
+</div> 

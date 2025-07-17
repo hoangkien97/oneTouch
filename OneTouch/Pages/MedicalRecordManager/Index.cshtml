@@ -1,0 +1,71 @@
+﻿@page
+@model OneTouch.Pages.MedicalRecordManager.IndexModel
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Quản lý hồ sơ bệnh án";
+}
+
+<h1>Quản lý hồ sơ bệnh án</h1>
+
+<!-- <p>
+    <a asp-page="Create" class="btn btn-primary">Create New</a>
+</p> -->
+<div class="table-responsive">
+    <table class="table table-striped table-hover table-bordered align-middle shadow-sm" style="border-radius: 12px; overflow: hidden;">
+        <thead class="table-primary">
+            <tr>
+                <th>Chẩn đoán</th>
+                <th>Ghi chú bác sĩ</th>
+                <th>Ngày tạo</th>
+                <th>Lịch hẹn</th>
+                <!-- <th></th> -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.MedicalRecord)
+            {
+                <tr>
+                    <td>@item.Diagnosis</td>
+                    <td>@item.DoctorNote</td>
+                    <td>@item.CreatedAt?.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>@(item.Appointment != null ? item.Appointment.AppointmentId.ToString() : "")</td>
+                    <!--
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.RecordId">Edit</a> |
+                        <a asp-page="./Details" asp-route-id="@item.RecordId">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.RecordId">Delete</a>
+                    </td>
+                    -->
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .table {
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+        .table thead.table-primary {
+            background: linear-gradient(90deg, #667eea 0%, #64b5f6 100%);
+            color: #fff;
+            font-weight: 600;
+            border: none;
+        }
+
+    .table-striped > tbody > tr:nth-of-type(odd) {
+        background-color: #f6f9fc;
+    }
+
+    .table-hover > tbody > tr:hover {
+        background-color: #e3f2fd;
+    }
+
+    .table th, .table td {
+        vertical-align: middle;
+        border: none;
+    }
+</style>

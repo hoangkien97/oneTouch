@@ -1,10 +1,229 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Trang chủ";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!-- Hero Section -->
+<section class="hero-section position-relative text-white py-5">
+    <div class="hero-slider">
+        @foreach (var image in Model.HeroImages)
+        {
+            <div class="hero-slide" style="background-image: url('@image.FilePath');"></div>
+        }
+    </div>
+    <div class="overlay"></div>
+    <div class="container position-relative py-5" style="z-index: 2;">
+        <div class="row min-vh-auto align-items-center">
+            <div class="col-lg-7 animate-fadeInUp">
+                <span class="badge bg-warning mb-3 px-3 py-2">Chăm sóc sức khỏe tận tâm</span>
+                <h1 class="display-4 fw-bold mb-4">
+                    Chăm sóc sức khỏe của bạn
+                    <span class="text-warning d-block">chưa bao giờ dễ dàng hơn</span>
+                </h1>
+                <p class="lead mb-4">
+                    Đặt lịch khám bệnh trực tuyến nhanh chóng, tiện lợi với đội ngũ y bác sĩ chuyên môn cao.
+                    Chúng tôi cam kết mang đến dịch vụ y tế chất lượng nhất cho bạn và gia đình.
+                </p>
+                <div class="d-flex gap-3">
+                    <a href="/Account/Register" class="btn btn-warning btn-lg">Đăng ký ngay</a>
+                    <a href="/Appointments/Create" class="btn btn-outline-light btn-lg">Đặt lịch khám</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <!-- Tiết kiệm thời gian -->
+            <div class="col-lg-4 mb-4">
+                <div class="feature-card text-center">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="h4 mb-3">Tiết kiệm thời gian</h3>
+                    <p class="text-muted mb-0">
+                        Không cần xếp hàng hay gọi điện, đặt lịch khám mọi lúc, mọi nơi chỉ với vài thao tác đơn giản
+                    </p>
+                </div>
+            </div>
+
+            <!-- Đặt lịch dễ dàng -->
+            <div class="col-lg-4 mb-4">
+                <div class="feature-card text-center">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3 class="h4 mb-3">Đặt lịch dễ dàng</h3>
+                    <p class="text-muted mb-0">
+                        Đặt lịch khám trực tuyến nhanh chóng, tiện lợi với quy trình đơn giản và thân thiện
+                    </p>
+                </div>
+            </div>
+
+            <!-- Xem lịch khám chi tiết -->
+            <div class="col-lg-4 mb-4">
+                <div class="feature-card text-center">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3 class="h4 mb-3">Xem lịch khám chi tiết</h3>
+                    <p class="text-muted mb-0">
+                        Dễ dàng tra cứu thông tin lịch hẹn, thời gian khám và bác sĩ một cách minh bạch và rõ ràng
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- About Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <img src="@(Model.AboutImage != null ? Model.AboutImage.FilePath : "/images/about-img.jpg")" alt="About Us" class="img-fluid rounded-3 shadow">
+            </div>
+            <div class="col-lg-6">
+                <span class="badge bg-primary mb-3 px-3 py-2">Về chúng tôi</span>
+                <h2 class="h1 mb-4">Tại sao chọn OneTouch Medical?</h2>
+                <p class="lead text-muted mb-4">
+                    Chúng tôi mang đến giải pháp đặt lịch khám hiện đại, nhanh chóng và dễ dùng cho mọi đối tượng.
+                </p>
+
+                <div class="d-flex mb-3">
+                    <div class="me-3">
+                        <i class="fas fa-check-circle text-primary fa-2x"></i>
+                    </div>
+                    <div>
+                        <h4 class="h5 mb-2">Giao diện siêu đơn giản</h4>
+                        <p class="text-muted mb-0">Cả người lớn tuổi cũng dễ dàng sử dụng mà không cần hướng dẫn nhiều</p>
+                    </div>
+                </div>
+
+                <div class="d-flex mb-3">
+                    <div class="me-3">
+                        <i class="fas fa-check-circle text-primary fa-2x"></i>
+                    </div>
+                    <div>
+                        <h4 class="h5 mb-2">Triển khai nhanh trong 24h</h4>
+                        <p class="text-muted mb-0">Không ảnh hưởng đến hoạt động hiện tại của phòng khám</p>
+                    </div>
+                </div>
+
+                <div class="d-flex mb-3">
+                    <div class="me-3">
+                        <i class="fas fa-check-circle text-primary fa-2x"></i>
+                    </div>
+                    <div>
+                        <h4 class="h5 mb-2">Bảo mật dữ liệu chuẩn y tế</h4>
+                        <p class="text-muted mb-0">Tuân thủ nghiêm ngặt các tiêu chuẩn bảo mật trong ngành y</p>
+                    </div>
+                </div>
+
+                <div class="d-flex mb-3">
+                    <div class="me-3">
+                        <i class="fas fa-check-circle text-primary fa-2x"></i>
+                    </div>
+                    <div>
+                        <h4 class="h5 mb-2">Hỗ trợ kỹ thuật 1:1 trọn đời</h4>
+                        <p class="text-muted mb-0">Luôn đồng hành và hỗ trợ trực tiếp trong suốt quá trình sử dụng</p>
+                    </div>
+                </div>
+
+                <div class="d-flex">
+                    <div class="me-3">
+                        <i class="fas fa-check-circle text-primary fa-2x"></i>
+                    </div>
+                    <div>
+                        <h4 class="h5 mb-2">Miễn phí dùng thử</h4>
+                        <p class="text-muted mb-0">Không mất bất kỳ chi phí nào trong thời gian trải nghiệm ban đầu</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Doctors Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="badge bg-primary text-white mb-3 px-3 py-2">Đội ngũ chuyên gia</span>
+            <h2 class="h1 mb-4">Bác sĩ nổi bật của chúng tôi</h2>
+            <p class="lead text-muted w-75 mx-auto">
+                Gặp gỡ đội ngũ bác sĩ chuyên nghiệp và giàu kinh nghiệm, được đánh giá cao bởi các bệnh nhân của OneTouch Medical.
+            </p>
+        </div>
+        
+        @if (Model.TopDoctors != null && Model.TopDoctors.Any())
+        {
+            <div class="row justify-content-center">
+                @foreach (var doctor in Model.TopDoctors)
+                {
+                    <partial name="Shared/_TopDoctorCard" model="doctor" />
+                }
+            </div>
+        }
+        else
+        {
+            <div class="text-center">
+                <p>Hiện chưa có thông tin bác sĩ nổi bật.</p>
+            </div>
+        }
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mb-4 mb-lg-0">
+                <h2 class="h1 mb-2">Bạn cần tư vấn?</h2>
+                <p class="lead mb-0">Liên hệ với chúng tôi ngay để được tư vấn miễn phí về sức khỏe</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a href="/Contact" class="btn btn-light btn-lg">Liên hệ ngay</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        // Add smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Hero Slider
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.hero-slide');
+        
+        function showSlide(index) {
+            slides.forEach(slide => slide.style.opacity = '0');
+            slides[index].style.opacity = '1';
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        // Initialize first slide
+        showSlide(currentSlide);
+        
+        // Change slide every 3 seconds (3000 milliseconds)
+        setInterval(nextSlide, 3000);
+    </script>
+}

@@ -1,0 +1,51 @@
+@page
+@model OneTouch.Pages.Account.VerifyOtpModel
+@{
+    ViewData["Title"] = "Xác thực OTP";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-center">Xác thực OTP</h3>
+                </div>
+                <div class="card-body">
+                    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+                    {
+                        <div class="alert alert-danger">@Model.ErrorMessage</div>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.SuccessMessage))
+                    {
+                        <div class="alert alert-success">@Model.SuccessMessage</div>
+                    }
+
+                    <form method="post">
+                        <input type="hidden" asp-for="Input.Phone" />
+                        <div class="form-group mb-3">
+                            <label asp-for="Input.Otp" class="form-label">Nhập mã OTP</label>
+                            <input asp-for="Input.Otp" class="form-control" placeholder="Nhập mã OTP 6 số" maxlength="6" />
+                            <span asp-validation-for="Input.Otp" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-primary">Xác thực</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Chỉ cho phép nhập số
+            $('#Input_Otp').on('input', function () {
+                this.value = this.value.replace(/[^0-9]/g, '');
+            });
+        });
+    </script>
+} 

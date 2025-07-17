@@ -1,0 +1,165 @@
+@page
+@model OneTouch.Pages.User.HomeModel
+@{
+    ViewData["Title"] = "Trang chủ";
+}
+
+<!-- Hero Section -->
+<section class="hero-section position-relative text-white py-5 mb-4" style="min-height: 320px; background: linear-gradient(90deg, #0d6efd 60%, #6c63ff 100%), url('/uploads/hero/1e1305b2-90bb-49fb-bd85-3016499c19c4.jpg') center center/cover no-repeat;">
+    <div class="container position-relative py-4" style="z-index: 2;">
+        <div class="row align-items-center">
+            <div class="col-lg-8 animate-fadeInUp">
+                <span class="badge bg-warning mb-3 px-3 py-2">Chào mừng trở lại!</span>
+                <h1 class="display-5 fw-bold mb-3">Xin chào, @Model.UserName</h1>
+                <p class="lead mb-4">Chúc bạn một ngày tốt lành cùng OneTouch Medical. Đặt lịch, quản lý sức khỏe và nhận tư vấn dễ dàng!</p>
+                <a href="/Appointments/Create" class="btn btn-light btn-lg shadow">Đặt lịch khám ngay</a>
+            </div>
+        </div>
+    </div>
+    <div class="overlay" style="background: rgba(0,0,0,0.2); position: absolute; top:0; left:0; width:100%; height:100%; z-index:1;"></div>
+</section>
+
+<!-- Quick Actions -->
+<section class="py-2">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="feature-card text-center shadow-hover h-100">
+                    <div class="feature-icon mx-auto mb-3"><i class="fas fa-calendar-plus"></i></div>
+                    <h3 class="h5 mb-2">Đặt lịch khám</h3>
+                    <p class="text-muted mb-3">Đặt lịch với bác sĩ chuyên khoa</p>
+                    <a href="/Appointments/Create" class="btn btn-primary">Đặt lịch</a>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="feature-card text-center shadow-hover h-100">
+                    <div class="feature-icon mx-auto mb-3"><i class="fas fa-history"></i></div>
+                    <h3 class="h5 mb-2">Lịch sử khám</h3>
+                    <p class="text-muted mb-3">Xem lại lịch sử khám bệnh</p>
+                    <a href="/Appointments/History" class="btn btn-primary">Xem lịch sử</a>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="feature-card text-center shadow-hover h-100">
+                    <div class="feature-icon mx-auto mb-3"><i class="fas fa-user"></i></div>
+                    <h3 class="h5 mb-2">Hồ sơ cá nhân</h3>
+                    <p class="text-muted mb-3">Cập nhật thông tin cá nhân</p>
+                    <a href="/Profile" class="btn btn-primary">Cập nhật</a>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="feature-card text-center shadow-hover h-100">
+                    <div class="feature-icon mx-auto mb-3"><i class="fas fa-star"></i></div>
+                    <h3 class="h5 mb-2">Đánh giá & Góp ý</h3>
+                    <p class="text-muted mb-3">Gửi nhận xét cho dịch vụ</p>
+                    <a href="/Appointments/History" class="btn btn-primary">Đánh giá ngay</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Top Doctors Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="badge bg-primary text-white mb-3 px-3 py-2">Đội ngũ chuyên gia</span>
+            <h2 class="h1 mb-4">Bác sĩ nổi bật của chúng tôi</h2>
+            <p class="lead text-muted w-75 mx-auto">
+                Gặp gỡ đội ngũ bác sĩ chuyên nghiệp và giàu kinh nghiệm, được đánh giá cao bởi các bệnh nhân của OneTouch Medical.
+            </p>
+        </div>
+        
+        @if (Model.TopDoctors != null && Model.TopDoctors.Any())
+        {
+            <div class="row justify-content-center">
+                @foreach (var doctor in Model.TopDoctors)
+                {
+                    <partial name="Shared/_TopDoctorCard" model="doctor" />
+                }
+            </div>
+        }
+        else
+        {
+            <div class="text-center">
+                <p>Hiện chưa có thông tin bác sĩ nổi bật.</p>
+            </div>
+        }
+    </div>
+</section>
+
+<!-- Testimonial Section -->
+<section class="py-4">
+    <div class="container">
+        <div class="card border-0 shadow-sm mb-3">
+            <div class="card-body">
+                <h3 class="card-title mb-4"><i class="fas fa-comment-dots text-primary me-2"></i>Khách hàng nói gì?</h3>
+                <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        @if (Model.Testimonials != null && Model.Testimonials.Any())
+                        {
+                            var idx = 0;
+                            foreach (var fb in Model.Testimonials)
+                            {
+                                <div class="carousel-item @(idx == 0 ? "active" : "")">
+                            <div class="d-flex align-items-center gap-3">
+                                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'><circle cx='32' cy='32' r='32' fill='%23e9ecef'/><circle cx='32' cy='26' r='14' fill='%23adb5bd'/><ellipse cx='32' cy='50' rx='18' ry='10' fill='%23dee2e6'/></svg>" class="rounded-circle" style="width:64px; height:64px; object-fit:cover;" alt="@fb.CustomerName">
+                                <div>
+                                            <strong>@fb.CustomerName</strong>
+                                            <div class="mb-1">
+                                                @for (int i = 0; i < fb.Rating; i++)
+                                                {
+                                                    <i class="fas fa-star text-warning"></i>
+                                                }
+                                                @for (int i = fb.Rating; i < 5; i++)
+                                                {
+                                                    <i class="far fa-star text-warning"></i>
+                                                }
+                                </div>
+                                            <p class="mb-0 text-muted">"@fb.Comment"</p>
+                            </div>
+                        </div>
+                                </div>
+                                idx++;
+                            }
+                        }
+                        else
+                        {
+                            <div class="carousel-item active">
+                            <div class="d-flex align-items-center gap-3">
+                                    <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'><circle cx='32' cy='32' r='32' fill='%23e9ecef'/><circle cx='32' cy='26' r='14' fill='%23adb5bd'/><ellipse cx='32' cy='50' rx='18' ry='10' fill='%23dee2e6'/></svg>" class="rounded-circle" style="width:64px; height:64px; object-fit:cover;" alt="Khách hàng">
+                                <div>
+                                        <strong>Chưa có đánh giá</strong>
+                                        <p class="mb-0 text-muted">Hãy là người đầu tiên để lại nhận xét về dịch vụ của chúng tôi!</p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Trước</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Sau</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        // Kích hoạt carousel Bootstrap nếu cần
+        var healthTipsCarousel = document.getElementById('healthTipsCarousel');
+        if (healthTipsCarousel) {
+            var carousel1 = new bootstrap.Carousel(healthTipsCarousel, { interval: 4000 });
+        }
+        var testimonialCarousel = document.getElementById('testimonialCarousel');
+        if (testimonialCarousel) {
+            var carousel2 = new bootstrap.Carousel(testimonialCarousel, { interval: 6000 });
+        }
+    </script>
+} 

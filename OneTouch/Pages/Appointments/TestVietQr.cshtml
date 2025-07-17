@@ -1,0 +1,84 @@
+@page
+@model OneTouch.Pages.Appointments.TestVietQrModel
+@{
+    ViewData["Title"] = "Test VietQR";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-qrcode me-2"></i>
+                        Test VietQR Payment
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <div class="mb-3">
+                            <label for="amount" class="form-label">Số tiền (VNĐ)</label>
+                            <input type="number" class="form-control" id="amount" name="amount" value="200000" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Mô tả</label>
+                            <input type="text" class="form-control" id="description" name="description" value="Test thanh toán VietQR" required />
+                        </div>
+                        <button type="submit" class="btn btn-primary">Tạo QR Code</button>
+                    </form>
+
+                    @if (!string.IsNullOrEmpty(Model.QrCodeUrl))
+                    {
+                        <hr />
+                        <div class="text-center">
+                            <h5>QR Code VietQR</h5>
+                            <div class="qr-container mb-3">
+                                <img src="@Model.QrCodeUrl" alt="VietQR Code" class="img-fluid border rounded" style="max-width: 300px;" />
+                            </div>
+                            <div class="payment-details">
+                                <p><strong>Số tiền:</strong> @Model.Amount.ToString("N0") VNĐ</p>
+                                <p><strong>Mô tả:</strong> @Model.Description</p>
+                                <p><strong>Payment URL:</strong> <small class="text-muted">@Model.PaymentUrl</small></p>
+                                <p><strong>QR Code URL:</strong> <small class="text-muted">@Model.QrCodeUrl</small></p>
+                            </div>
+                            <div class="mt-3">
+                                <a href="@Model.PaymentUrl" target="_blank" class="btn btn-success me-2">
+                                    <i class="fas fa-external-link-alt me-2"></i>Mở link thanh toán
+                                </a>
+                                <button type="button" class="btn btn-info" onclick="copyPaymentUrl()">
+                                    <i class="fas fa-copy me-2"></i>Copy URL
+                                </button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function copyPaymentUrl() {
+        navigator.clipboard.writeText('@Model.PaymentUrl').then(function() {
+            alert('Đã copy URL thanh toán vào clipboard!');
+        }, function(err) {
+            console.error('Could not copy text: ', err);
+        });
+    }
+</script>
+
+<style>
+    .qr-container {
+        padding: 20px;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 10px;
+        display: inline-block;
+    }
+
+    .payment-details {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 5px;
+        margin: 15px 0;
+    }
+</style> 
